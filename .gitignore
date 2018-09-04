@@ -1,2 +1,4 @@
 */.git/*
 */.idea/*
+*/docker/*
+**/node\_modules/*
