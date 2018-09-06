@@ -1,13 +1,13 @@
 {
-  "name": "iot-project-india",
+  "name": "iot-project",
   "version": "1.0.0",
-  "description": "AU IOT project team india",
+  "description": "Example AU IOT project",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Group India",
+  "author": "Michal Ratajsky <michal.ratajsky@post.au.dk>",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
