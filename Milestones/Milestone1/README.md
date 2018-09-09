@@ -19,9 +19,13 @@ $ docker run -p 8080:8080 --privileged -d india/milestone1
 
 ## Check program
 
-To check if the program is running correctly, use the following command:
+To check if the program is running correctly, use the following command if you are testing from inside the raspberry pi:
 ```
 curl localhost:8080
+```
+Do the following if you are testing from another machine:
+```
+curl <raspberry pi IP>:8080
 ```
 
 ## Stop the Program
