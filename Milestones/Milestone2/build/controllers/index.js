@@ -1,7 +1,10 @@
 "use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-/* app/controllers/index.ts */
-__export(require("./welcome.controller"));
+// /* app/controllers/index.ts */
+// import * as app from "../app"
+// const port: number = Number(process.env.PORT) || 3000;
+// app.default.listen(port, () => {
+//         // Success callback
+//         console.log(`Listening at http://localhost:${port}/`);
+//     });
+// //export * from './welcome.controller';
+// console.log("end of index")
