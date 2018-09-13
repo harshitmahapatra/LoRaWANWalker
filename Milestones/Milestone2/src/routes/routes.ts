@@ -12,7 +12,6 @@ greenLed.writeSync(1);
 //PIR
 var pir = new Gpio(17, 'in', 'both');    //#A
 //DHT
-//DHT
 var sensorLib = require('node-dht-sensor');
 sensorLib.initialize(22, 12); //#A
 
@@ -28,15 +27,18 @@ export class Routes {
 
         app.route('/led')
             .get((req: Request, res: Response) => {
+                let stateRedRed = GetLEDInfo(redLed);
+                let stateYellowRed = GetLEDInfo(yellowLed);
+                let stateGreenRed = GetLEDInfo(greenLed);
                 res.status(200).send({
-                    message: 'LED page'
+                    message: `LED page \n Red LED: ${stateRedRed} \n Yellow LED: ${stateYellowRed} \n Red LED: ${stateGreenRed}`
                 })
             })
 
         app.route('/led/:color')
         .get((req: Request, res: Response) => {
                 let { color } = req.params.color;
-                let ledStatus : string = GetLEDInfoByColor(color);
+                let ledStatus : String = GetLEDInfoByColor(color);
 
                 res.status(200).send({
                     message: ledStatus
@@ -65,30 +67,33 @@ export class Routes {
 
         app.route('/pir')
             .get((req: Request, res: Response) => {
+                let pirSensorStatus : String = GetPIRInfo();
                 res.status(200).send({
-                    //message: ledStatus
+                    message: pirSensorStatus
                 })
             })
 
         app.route('/dht')
             .get((req: Request, res: Response) => {
+                let dhtSensorTempera : String = GetDHTInfo().Temperature
+                let dhtSensorHumidity : String = GetDHTInfo().Humidity
                 res.status(200).send({
-                    message: 'DHT page'
+                    message: `Temperature: ${GetDHTInfo().Temperature} | Humidity: ${GetDHTInfo().Humidity}`
                 })
             })
         
         app.route('/dht/:option')
-            .get((req: Request, res: Response) => {
-                let { option } = req.params.option;
-
+        .get((req: Request, res: Response) => {
+                let option = req.params.option;
+                let ledStatus : String = GetDHTInfoFromText(option);
                 res.status(200).send({
-                    //message: ledStatus
+                    message: ledStatus
                 })
             })
     }
 }
 
-function GetLEDByColor(color : string){
+function GetLEDByColor(color : string) : any{
     let led: Gpio;
     if (color == 'red') {
         led = redLed;
@@ -100,25 +105,25 @@ function GetLEDByColor(color : string){
     return led;
 }
 
-function GetLEDInfoByColor(color: string) {
+function GetLEDInfoByColor(color: string):String {
     return GetLEDInfo(GetLEDByColor(color));
 }
 
-function GetLEDInfo(led: Gpio) {
+function GetLEDInfo(led: Gpio) : String {
     var ledState = led.readSync();
     return ledState ? "ON" : "OFF";
 }
 
-function SetLEDState(led: Gpio, state : number) {
+function SetLEDState(led: Gpio, state : number) : void {
     led.writeSync(state);
 }
 
 
-function GetPIRInfo() {
+function GetPIRInfo() : String {
     return pir.readSync() ? "Movement" : "No Movement";
 }
 
-function GetDHTInfo() {
+function GetDHTInfo() : any {
     var readout = sensorLib.read();
 
     return {
@@ -127,13 +132,12 @@ function GetDHTInfo() {
     }
 }
 
-function GetDHTInfoFromText(option: string) {
-    let dhtInfo = GetDHTInfo()
-
+function GetDHTInfoFromText(option: string) : any {
+    let dhtInfo = GetDHTInfo();
     if (option == "temperature") {
-        return dhtInfo.Temperature
+        return `Temperature ${dhtInfo.Temperature}`;
     } else if (option == "humidity") {
-        return dhtInfo.Humidity
+        return `Humidity ${dhtInfo.Humidity}`;
     }
 }
 
