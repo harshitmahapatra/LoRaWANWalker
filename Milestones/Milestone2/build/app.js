@@ -10,21 +10,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = __importStar(require("express"));
 var bodyParser = __importStar(require("body-parser"));
+var routes_1 = require("./routes/routes");
 var App = /** @class */ (function () {
     function App() {
+        this.routePrv = new routes_1.Routes();
         this.app = express.default();
         this.config();
-        this.mountRoutes();
+        this.routePrv.routes(this.app);
     }
-    App.prototype.mountRoutes = function () {
-        var router = express.Router();
-        router.get('/', function (req, res) {
-            res.json({
-                message: 'Hello World!'
-            });
-        });
-        this.app.use('/', router);
-    };
     App.prototype.config = function () {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));

@@ -6,7 +6,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var app_1 = __importDefault(require("./app"));
 var PORT = 3000;
-console.log('bla');
 app_1.default.listen(PORT, function () {
-    console.log('Express server listening on port ' + PORT);
+    console.log("Express server listening http://localhost:" + PORT + "/");
 });
