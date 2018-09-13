@@ -13,12 +13,13 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
     "express": "^4.16.3",
-    "nodemon": "^1.18.4",
-    "ts-node": "^7.0.1",
-    "typescript": "^3.0.3",
     "node-dht-sensor": "0.0.34",
-    "onoff": "^3.2.1"
+    "nodemon": "^1.18.4",
+    "onoff": "^3.2.1",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
   },
   "devDependencies": {
     "@types/es6-shim": "^0.31.37",

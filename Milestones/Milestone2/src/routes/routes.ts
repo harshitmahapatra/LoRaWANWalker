@@ -11,9 +11,10 @@ export class Routes {
 
         app.route('/')
             .get((req: Request, res: Response) => {
-                res.status(200).send({
-                    message: 'Welcome to India\'s Raspberry Pi!'
-                })
+                res.status(200).render('index');
+                // res.status(200).send({
+                //     message: 'Welcome to India\'s Raspberry Pi!'
+                // })
             })
 
         app.route('/led')
