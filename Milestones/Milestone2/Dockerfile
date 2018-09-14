@@ -18,13 +18,14 @@ WORKDIR /usr/src/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY package*.json ./
+COPY tsconfig.json ./
 
 RUN npm install
+COPY . .
 
-RUN npm build
+RUN npm run build
 
 # Bundle app source
-COPY . .
 
 # Our application listens on port 8080
 EXPOSE 8080

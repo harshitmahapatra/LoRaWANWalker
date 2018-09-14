@@ -3,18 +3,19 @@
 
 <head>
     <meta charset="utf-8">
-    <title>PIR</title>
+    <title>Temperature</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
 
-<h1> <%= pir.name %> </h1>
+<h1> <%= temperature.name %> </h1>
 
-<h3> Description:  <%= pir.description %> </h3>
+<h3> Description:  <%= temperature.description %> </h3>
 
-<%= pir.value ? "Movement" : "No Movement" %> 
+The current temperature is  <%= temperature.value %> degrees <%= temperature.unit %>
+
 </body>
 
 </html>

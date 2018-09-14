@@ -11,22 +11,46 @@ export class Routes {
 
         app.route('/')
             .get((req: Request, res: Response) => {
+                res.status(200).redirect('/pi');
+            })
+
+        app.route('/pi')
+            .get((req: Request, res: Response) => {
                 res.status(200).render('index');
             })
 
-        app.route('/led')
+        app.route('/pi/actuators')
             .get((req: Request, res: Response) => {
-                res.status(200).render('led');
+                let ledInfo = m.GetAllLEDInfo()
+                if (IsJson(req)) {
+                    return ledInfo;
+                } else {
+                    res.status(200).render('actuators');
+                }
             })
 
-        app.route('/led/:color')
+
+        app.route('/pi/actuators/leds')
+            .get((req: Request, res: Response) => {
+                let ledInfo = m.GetAllLEDInfo()
+                if (IsJson(req)) {
+                    return ledInfo;
+                } else {
+                    res.status(200).render('leds', { "ledInfo": ledInfo});
+                }
+            })
+
+        app.route('/pi/actuators/leds/:color')
         .get((req: Request, res: Response) => {
                 let color : string = req.params.color;
-                let ledStatus : string = m.GetLEDInfoByColor(color);
+                let ledInfo = m.GetLEDInfoByColor(color);
+                if (IsJson(req)) {
+                    return ledInfo;
+                }
                 res.status(200).render('led_specific', {
-                    color : color,
-                    ledStatus : ledStatus,
-                    url: req.url
+                    'color' : color,
+                    'ledStatus': ledInfo.value ? "ON" : "OFF",
+                    'url': req.url
                 })
             })
         .post((req: Request, res: Response) => {
@@ -48,27 +72,49 @@ export class Routes {
             res.status(200).redirect(req.url.split('?')[0])
         })
 
-        app.route('/pir')
+        app.route('/pi/sensors')
             .get((req: Request, res: Response) => {
-                let pirSensorStatus : string = m.GetPIRInfo();
-                res.status(200).render('pir', { status : pirSensorStatus });
+                let sensorData = m.GetSensorData();
+                if (IsJson(req)) {
+                    res.status(200).send(sensorData);
+                } else {
+                    res.status(200).render('sensors', { 'sensorData': sensorData});
+                }
             })
 
-        app.route('/dht')
+        app.route('/pi/sensors/pir')
             .get((req: Request, res: Response) => {
-                let dhtSensorTempera : string = m.GetDHTInfo().Temperature
-                let dhtSensorHumidity : string = m.GetDHTInfo().Humidity
-                res.status(200).render('dht')
+                let pir = m.GetPIRInfo();
+                if (IsJson(req)) {
+                    res.status(200).send(pir);
+                } else {
+                    res.status(200).render('pir', { 'pir': pir});
+                }
             })
-        
-        app.route('/dht/:option')
-        .get((req: Request, res: Response) => {
-                let option = req.params.option;
-                let sensorStatus : number = m.GetDHTInfoFromText(option);
-                res.status(200).render('dht_specific', { 
-                    option: option,
-                    value : sensorStatus
-                })
+
+        app.route('/pi/sensors/humidity')
+            .get((req: Request, res: Response) => {
+                let humidity = m.GetHumidity();
+                if (IsJson(req)) {
+                    res.status(200).send(humidity);
+                } else {
+                    res.status(200).render('humidity', { 'humidity' : humidity });
+                }
+            })
+
+        app.route('/pi/sensors/temperature')
+            .get((req: Request, res: Response) => {
+                let temperature = m.GetTemperature();
+                if (IsJson(req)) {
+                    res.status(200).send(temperature);
+                } else {
+                    res.status(200).render('temperature', { 'temperature' : temperature });
+                }
             })
     }
+}
+
+function IsJson(req: Request) {
+    let header: string = String(req.get('Accept'));
+    return header.includes('application/json');
 }
