@@ -1,8 +1,13 @@
+
 */.git/*
 */.idea/*
 */docker/*
 **/node\_modules/*
 **/iot-project-master/*
+**/build/*
 **/zips/*
+
+
+
 *.img
 
