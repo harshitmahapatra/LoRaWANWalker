@@ -23,7 +23,7 @@ export class Routes {
             .get((req: Request, res: Response) => {
                 let ledInfo = m.GetAllLEDInfo()
                 if (IsJson(req)) {
-                    return ledInfo;
+                    res.status(200).send(ledInfo);
                 } else {
                     res.status(200).render('actuators');
                 }
@@ -34,7 +34,7 @@ export class Routes {
             .get((req: Request, res: Response) => {
                 let ledInfo = m.GetAllLEDInfo()
                 if (IsJson(req)) {
-                    return ledInfo;
+                    res.status(200).send(ledInfo);
                 } else {
                     res.status(200).render('leds', { "ledInfo": ledInfo});
                 }
@@ -45,13 +45,14 @@ export class Routes {
                 let color : string = req.params.color;
                 let ledInfo = m.GetLEDInfoByColor(color);
                 if (IsJson(req)) {
-                    return ledInfo;
+                    res.status(200).send(ledInfo);
+                } else{
+                    res.status(200).render('led_specific', {
+                        'color' : color,
+                        'ledStatus': ledInfo.value ? "ON" : "OFF",
+                        'url': req.url
+                    })
                 }
-                res.status(200).render('led_specific', {
-                    'color' : color,
-                    'ledStatus': ledInfo.value ? "ON" : "OFF",
-                    'url': req.url
-                })
             })
         .post((req: Request, res: Response) => {
             let ledParam: string = req.query.state;
