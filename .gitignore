@@ -2,3 +2,7 @@
 */.idea/*
 */docker/*
 **/node\_modules/*
+**/iot-project-master/*
+**/zips/*
+*.img
+

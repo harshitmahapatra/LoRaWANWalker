@@ -1,7 +1,7 @@
 {
-  "name": "iot-project-india",
+  "name": "IoT-Group-India",
   "version": "1.0.0",
-  "description": "AU IOT project team india",
+  "description": "AU IoT Milestone 1",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
