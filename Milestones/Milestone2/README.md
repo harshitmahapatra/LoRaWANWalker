@@ -34,3 +34,47 @@ To stop the application, use `docker ps` followed by this command:
 ```
 $ docker stop <CONTAINER ID>
 ```
+
+# Requests
+
+## Get request:
+
+### Pages
+- Welcome page
+	-  /pi
+- Sensors page
+	- /pi/sensors
+- Movement sensor
+	- /pi/sensors/pir
+- Temperature sensor
+	- /pi/sensors/temperature
+- Humidity sensor
+	-  /pi/sensors/humidity
+-  Actuators
+	- /pi/actuators
+-  LED's
+	- /pi/actuators/led
+-  Red LED (connected to Gpio port 4)
+	- /pi/actuators/led/red
+-  Yellow LED (connected to Gpio port 22)
+	- /pi/actuators/led/yellow
+-  Green LED (connected to Gpio port 2)
+	- /pi/actuators/led/green
+ 
+### Tree of the webpage
+- /pi
+	- /sensors
+		- /pir
+		- /temperature
+		- /humidity
+	- /actuators
+		- led
+			- red
+			- yellow
+			- green
+
+## Post request:
+- Turn on led with ***color***
+/led/***color***?state=ON
+- Turn off led with color ***color***
+/led/***color***?state=OFF
