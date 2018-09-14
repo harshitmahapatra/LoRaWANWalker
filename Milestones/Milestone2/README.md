@@ -53,13 +53,13 @@ $ docker stop <CONTAINER ID>
 -  Actuators
 	- /pi/actuators
 -  LED's
-	- /pi/actuators/led
+	- /pi/actuators/leds
 -  Red LED (connected to Gpio port 4)
-	- /pi/actuators/led/red
+	- /pi/actuators/leds/red
 -  Yellow LED (connected to Gpio port 22)
-	- /pi/actuators/led/yellow
+	- /pi/actuators/leds/yellow
 -  Green LED (connected to Gpio port 2)
-	- /pi/actuators/led/green
+	- /pi/actuators/leds/green
  
 ### Tree of the webpage
 - /pi
@@ -68,13 +68,13 @@ $ docker stop <CONTAINER ID>
 		- /temperature
 		- /humidity
 	- /actuators
-		- led
+		- leds
 			- red
 			- yellow
 			- green
 
-## Post request:
+## Post request for setting LED status:
 - Turn on led with ***color***
-/led/***color***?state=ON
+/pi/actuators/leds/***color***?state=ON
 - Turn off led with color ***color***
-/led/***color***?state=OFF
+/pi/actuators/leds/***color***?state=OFF
