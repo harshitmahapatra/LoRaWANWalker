@@ -21,16 +21,16 @@ $ docker run -p 8080:8080 --privileged -d india/milestone1
 
 To check if the program is running correctly, use the following command if you are testing from inside the raspberry pi:
 ```
-curl localhost:8080
+$ curl localhost:8080
 ```
 Do the following if you are testing from another machine:
 ```
-curl <raspberry pi IP>:8080
+$ curl <raspberry pi IP>:8080
 ```
 
 ## Stop the Program
 
 To stop the application, use `docker ps` followed by this command:
 ```
-docker stop <CONTAINER ID>
+$ docker stop <CONTAINER ID>
 ```
