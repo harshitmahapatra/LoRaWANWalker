@@ -14,18 +14,18 @@ To create a container from the created image and run the application, use the
 `docker run` command:
 
 ```
-$ docker run --privileged -p 3000:3000 -d india/milestone2
+$ docker run --privileged -p 8080:8080 -d india/milestone2
 ```
 
 ## Check program
 
 To check if the program is running correctly, use the following command if you are testing from inside the raspberry pi:
 ```
-$ curl localhost:3000
+$ curl localhost:8080
 ```
 Do the following if you are testing from another machine:
 ```
-$ curl <raspberry pi IP>:3000
+$ curl <raspberry pi IP>:8080
 ```
 
 ## Stop the Program
