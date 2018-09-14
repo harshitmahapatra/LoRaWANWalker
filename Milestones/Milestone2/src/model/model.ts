@@ -1,31 +1,29 @@
-import { Request, Response, Application } from "express";
 import { Gpio } from "onoff";
 
 //Initialize Sensors
 //LEDs
-var redLed = new Gpio(4, 'out'); //#B
+var redLed = new Gpio(4, 'out');
 redLed.writeSync(1);
-var yellowLed = new Gpio(22, 'out'); //#B
+var yellowLed = new Gpio(22, 'out');
 yellowLed.writeSync(1);
-var greenLed = new Gpio(2, 'out'); //#B
+var greenLed = new Gpio(2, 'out'); 
 greenLed.writeSync(1);
 //PIR
-var pir = new Gpio(17, 'in', 'both');    //#A
+var pir = new Gpio(17, 'in', 'both');
 //DHT
 var sensorLib = require('node-dht-sensor');
 sensorLib.initialize(22, 12); //#A
 
-function getRedLed(){
+function GetRedLed(){
     return redLed;
 }
 
-function getYellowLed(){
+function GetYellowLed(){
     return redLed;
 }
-function getGreenLed(){
+function GetGreenLed(){
     return redLed;
 }
-
 
 function GetLEDByColor(color : string) : any{
     let led: Gpio;
@@ -39,11 +37,11 @@ function GetLEDByColor(color : string) : any{
     return led;
 }
 
-function GetLEDInfoByColor(color: string):String {
+function GetLEDInfoByColor(color: string): string {
     return GetLEDInfo(GetLEDByColor(color));
 }
 
-function GetLEDInfo(led: Gpio) : String {
+function GetLEDInfo(led: Gpio) : string {
     var ledState = led.readSync();
     return ledState ? "ON" : "OFF";
 }
@@ -53,7 +51,7 @@ function SetLEDState(led: Gpio, state : number) : void {
 }
 
 
-function GetPIRInfo() : String {
+function GetPIRInfo() : string {
     return pir.readSync() ? "Movement" : "No Movement";
 }
 
@@ -66,13 +64,15 @@ function GetDHTInfo() : any {
     }
 }
 
-function GetDHTInfoFromText(option: string) : any {
+function GetDHTInfoFromText(option: string) : number {
     let dhtInfo = GetDHTInfo();
     if (option == "temperature") {
-        return `Temperature ${dhtInfo.Temperature}`;
+        return dhtInfo.Temperature;
     } else if (option == "humidity") {
-        return `Humidity ${dhtInfo.Humidity}`;
+        return dhtInfo.Humidity;
+    } else {
+        return -1;
     }
 }
 
-export { getRedLed, getYellowLed, getGreenLed, GetLEDInfo, GetLEDInfoByColor, SetLEDState, GetLEDByColor, GetPIRInfo, GetDHTInfo, GetDHTInfoFromText};
+export { GetRedLed, GetYellowLed, GetGreenLed, GetLEDInfo, GetLEDInfoByColor, SetLEDState, GetLEDByColor, GetPIRInfo, GetDHTInfo, GetDHTInfoFromText};

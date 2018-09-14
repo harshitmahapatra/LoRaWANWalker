@@ -1,9 +1,9 @@
 import { Request, Response, Application } from "express";
 import * as m from "../model/model";
 
-var redLed = m.getRedLed();
-var yellowLed = m.getYellowLed();
-var greenLed = m.getGreenLed();
+var redLed = m.GetRedLed();
+var yellowLed = m.GetYellowLed();
+var greenLed = m.GetGreenLed();
 
 export class Routes {
     
@@ -12,34 +12,28 @@ export class Routes {
         app.route('/')
             .get((req: Request, res: Response) => {
                 res.status(200).render('index');
-                // res.status(200).send({
-                //     message: 'Welcome to India\'s Raspberry Pi!'
-                // })
             })
 
         app.route('/led')
             .get((req: Request, res: Response) => {
-                let stateRedRed = m.GetLEDInfo(redLed);
-                let stateYellowRed = m.GetLEDInfo(yellowLed);
-                let stateGreenRed = m.GetLEDInfo(greenLed);
-                res.status(200).send({
-                    message: `LED page \n Red LED: ${stateRedRed} \n Yellow LED: ${stateYellowRed} \n Red LED: ${stateGreenRed}`
-                })
+                res.status(200).render('led');
             })
 
         app.route('/led/:color')
         .get((req: Request, res: Response) => {
-                let { color } = req.params.color;
-                let ledStatus : String = m.GetLEDInfoByColor(color);
-
-                res.status(200).send({
-                    message: ledStatus
+                let color : string = req.params.color;
+                let ledStatus : string = m.GetLEDInfoByColor(color);
+                res.status(200).render('led_specific', {
+                    color : color,
+                    ledStatus : ledStatus,
+                    url: req.url
                 })
             })
         .post((req: Request, res: Response) => {
             let ledParam: string = req.query.state;
             let ledState : number;
             let color = req.params.color;
+            
             if (ledParam == "ON") {
                 ledState = 1;
             } else if (ledParam == "OFF") {
@@ -51,54 +45,30 @@ export class Routes {
                 return;
             }
             m.SetLEDState(m.GetLEDByColor(color), ledState)
-
-            res.status(200).send({
-                message: `Changed ${color} LED state to ${ledParam}`
-            })
+            res.status(200).redirect(req.url.split('?')[0])
         })
 
         app.route('/pir')
             .get((req: Request, res: Response) => {
-                let pirSensorStatus : String = m.GetPIRInfo();
-                res.status(200).send({
-                    message: pirSensorStatus
-                })
+                let pirSensorStatus : string = m.GetPIRInfo();
+                res.status(200).render('pir', { status : pirSensorStatus });
             })
 
         app.route('/dht')
             .get((req: Request, res: Response) => {
-                let dhtSensorTempera : String = m.GetDHTInfo().Temperature
-                let dhtSensorHumidity : String = m.GetDHTInfo().Humidity
-                res.status(200).send({
-                    message: `Temperature: ${m.GetDHTInfo().Temperature} | Humidity: ${m.GetDHTInfo().Humidity}`
-                })
+                let dhtSensorTempera : string = m.GetDHTInfo().Temperature
+                let dhtSensorHumidity : string = m.GetDHTInfo().Humidity
+                res.status(200).render('dht')
             })
         
         app.route('/dht/:option')
         .get((req: Request, res: Response) => {
                 let option = req.params.option;
-                let ledStatus : String = m.GetDHTInfoFromText(option);
-                res.status(200).send({
-                    message: ledStatus
+                let sensorStatus : number = m.GetDHTInfoFromText(option);
+                res.status(200).render('dht_specific', { 
+                    option: option,
+                    value : sensorStatus
                 })
             })
     }
 }
-
-
-
-
-
-// function SwitchBlink(led: Gpio) {
-//     var value = (led.readSync() + 1) % 2;
-//     led.writeSync(value);
-// }
-
-// // Functions for getting sensor data 
-// function GetSensorInfo() {
-//     return {
-//         led: GetLEDInfo(redLed),
-//         pir: GetPIRInfo(),
-//         dht: GetDHTInfo()
-//     };
-// }

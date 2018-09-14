@@ -1,8 +1,6 @@
-/* app/app.ts */
-
 import * as express from "express";
-import * as bodyParser from "body-parser";
 import { Routes } from "./routes/routes";
+import * as path from "path"
 
 class App {
     public app: express.Application;
@@ -15,8 +13,8 @@ class App {
     }
 
     private config(): void {
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.set('views', path.join(__dirname, '/views'));
+        this.app.set('view engine', 'ejs');
     }
 }
 export default new App().app;
