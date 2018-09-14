@@ -68,10 +68,10 @@ $ docker stop <CONTAINER ID>
 		- /temperature
 		- /humidity
 	- /actuators
-		- leds
-			- red
-			- yellow
-			- green
+		- /leds
+			- /red
+			- /yellow
+			- /green
 
 ## Post request for setting LED status:
 - Turn on led with ***color***
