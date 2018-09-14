@@ -21,6 +21,8 @@ COPY package*.json ./
 
 RUN npm install
 
+RUN npm build
+
 # Bundle app source
 COPY . .
 
@@ -28,4 +30,4 @@ COPY . .
 EXPOSE 8080
 
 # Start our application, this runs the "start" script defined in package.json
-CMD [ "npm", "start" ]
+CMD [ "npm", "start"]
