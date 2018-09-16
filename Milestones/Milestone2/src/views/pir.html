@@ -3,31 +3,32 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Team India's Pi</title>
+    <title>PIR</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
 </head>
-<h1> Welcome to team India's Raspberry Pi! </h1>
+
 <body>
-    <div class="container">
-        <ul class=”nav navbar-nav pull-right”>
-            <li><a href="/pi/actuators/">Actuators</a> 
-            <li><a href="/pi/sensors/">Sensors</a> 
-            </li> 
-        </ul>
-    </div>
 
+<h1 id=name> </h1>
 
+<h3> Description: <div id="description"> </div> </h3>
+
+<div id="value"> </div>
+
+</body>
     <script>
     function subscribeToWs(url, msg) {
 
-        console.info('Subscribing to WS');
+        console.info('Subscribing to PIR WS');
         console.info(url);
         var socket = new WebSocket(url);
 
         socket.onmessage = function (event) {
-            console.log('received message');
-            console.log(event.data);
+            let newData = JSON.parse(event.data);
+            document.getElementById("value").innerHTML = event.data.value ? "Movement" : "No Movement";
+            document.getElementById("name").innerHTML = event.data.name;
+            document.getElementById("description").innerHTML = event.data.description;
         };
         socket.onerror = function (error) {
             console.log('An error occurred while trying to connect to a Websocket!');
@@ -39,12 +40,8 @@
             }
         };
     }
-    subscribeToWs('ws://192.168.0.107:8081/pi/sensors', 'test message');
+    subscribeToWs('ws://192.168.0.107:8081/pi/sensors/pir', 'test message');
     </script>
 
-
-
-
-</body>
-
 </html>
+
