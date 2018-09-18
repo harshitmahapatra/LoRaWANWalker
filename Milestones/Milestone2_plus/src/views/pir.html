@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>PIR</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+
+<h1 id=name> </h1>
+
+<h3> Description: <div id="description"> </div> </h3>
+
+<div id="value"> </div>
+
+</body>
+    <script>
+    function subscribeToWs(url, msg) {
+
+        console.info('Subscribing to PIR WS');
+        console.info(url);
+        var socket = new WebSocket(url);
+
+        socket.onmessage = function (event) {
+            let newData = JSON.parse(event.data);
+            document.getElementById("value").innerHTML = event.data.value ? "Movement" : "No Movement";
+            document.getElementById("name").innerHTML = event.data.name;
+            document.getElementById("description").innerHTML = event.data.description;
+        };
+        socket.onerror = function (error) {
+            console.log('An error occurred while trying to connect to a Websocket!');
+            console.log(error);
+        };
+        socket.onopen = function (event) {
+            if (msg) {
+                socket.send(msg);
+            }
+        };
+    }
+    subscribeToWs('ws://192.168.0.107:8081/pi/sensors/pir', 'test message');
+    </script>
+
+</html>
+
