@@ -81,7 +81,6 @@ export class Routes {
 
         app.route('/pi/sensors/pir')
             .get((req: Request, res: Response) => {
-                console.log("get pir was called");
                 let pir = m.GetPIRInfo();
                 if (IsHTML(req)) {
                     res.status(200).sendFile(path.join(__dirname + '/../views/pir.html'));

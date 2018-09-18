@@ -3,18 +3,23 @@ import * as http from 'http';
 import * as WebSocket from 'ws';
 import { InitWebsocket } from "./websockets"
 
-const APPPORT = 8080;
+const PORT = 8080;
+const HOST = "localhost";
 
 const server = http.createServer(app);
-
 const wss = new WebSocket.Server({ server });
-let data: any;
 
+console.log('address: ' + wss.address())
+console.log('eventNames: ' + wss.eventNames)
+console.log('path: ' + wss.path)
+console.log('options: ' + wss.options)
+console.log(wss);
+
+let data : any;
 wss.on('connection', (ws: WebSocket, req: Request) => {
-    console.log('new connection');
-    let desiredResource: string;
+    console.log('new connection from ' + req.url);
 
-    desiredResource = req.url;
+    let desiredResource: string = req.url;
     SelectResouce(desiredResource);
     ws.send(data)
 
@@ -28,6 +33,7 @@ wss.on('connection', (ws: WebSocket, req: Request) => {
         }
     }, 500);
 })
+
 
 function SelectResouce(url: string) { //#E
     http.get({
@@ -46,7 +52,15 @@ function SelectResouce(url: string) { //#E
     });
 }
 
-//start our server
-app.listen(APPPORT, () => {
-    console.log(`Server started on port ${APPPORT} :)`);
+
+
+// wss.on('connection', (ws: WebSocket, req: Request) => {
+//     console.log('new connection');
+
+//     ws.send('I got your connection, ' + req.url);
+// })
+
+
+server.listen(PORT, () => {
+    console.log(`Running on http://${HOST}:${PORT}`);
 });
