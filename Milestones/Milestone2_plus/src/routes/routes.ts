@@ -1,10 +1,6 @@
 import { Request, Response, Application } from "express";
-import * as m from "../model/model";
-
-var redLed = m.GetRedLed();
-var yellowLed = m.GetYellowLed();
-var greenLed = m.GetGreenLed();
-
+import * as m from "../resources/model";
+import * as path from "path";
 export class Routes {
     
     public routes(app : Application): void {
@@ -16,16 +12,16 @@ export class Routes {
 
         app.route('/pi')
             .get((req: Request, res: Response) => {
-                res.status(200).render('index');
+                res.status(200).render('index', { data: m.GetAllData() });
             })
 
         app.route('/pi/actuators')
             .get((req: Request, res: Response) => {
                 let ledInfo = m.GetAllLEDInfo()
-                if (IsJson(req)) {
-                    res.status(200).send(ledInfo);
-                } else {
+                if (IsHTML(req)) {
                     res.status(200).render('actuators');
+                } else {
+                    res.status(200).send(ledInfo);
                 }
             })
 
@@ -33,10 +29,10 @@ export class Routes {
         app.route('/pi/actuators/leds')
             .get((req: Request, res: Response) => {
                 let ledInfo = m.GetAllLEDInfo()
-                if (IsJson(req)) {
-                    res.status(200).send(ledInfo);
-                } else {
+                if (IsHTML(req)) {
                     res.status(200).render('leds', { "ledInfo": ledInfo});
+                } else {
+                    res.status(200).send(ledInfo);
                 }
             })
 
@@ -44,21 +40,21 @@ export class Routes {
         .get((req: Request, res: Response) => {
                 let color : string = req.params.color;
                 let ledInfo = m.GetLEDInfoByColor(color);
-                if (IsJson(req)) {
-                    res.status(200).send(ledInfo);
-                } else{
+                if (IsHTML(req)) {
                     res.status(200).render('led_specific', {
                         'color' : color,
                         'ledStatus': ledInfo.value ? "ON" : "OFF",
                         'url': req.url
                     })
+                } else{
+                    res.status(200).send(ledInfo);
                 }
             })
         .post((req: Request, res: Response) => {
             let ledParam: string = req.query.state;
             let ledState : number;
             let color = req.params.color;
-            
+
             if (ledParam == "ON") {
                 ledState = 1;
             } else if (ledParam == "OFF") {
@@ -69,53 +65,57 @@ export class Routes {
                 })
                 return;
             }
-            m.SetLEDState(m.GetLEDByColor(color), ledState)
+            m.SetLEDState(color, ledState)
             res.status(200).redirect(req.url.split('?')[0])
         })
 
         app.route('/pi/sensors')
             .get((req: Request, res: Response) => {
-                let sensorData = m.GetSensorData();
-                if (IsJson(req)) {
-                    res.status(200).send(sensorData);
-                } else {
+                let sensorData = m.GetAllSensorData();
+                if (IsHTML(req)) {
                     res.status(200).render('sensors', { 'sensorData': sensorData});
+                } else {
+                    res.status(200).send(sensorData);
                 }
             })
 
         app.route('/pi/sensors/pir')
             .get((req: Request, res: Response) => {
+                console.log("get pir was called");
                 let pir = m.GetPIRInfo();
-                if (IsJson(req)) {
-                    res.status(200).send(pir);
+                if (IsHTML(req)) {
+                    res.status(200).sendFile(path.join(__dirname + '../views/pir.html'));
+                    //res.status(200).render('pir', { 'pir': pir});
                 } else {
-                    res.status(200).render('pir', { 'pir': pir});
+                    console.log("NOT HTML");
+
+                    res.status(200).send(pir);
                 }
             })
 
         app.route('/pi/sensors/humidity')
             .get((req: Request, res: Response) => {
                 let humidity = m.GetHumidity();
-                if (IsJson(req)) {
-                    res.status(200).send(humidity);
-                } else {
+                if (IsHTML(req)) {
                     res.status(200).render('humidity', { 'humidity' : humidity });
+                } else {
+                    res.status(200).send(humidity);
                 }
             })
 
         app.route('/pi/sensors/temperature')
             .get((req: Request, res: Response) => {
                 let temperature = m.GetTemperature();
-                if (IsJson(req)) {
-                    res.status(200).send(temperature);
-                } else {
+                if (IsHTML(req)) {
                     res.status(200).render('temperature', { 'temperature' : temperature });
+                } else {
+                    res.status(200).send(temperature);
                 }
             })
     }
 }
 
-function IsJson(req: Request) {
+function IsHTML(req: Request) {
     let header: string = String(req.get('Accept'));
-    return header.includes('application/json');
+    return header.includes('text/html');
 }

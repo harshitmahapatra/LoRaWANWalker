@@ -9,13 +9,13 @@
 </head>
 
 <% var inverseState = (ledStatus == 'ON') ? 'OFF' : 'ON' %>
-<% var post = url + "?state=" + inverseState  %>
+<% var completeURL = url + "?state=" + inverseState  %>
 
 
 <body>
     The <%= color %> LED is <%= ledStatus %>
 
-    <form action="<%= post %>" method="post">
+    <form action="<%= completeURL %>" method="post">
         <button type="submit">Change LED state</button>
     </form>
 </body>

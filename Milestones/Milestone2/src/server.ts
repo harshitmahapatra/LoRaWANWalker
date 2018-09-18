@@ -1,11 +1,7 @@
 import app from "./app";
-import { InitWebsocket } from "./websockets"
-
-const APPPORT = 8080;
+const PORT = 8080;
 
 //Get the server running
-app.listen(APPPORT, () => {
-    console.log(`Express server listening http://localhost:${APPPORT}/`);
+app.listen(PORT, () => {
+    console.log(`Express server listening http://localhost:${PORT}/`);
 })
-
-InitWebsocket();
