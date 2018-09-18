@@ -1,0 +1,27 @@
+
+Milestone 3: Storing & Retrieving
+
+The purpose of this milestone is to hook up your system, through MQTT, to cloud storage.
+
+Create a storage component, hosted on a public accessible cloud server that can retrieve sensor data from your RPi over MQTT. You are encouraged to both try using EVRYTHNG as well as rolling your own solution in order to get a handle on the practicalities of building your own.
+
+Your Docker image on the RPi should, upon start, connect to a MQTT broker running on your cloud server.
+
+Your cloud instance should also host a Web page that retrieves and displays the collected data, as well as enabling control of LEDs on the RPi.
+
+See the Resources page for information on getting started with MQTT and cloud services.
+
+You should keep your own RPi running, so that we, by running your code on our RPis, can see several RPis in action.
+
+Your system should ideally contain a Dockerfile that can be built and started on a (sensor connected) RPi, as well as Dockerfiles for your cloud side components.
+
+It is your responsibility that your cloud components are running.
+
+You should deliver either a zip-file, or, better, a file consisting of the necessary git command to clone your repository.
+
+There should be a README.md file in the root with instructions, as well as documentation of the REST endpoints and the possible HTTP they can support.
+
+Add 'au589905' as a user to your group on GitLab, so that Michal can access your code.
+
+Deadline: 23:59 23/Sept/2018
+

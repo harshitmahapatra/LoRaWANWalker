@@ -84,8 +84,7 @@ export class Routes {
                 console.log("get pir was called");
                 let pir = m.GetPIRInfo();
                 if (IsHTML(req)) {
-                    res.status(200).sendFile(path.join(__dirname + '../views/pir.html'));
-                    //res.status(200).render('pir', { 'pir': pir});
+                    res.status(200).sendFile(path.join(__dirname + '/../views/pir.html'));
                 } else {
                     console.log("NOT HTML");
 
@@ -97,7 +96,7 @@ export class Routes {
             .get((req: Request, res: Response) => {
                 let humidity = m.GetHumidity();
                 if (IsHTML(req)) {
-                    res.status(200).render('humidity', { 'humidity' : humidity });
+                    res.status(200).sendFile(path.join(__dirname + '/../views/humidity.html'));
                 } else {
                     res.status(200).send(humidity);
                 }
@@ -107,7 +106,7 @@ export class Routes {
             .get((req: Request, res: Response) => {
                 let temperature = m.GetTemperature();
                 if (IsHTML(req)) {
-                    res.status(200).render('temperature', { 'temperature' : temperature });
+                    res.status(200).sendFile(path.join(__dirname + '/../views/temperature.html'));
                 } else {
                     res.status(200).send(temperature);
                 }

@@ -1,12 +1,16 @@
 import * as WebSocket from 'ws';
 import * as http from 'http';
+import {Application} from "express";
+
 const WSPORT = 8081;
 let data: any;
-function InitWebsocket() {
-    const wss = new WebSocket.Server({ port: WSPORT });
+function InitWebsocket(server : Application) {
+    const wss = new WebSocket.Server({ server : server });
     let desiredResource : string;
     
     wss.on('connection', (ws: WebSocket, req: Request) => {
+        console.log('new connection');
+
         desiredResource = req.url;
         SelectResouce(desiredResource);
         ws.send(data)
@@ -14,9 +18,14 @@ function InitWebsocket() {
         setInterval(() => {
             SelectResouce(desiredResource);
             console.log(data);
-            ws.send(data)
+            try {
+                ws.send(data)
+            } catch (error) {
+                ws.close();                
+            }
         }, 500);
     })
+    return wss;
 }
 
 function SelectResouce(url : string) { //#E

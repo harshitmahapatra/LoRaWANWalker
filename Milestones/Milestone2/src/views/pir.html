@@ -26,21 +26,17 @@
 
         socket.onmessage = function (event) {
             let newData = JSON.parse(event.data);
-            document.getElementById("value").innerHTML = event.data.value ? "Movement" : "No Movement";
-            document.getElementById("name").innerHTML = event.data.name;
-            document.getElementById("description").innerHTML = event.data.description;
+            console.log(newData);
+            document.getElementById("value").innerHTML = newData.value ? "Movement" : "No Movement";
+            document.getElementById("name").innerHTML = newData.name;
+            document.getElementById("description").innerHTML = newData.description;
         };
         socket.onerror = function (error) {
             console.log('An error occurred while trying to connect to a Websocket!');
             console.log(error);
         };
-        socket.onopen = function (event) {
-            if (msg) {
-                socket.send(msg);
-            }
-        };
     }
-    subscribeToWs('ws://192.168.0.107:8081/pi/sensors/pir', 'test message');
+    subscribeToWs('ws://192.168.0.107:8081/pi/sensors/pir');
     </script>
 
 </html>

@@ -3,7 +3,7 @@ import * as resources from "./resources.json";
 import * as plugins from "../plugins/plugins"
 
 
-setInterval(PoolSensors, 100);
+setInterval(PoolSensors, 2000);
 
 function PoolSensors() : void{
     UpdateTemperature();

@@ -8,14 +8,41 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
 </head>
 
+
 <body>
 
-<h1> <%= temperature.name %> </h1>
+    <h1 id=name> </h1>
 
-<h3> Description:  <%= temperature.description %> </h3>
+    <h3> Description: <div id="description"> </div>
+    </h3>
 
-The current temperature is  <%= temperature.value %> degrees <%= temperature.unit %>
+    The current temperature is <div id="value"> </div> degrees  <div id="unit"> </div>
 
 </body>
+<script>
+    function subscribeToWs(url, msg) {
+
+        var socket = new WebSocket(url);
+
+        socket.onmessage = function (event) {
+            let newData = JSON.parse(event.data);
+            console.log(newData);
+            document.getElementById("value").innerHTML = newData.value;
+            document.getElementById("name").innerHTML = newData.name;
+            document.getElementById("description").innerHTML = newData.description;
+            document.getElementById("unit").innerHTML = newData.unit;
+        };
+        socket.onerror = function (error) {
+            console.log('An error occurred while trying to connect to a Websocket!');
+            console.log(error);
+        };
+        socket.onopen = function (event) {
+            if (msg) {
+                socket.send(msg);
+            }
+        };
+    }
+    subscribeToWs('ws://192.168.0.107:8080/pi/sensors/temperature');
+</script>
 
 </html>
