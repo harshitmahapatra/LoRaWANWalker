@@ -18,35 +18,34 @@ client.on('connect', () => {
 })
 
 function SubscribeLEDs(){
-    client.subscribe('pi/actuators/leds/red')
-    client.subscribe('pi/actuators/leds/green')
-    client.subscribe('pi/actuators/leds/green')
+    client.subscribe('pi/actuators/leds/red');
+    client.subscribe('pi/actuators/leds/green');
+    client.subscribe('pi/actuators/leds/yellow');
+    console.log('subscribed to leds');
 }
 
 client.on('message', (topic: string, message: string) => {
-    DelegateMessage(topic, message);
+    console.log('Got message on topic %s:%s ', topic, message)
+    DelegateMessage(topic, JSON.parse(message));
 })
 
-function DelegateMessage(topic: string, message: string) {
-    console.log(topic);
+function DelegateMessage(topic: string, message: JSON) {
+    console.log(path.dirname(topic))
     if (path.dirname(topic) == 'pi/actuators/leds') {
-        console.log(path.basename(topic))
-        if (path.basename(topic) == '') {
-            
-        }
+        UpdateLed(path.basename(topic), message);
     } else {
-        
+        console.log('didn\'t recognize topic');
     }
 }
 
-function CheckColor(color : string) {
-    // let colors = ['red', 'yellow', 'green'];
-    // if (colors.indexOf(color) > -1) {
-    //     m.SetLEDState(color)
-    // }
-    // if (color == 'green') {
-        
-    // }
+function UpdateLed(color : string, info : any) {
+    let colors = ['red', 'yellow', 'green'];
+    console.log('checking color: ' + color);
+    
+    if (colors.indexOf(color) > -1) {
+        console.log('changing led state');
+        m.SetLEDState(color, info.value ? 1 : 0);
+    }
 }
 
 function PublishAllInfo() {

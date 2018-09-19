@@ -1,5 +1,5 @@
 //import { Gpio } from "onoff";
-import * as resources from "./resources.json";
+import { pi } from "./resources.json";
 import * as plugins from "../plugins/plugins"
 
 
@@ -12,22 +12,22 @@ function PoolSensors() : void{
 }
 
 function UpdateTemperature(){
-    resources.pi.sensors.temperature.value = plugins.TakeTemperature();
+    pi.sensors.temperature.value = plugins.TakeTemperature();
 }
 function UpdateHumidity(){
-    resources.pi.sensors.humidity.value = plugins.TakeHumidity();
+    pi.sensors.humidity.value = plugins.TakeHumidity();
 }
 function UpdatePIR(){
-    resources.pi.sensors.pir.value = (plugins.TakePIR() == 1) ? true : false;
+    pi.sensors.pir.value = (plugins.TakePIR() == 1) ? true : false;
 }
 
 function GetLEDInfoByColor(color: string){
     if (color == 'red') {
-        return resources.pi.actuators.leds["1"];
+        return pi.actuators.leds["1"];
     } else if (color == 'yellow') {
-        return resources.pi.actuators.leds["2"];
+        return pi.actuators.leds["2"];
     } else {
-        return resources.pi.actuators.leds["3"];
+        return pi.actuators.leds["3"];
     }
 }
 
@@ -38,27 +38,27 @@ function SetLEDState(color: string, value : number) : void {
 }
 
 function GetPIRInfo() {
-    return resources.pi.sensors.pir;
+    return pi.sensors.pir;
 }
 
 function GetTemperature(){
-    return resources.pi.sensors.temperature;
+    return pi.sensors.temperature;
 }
 
 function GetHumidity() {
-    return resources.pi.sensors.humidity;
+    return pi.sensors.humidity;
 }
 
 function GetAllSensorData(){
-    return resources.pi.sensors;
+    return pi.sensors;
 }
 
 function GetAllLEDInfo() {
-    return resources.pi.actuators;
+    return pi.actuators;
 }
 
 function GetAllData(){
-    return resources.pi;
+    return pi;
 }
 
 export { 

@@ -13,19 +13,19 @@ client.on('connect', () => {
 })
 
 client.on('message', (topic: string, message : string) => {
-    DelegateMessage(topic, message);
+    DelegateMessage(topic, JSON.parse(message));
 })
 
-function DelegateMessage(topic: string, message: string) {
+function DelegateMessage(topic: string, message : JSON) {
     switch (topic) {
         case 'pi/sensors/pir':
-            UpdatePir(JSON.parse(message));
+            UpdatePir(message);
             break;
         case 'pi/sensors/temperature':
-            UpdateTemperature(JSON.parse(message));
+            UpdateTemperature(message);
             break;
         case 'pi/sensors/humidity':
-            UpdateHumidity(JSON.parse(message));
+            UpdateHumidity(message);
             break;
     
         default:
@@ -43,3 +43,14 @@ function UpdateTemperature(info : any) {
 function UpdateHumidity(info : any) {
     console.log('Current Humidity: %s%s', info.value, info.unit);
 }
+
+function ChangeLedState(led : string, value : boolean) {
+    let info: string = JSON.stringify({ "value": value });
+    client.publish('pi/actuators/leds/' + led, info);
+}
+
+// setTimeout(() => {
+    // ChangeLedState('green', true);
+    // ChangeLedState('red', true);
+    //ChangeLedState('yellow', true);
+// }, 2000);
