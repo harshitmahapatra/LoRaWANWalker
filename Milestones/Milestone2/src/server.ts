@@ -1,20 +1,18 @@
 import app from "./app";
 import * as http from 'http';
 import * as WebSocket from 'ws';
-import { InitWebsocket } from "./websockets"
+import * as mqtt from 'mqtt';
+//import { InitWebsocket } from "./websockets"
+
+
 
 const PORT = 8080;
 const HOST = "localhost";
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
-
-console.log('address: ' + wss.address())
-console.log('eventNames: ' + wss.eventNames)
-console.log('path: ' + wss.path)
-console.log('options: ' + wss.options)
-console.log(wss);
-
+const client = mqtt.connect('mqtt://india.cloud.google.com')
+client.pub     
 let data : any;
 wss.on('connection', (ws: WebSocket, req: Request) => {
     console.log('new connection from ' + req.url);
