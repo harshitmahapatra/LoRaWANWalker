@@ -5,11 +5,11 @@
   "main": "build/server.js",
   "scripts": {
     "views": "cp -r ./src/views/ ./build",
-    "dev": "ts-node ./src/server.ts",
+    "dev": "npm run views && ts-node ./src/server.ts",
     "nodemon": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "tsc": "tsc",
     "start": "node build/server.js",
-    "build": "npm run tsc && npm run views",
+    "build": "rm -r ./build && npm run tsc && npm run views",
     "buildstart": "npm run build && npm run start"
   },
   "keywords": [],
@@ -20,9 +20,11 @@
     "mqtt": "^2.18.8",
     "nodemon": "^1.18.4",
     "ts-node": "^7.0.1",
-    "typescript": "^3.0.3"
+    "typescript": "^3.0.3",
+    "ws": "^6.0.0"
   },
   "devDependencies": {
+    "@types/ws": "^6.0.1",
     "@types/express": "^4.16.0",
     "@types/node": "^10.10.1"
   }

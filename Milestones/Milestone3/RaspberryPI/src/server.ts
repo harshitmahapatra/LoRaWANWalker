@@ -3,19 +3,14 @@ import * as m from './resources/model';
 import * as path from 'path';
 
 let endpoint = 'mqtt://192.168.0.160:8081';
-let testEndpoing = 'mqtt://est.mosquitto.org';
-console.log('connecting to broker at ' + testEndpoing);
+let cloudBroker = 'mqtt://35.204.82.222';
+console.log('connecting to broker at ' + cloudBroker);
 
 //create connection to broker
-const client = mqtt.connect(testEndpoing);
+const client = mqtt.connect(cloudBroker);
 
-
-client.on('connect', () => {
-    console.log('successfully connected to broker');
-
-    setInterval(PublishAllInfo, 2000);
-    SubscribeLEDs();
-})
+setInterval(PublishAllInfo, 5000);
+SubscribeLEDs();
 
 function SubscribeLEDs(){
     client.subscribe('pi/actuators/leds/red');
@@ -28,6 +23,7 @@ client.on('message', (topic: string, message: string) => {
     console.log('Got message on topic %s:%s ', topic, message)
     DelegateMessage(topic, JSON.parse(message));
 })
+
 
 function DelegateMessage(topic: string, message: JSON) {
     console.log(path.dirname(topic))
@@ -49,6 +45,7 @@ function UpdateLed(color : string, info : any) {
 }
 
 function PublishAllInfo() {
+    console.log('sending sensor info to broker');
     PublishPirInfo();
     PublishTemperatureInfo();
     PublishHumidityInfo();

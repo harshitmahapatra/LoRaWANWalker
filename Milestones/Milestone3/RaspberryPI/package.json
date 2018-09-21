@@ -9,7 +9,7 @@
     "nodemon": "npm run copy && nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "tsc": "tsc",
     "start": "node build/server.js",
-    "build": "npm run views && npm run resources && npm run tsc",
+    "build": "npm run resources && npm run tsc",
     "copy": "npm run resources",
     "buildstart": "npm run build && npm run start"
   },

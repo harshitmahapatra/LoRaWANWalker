@@ -1,4 +1,5 @@
 import * as mqtt from 'mqtt';
+import m from './model/model';
 
 export class MQTTClient  {
     private client: mqtt.MqttClient;
@@ -12,12 +13,13 @@ export class MQTTClient  {
         this.client.on('connect', () => {
             console.log('successfully connected to broker');
     
-            this.client.subscribe('pi/sensors/pir');
+            this.client.subscribe('pi/sensors/pir123');
             this.client.subscribe('pi/sensors/temperature');
             this.client.subscribe('pi/sensors/humidity');
         })
     
         this.client.on('message', (topic: string, message: string) => {
+            console.log(message.toString());
             DelegateMessage(topic, JSON.parse(message));
         })
     }
@@ -32,13 +34,13 @@ export class MQTTClient  {
 function DelegateMessage(topic: string, message: JSON) {
     switch (topic) {
         case 'pi/sensors/pir':
-            UpdatePir(message);
+            m.SetPir(message);
             break;
         case 'pi/sensors/temperature':
-            UpdateTemperature(message);
+            m.SetTemperature(message);
             break;
         case 'pi/sensors/humidity':
-            UpdateHumidity(message);
+            m.SetHumidity(message);
             break;
 
         default:
@@ -46,18 +48,6 @@ function DelegateMessage(topic: string, message: JSON) {
             break;
     }
 }
-
-function UpdatePir(info: any) {
-    console.log('PIR is%s detecting movement', info.value ? '' : ' not');
-}
-function UpdateTemperature(info: any) {
-    console.log('Current Temperature: %s degrees %s', info.value, info.unit);
-}
-function UpdateHumidity(info: any) {
-    console.log('Current Humidity: %s%s', info.value, info.unit);
-}
-
-
 
 
 

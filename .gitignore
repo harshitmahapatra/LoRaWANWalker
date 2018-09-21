@@ -6,7 +6,7 @@
 **/iot-project-master/*
 **/build/*
 **/zips/*
-
+**/*.log
 
 
 *.img
