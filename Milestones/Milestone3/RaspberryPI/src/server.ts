@@ -4,10 +4,10 @@ import * as path from 'path';
 
 let endpoint = 'mqtt://192.168.0.160:8081';
 let testEndpoing = 'mqtt://est.mosquitto.org';
-console.log('connecting to broker at ' + endpoint);
+console.log('connecting to broker at ' + testEndpoing);
 
 //create connection to broker
-const client = mqtt.connect(endpoint);
+const client = mqtt.connect(testEndpoing);
 
 
 client.on('connect', () => {

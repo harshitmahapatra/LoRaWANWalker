@@ -1,56 +1,40 @@
-import * as mqtt from 'mqtt';
+import * as path from 'path';
+import express = require('express');
+import { MQTTClient } from "./MQTTClient";
 
-console.log('lets connect to broker...')
+const PORT = process.env.port || 8080;
+const localBroker = 'mqtt://localhost:8081';
+const testBroker = 'mqtt://test.mosquitto.org';
+const cloudBroker = 'mqtt://mqtt-broker-216922.appspot.com:8080';
+
+console.log('connecting to broker at ' + localBroker);
 //create connection to broker
-const client = mqtt.connect('mqtt://localhost:8081');
+const client = new MQTTClient(localBroker);
+const app = express();
 
-client.on('connect', () => {
-    console.log('successfully connected to broker');
-
-    client.subscribe('pi/sensors/pir');
-    client.subscribe('pi/sensors/temperature');
-    client.subscribe('pi/sensors/humidity');
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}...`);
 })
 
-client.on('message', (topic: string, message : string) => {
-    DelegateMessage(topic, JSON.parse(message));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '/views/index.html'));
 })
 
-function DelegateMessage(topic: string, message : JSON) {
-    switch (topic) {
-        case 'pi/sensors/pir':
-            UpdatePir(message);
-            break;
-        case 'pi/sensors/temperature':
-            UpdateTemperature(message);
-            break;
-        case 'pi/sensors/humidity':
-            UpdateHumidity(message);
-            break;
-    
-        default:
-            console.log('we don\'t care about this topic');
-            break;
+app.post('/pi/actuators/leds/:color', (req, res) => {
+    let color = req.params.color;
+    let stateParam: string = req.query.state;
+    let newState: boolean;
+    if (stateParam == "ON") {
+        newState = true;
+    } else if (stateParam == "OFF") {
+        newState = false;
+    } else {
+        res.status(400).send({
+            message: `${stateParam} is not a possible state for the LED`
+        })
+        return;
     }
-}
+    client.ChangeLedState(color, newState);
+})
 
-function UpdatePir(info : any) {
-    console.log('PIR is%s detecting movement', info.value ? '' : ' not');
-}
-function UpdateTemperature(info : any) {
-    console.log('Current Temperature: %s degrees %s', info.value, info.unit);
-}
-function UpdateHumidity(info : any) {
-    console.log('Current Humidity: %s%s', info.value, info.unit);
-}
 
-function ChangeLedState(led : string, value : boolean) {
-    let info: string = JSON.stringify({ "value": value });
-    client.publish('pi/actuators/leds/' + led, info);
-}
-
-// setTimeout(() => {
-    // ChangeLedState('green', true);
-    // ChangeLedState('red', true);
-    //ChangeLedState('yellow', true);
-// }, 2000);

@@ -1,9 +1,10 @@
 import * as mosca from 'mosca';
-import { Packet } from 'mosca';
 
-const PORT = 8081;
+const PORT = process.env.PORT || 8081;
 
-let server = new mosca.Server( {
+console.log('starting mosca server...');
+
+let server = new mosca.Server({
     port: PORT
 })
 
@@ -27,6 +28,6 @@ server.on('unsubscribed', function (topic, client: mosca.Client) {
     console.log('unsubscribed: ' + client.id);
 });
 
-server.on('ready', function () {
+server.on('ready', () => {
     console.log('Mosca server is up and running');
 });
