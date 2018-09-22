@@ -2,12 +2,13 @@ import { pi } from "./resources.json";
 import * as plugins from "../plugins/plugins"
 
 
-setInterval(PoolSensors, 500);
+setInterval(PoolSensors, 200);
 
 function PoolSensors() : void{
     UpdateTemperature();
     UpdateHumidity();
     UpdatePIR();
+    UpdateLEDs();
 }
 
 function UpdateTemperature(){
@@ -20,20 +21,24 @@ function UpdatePIR(){
     pi.sensors.pir.value = (plugins.TakePIR() == 1) ? true : false;
 }
 
-function GetLEDInfoByColor(color: string){
+function UpdateLEDs() {
+    pi.actuators.leds.red.value = !!plugins.GetLedState('red');
+    pi.actuators.leds.green.value = !!plugins.GetLedState('green');
+    pi.actuators.leds.yellow.value = !!plugins.GetLedState('yellow');
+}
+
+function GetLEDInfo(color: string){
     if (color == 'red') {
-        return pi.actuators.leds["1"];
+        return pi.actuators.leds.red;
     } else if (color == 'yellow') {
-        return pi.actuators.leds["2"];
+        return pi.actuators.leds.yellow;
     } else {
-        return pi.actuators.leds["3"];
+        return pi.actuators.leds.green;
     }
 }
 
 function SetLEDState(color: string, value : number) : void {
-    let led = plugins.GetLEDByColor(color);
-    led.writeSync(value);
-    GetLEDInfoByColor(color).value = !!value;
+    let led = plugins.SetLedState(color, value);
 }
 
 function GetPIRInfo() {
@@ -62,5 +67,5 @@ function GetAllData(){
 
 export { 
     GetAllLEDInfo, GetAllSensorData, GetTemperature, GetHumidity, 
-    GetLEDInfoByColor, SetLEDState, GetPIRInfo, GetAllData
+    GetLEDInfo, SetLEDState, GetPIRInfo, GetAllData
 };

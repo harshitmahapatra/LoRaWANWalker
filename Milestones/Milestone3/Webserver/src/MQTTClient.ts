@@ -13,9 +13,9 @@ export class MQTTClient  {
         this.client.on('connect', () => {
             console.log('successfully connected to broker');
     
-            this.client.subscribe('pi/sensors/pir123');
-            this.client.subscribe('pi/sensors/temperature');
-            this.client.subscribe('pi/sensors/humidity');
+            this.client.subscribe('/pi/sensors/pir');
+            this.client.subscribe('/pi/sensors/temperature');
+            this.client.subscribe('/pi/sensors/humidity');
         })
     
         this.client.on('message', (topic: string, message: string) => {
@@ -30,16 +30,15 @@ export class MQTTClient  {
     }
 }
 
-
 function DelegateMessage(topic: string, message: JSON) {
     switch (topic) {
-        case 'pi/sensors/pir':
+        case '/pi/sensors/pir':
             m.SetPir(message);
             break;
-        case 'pi/sensors/temperature':
+        case '/pi/sensors/temperature':
             m.SetTemperature(message);
             break;
-        case 'pi/sensors/humidity':
+        case '/pi/sensors/humidity':
             m.SetHumidity(message);
             break;
 

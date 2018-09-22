@@ -9,7 +9,7 @@
     "nodemon": "npm run copy && nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "tsc": "tsc",
     "start": "node build/server.js",
-    "build": "npm run resources && npm run tsc",
+    "build": "npm run tsc && npm run resources",
     "copy": "npm run resources",
     "buildstart": "npm run build && npm run start"
   },
@@ -25,7 +25,6 @@
     "typescript": "^3.0.3"
   },
   "devDependencies": {
-    "@types/es6-shim": "^0.31.37",
     "@types/node": "^10.9.4",
     "@types/onoff": "0.0.28"
   }

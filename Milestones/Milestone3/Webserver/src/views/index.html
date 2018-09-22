@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<script src="index.js"></script>
 
 <head>
     <title>Team India's Raspberry Pi</title>
@@ -8,39 +9,35 @@
 <body>
     <h2>State of actuators</h2>
 
-
     <div>
-        The green LED is <div id="greenLed"> </div>
+        <div id="red led">The red led is OFF</div>
     
-        <form action="<%= completeURL %>" method="post">
-            <button type="submit">Change LED state</button>
-        </form>
+        <button onclick="ChangeRedLED();">Change LED state</button>
+
     </div>
 
     <div>
-        The red LED is <div id="redLed"> </div>
+        <div id="green led">The green led is OFF</div>
     
-        <form action="<%= completeURL %>" method="post">
-            <button type="submit">Change LED state</button>
-        </form>
+        <button onclick="ChangeGreenLED();">Change LED state</button>
     </div>
 
     <div>
-        The yellow LED is <div id="yellowStatus"> </div>
+        <div id="yellow led">The yellow led is OFF</div>
     
-        <form action="<%= completeURL %>" method="post">
-            <button type="submit">Change LED state</button>
-        </form>
+        <button onclick="ChangeYellowLED();">Change LED state</button>
+
     </div>
 
     <h2>State of Sensors</h2>
-        The current temperature is <div id="temperature"> </div> degrees <div id="tempUnit"> </div>
+        <h3>Temperature sensor</h2>
+            <div id="temperature"> The current temperature is 0 degrees celcius</div>
+        <h3>Humidity sensor</h2>
+            <div id="humidity"> The current humidity level is 0%</div>
+        <h3>Movement sensor</h2>
+            <div id="movement"> There is no movement</div>
 
-        The current humidity level is <div id="humidity"> </div> <div id="humUnit"> </div>
-
-        The PIR sensor is<div id="movement"></div> detecting movement
 </body>
 
-<script src="index.js"></script>
 
 </html>

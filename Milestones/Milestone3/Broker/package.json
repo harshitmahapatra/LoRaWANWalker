@@ -4,13 +4,11 @@
   "description": "AU IoT Milestone 3",
   "main": "build/server.js",
   "scripts": {
-    "views": "cp -r ./src/views/ ./build/views/",
     "nodemon": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "dev": "ts-node ./src/server.ts",
-    "tsc": "tsc",
     "start": "node build/server.js",
-    "build": "npm run tsc && npm run views",
-    "buildstart": "npm run tsc && npm run views && npm run start"
+    "build": "tsc",
+    "buildstart": "npm run build && npm run start"
   },
   "keywords": [],
   "author": "",

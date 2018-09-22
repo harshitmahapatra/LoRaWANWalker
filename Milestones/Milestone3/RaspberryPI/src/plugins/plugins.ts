@@ -16,7 +16,7 @@ let pir = new Gpio(17, 'in', 'both');
 let sensorLib = require('node-dht-sensor');
 sensorLib.initialize(22, 12); //#A
 
-function GetLEDByColor(color: string): any {
+function GetLEDByColor(color: string): Gpio {
     let led: Gpio;
     if (color == 'red') {
         led = redLed;
@@ -26,6 +26,14 @@ function GetLEDByColor(color: string): any {
         led = greenLed;
     }
     return led;
+}
+
+function SetLedState(color: string, state: number): void{
+    GetLEDByColor(color).writeSync(state);
+}
+
+function GetLedState(color: string){
+    return GetLEDByColor(color).readSync();
 }
 
 function TakeTemperature() : number{
@@ -47,7 +55,7 @@ function MockTemperature() {
 }
 
 function MockHumidity() {
-    return Math.floor(Math.random() * 101);
+    return Math.floor(Math.random() * (70 - 20 + 1) + 20);
 }
 
-export { GetLEDByColor, TakeTemperature, TakeHumidity, TakePIR}
+export { SetLedState, GetLedState, TakeTemperature, TakeHumidity, TakePIR}

@@ -13,21 +13,21 @@ setInterval(PublishAllInfo, 5000);
 SubscribeLEDs();
 
 function SubscribeLEDs(){
-    client.subscribe('pi/actuators/leds/red');
-    client.subscribe('pi/actuators/leds/green');
-    client.subscribe('pi/actuators/leds/yellow');
+    client.subscribe('/pi/actuators/leds/update/red');
+    client.subscribe('/pi/actuators/leds/update/green');
+    client.subscribe('/pi/actuators/leds/update/yellow');
     console.log('subscribed to leds');
 }
 
 client.on('message', (topic: string, message: string) => {
-    console.log('Got message on topic %s:%s ', topic, message)
+    console.log('Got message on topic %s:%s', topic, message)
     DelegateMessage(topic, JSON.parse(message));
 })
 
 
 function DelegateMessage(topic: string, message: JSON) {
     console.log(path.dirname(topic))
-    if (path.dirname(topic) == 'pi/actuators/leds') {
+    if (path.dirname(topic) == '/pi/actuators/leds/update/') {
         UpdateLed(path.basename(topic), message);
     } else {
         console.log('didn\'t recognize topic');
@@ -45,20 +45,29 @@ function UpdateLed(color : string, info : any) {
 }
 
 function PublishAllInfo() {
+    m.SetLEDState('red', 1);
     console.log('sending sensor info to broker');
     PublishPirInfo();
     PublishTemperatureInfo();
     PublishHumidityInfo();
+    PublishLEDInfo();
 }
 
 function PublishPirInfo() {
-    client.publish('pi/sensors/pir', JSON.stringify(m.GetPIRInfo()));
+    client.publish('/pi/sensors/pir', JSON.stringify(m.GetPIRInfo()));
 }
 
 function PublishTemperatureInfo() {
-    client.publish('pi/sensors/temperature', JSON.stringify(m.GetTemperature()));
+    client.publish('/pi/sensors/temperature', JSON.stringify(m.GetTemperature()));
 }
 
 function PublishHumidityInfo() {
-    client.publish('pi/sensors/humidity', JSON.stringify(m.GetHumidity()));
+    client.publish('/pi/sensors/humidity', JSON.stringify(m.GetHumidity()));
 }
+
+function PublishLEDInfo() {
+    client.publish('/pi/actuators/leds/red', JSON.stringify(m.GetLEDInfo('red')));
+    client.publish('/pi/actuators/leds/green', JSON.stringify(m.GetLEDInfo('green')));
+    client.publish('/pi/actuators/leds/yellow', JSON.stringify(m.GetLEDInfo('yellow')));
+}
+

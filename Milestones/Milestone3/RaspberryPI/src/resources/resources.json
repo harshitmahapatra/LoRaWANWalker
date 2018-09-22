@@ -28,17 +28,17 @@
     "actuators": {
       "leds": 
         {
-          "1": {
+          "red": {
             "name": "red led",
             "value": false,
             "gpio": 4
           },
-          "2": {
+          "yellow": {
             "name": "yellow led",
             "value": false,
             "gpio": 22
           },
-          "3": {
+          "green": {
             "name": "green led",
             "value": false,
             "gpio": 2
