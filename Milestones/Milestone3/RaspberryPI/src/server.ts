@@ -9,8 +9,8 @@ console.log('connecting to broker at ' + cloudBroker);
 //create connection to broker
 const client = mqtt.connect(cloudBroker);
 
-setInterval(PublishAllInfo, 5000);
 SubscribeLEDs();
+setInterval(PublishAllInfo, 5000);
 
 function SubscribeLEDs(){
     client.subscribe('/pi/actuators/leds/update/red');
@@ -27,7 +27,7 @@ client.on('message', (topic: string, message: string) => {
 
 function DelegateMessage(topic: string, message: JSON) {
     console.log(path.dirname(topic))
-    if (path.dirname(topic) == '/pi/actuators/leds/update/') {
+    if (path.dirname(topic) == '/pi/actuators/leds/update') {
         UpdateLed(path.basename(topic), message);
     } else {
         console.log('didn\'t recognize topic');

@@ -9,7 +9,7 @@
     "nodemon": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "tsc": "tsc",
     "start": "node build/server.js",
-    "build": "rm -r ./build && npm run tsc && npm run views",
+    "build": "rm -rf ./build && npm run tsc && npm run views",
     "buildstart": "npm run build && npm run start"
   },
   "keywords": [],

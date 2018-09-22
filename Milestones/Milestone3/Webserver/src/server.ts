@@ -37,17 +37,21 @@ app.get('/index.js', (req, res) => {
 })
 
 wss.on('connection', (ws: WebSocket, req: Request) => {
-    console.log('new Websocket connection for resource: ' + req.url);
-    AddSub(req.url,ws);
+    let resource: string = req.url;
+    console.log('new Websocket connection for resource: ' + resource);
+    AddSub(resource, ws);
 
-    ws.on('message', (message: string) => {
-        console.log('new Websocket message: ' + message);
-        console.log('new led state: ' + JSON.parse(message).value ? 'ON' : 'OFF');
-        ChangeLedState()
-        //publish change to broker
+    ws.on('message', (info: string) => {
+        console.log('new led state: ' + JSON.parse(info).value);
+        console.log('/pi/actuators/leds/update/' + path.basename(resource));
+        client.publish('/pi/actuators/leds/update/' + path.basename(resource), info);
     })
 })
 
+function ChangeLedState(led: string, value: boolean) {
+    let info: string = JSON.stringify({ "value": value });
+    client.publish('/pi/actuators/leds/update/' + led, info);
+}
 
 client.on('connect', () => {
     console.log('successfully connected to broker');
@@ -60,11 +64,11 @@ client.on('connect', () => {
 })
 
 client.on('message', (topic: string, message: string) => {
+    console.log('new mqtt message');
     DelegateMessage(topic, JSON.parse(message));
 })
 
 function DelegateMessage(topic: string, info: JSON) {
-
     switch (topic) {
         case '/pi/sensors/pir':
             UpdatePir(info);
@@ -85,8 +89,12 @@ function DelegateMessage(topic: string, info: JSON) {
 }
 
 function SendInfo(subList: Array<WebSocket>, info: JSON) {
-    subList.forEach((ws) => {
-        ws.send(JSON.stringify(info));
+    subList.forEach((ws: WebSocket, index: number) => {
+        try {
+            ws.send(JSON.stringify(info));
+        } catch (error) {
+            subList.splice(index, 1)   
+        }
     })
 }
 
@@ -123,11 +131,6 @@ function UpdateLed(color:string, info: JSON) {
         default:
             break;
     }
-}
-
-function ChangeLedState(led: string, value: boolean) {
-    let info: string = JSON.stringify({ "value": value });
-    client.publish('/pi/actuators/leds/update/' + led, info);
 }
 
 function AddSub(url: string, ws: WebSocket) {

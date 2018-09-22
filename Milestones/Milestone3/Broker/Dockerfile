@@ -27,10 +27,8 @@ RUN npm run build
 
 # Bundle app source
 
-# Our application listens on port 8080
-EXPOSE 8080
-# Our application listens on port 8081 for ws
-EXPOSE 8081
+# Our application listens on port 1883
+EXPOSE 1883
 
 # Start our application, this runs the "start" script defined in package.json
 CMD [ "npm", "start"]

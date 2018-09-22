@@ -5,7 +5,6 @@ function subscribeToWs(url) {
     var socket = new WebSocket(url);
 
     socket.onmessage = function(event) {
-        console.log(event.data);
         DelegateMessage(JSON.parse(event.data));
     };
     socket.onerror = function (error) {
@@ -13,7 +12,7 @@ function subscribeToWs(url) {
         console.log(error);
     };
     socket.onopen = function (event) {
-        console.log('opened websocket');
+        console.log('opened websocket to ' + url);
     };
     
     return socket;
@@ -74,19 +73,29 @@ function UpdateLED(info) {
 }
 
 function ChangeRedLED() {
-    console.log('change red led');
-    var newState = (document.getElementById('red led').innerHTML == 'ON') ? false : true;
-    redLedSocket.send(JSON.stringify({'value' : newState}));
+    var state = document.getElementById('red led').innerHTML.split(' ').slice(-1)[0];
+    console.log((state == 'ON') ? false : true);
+    SendState(redLedSocket, (state == 'ON') ? false : true);
 }
 
 function ChangeGreenLED() {
-    console.log('change green led');
-    var newState = (document.getElementById('green led').innerHTML == 'ON') ? false : true;
-    greenLedSocket.send(JSON.stringify({'value' : newState}));
+    var state = document.getElementById('green led').innerHTML.split(' ').slice(-1)[0];
+    console.log((state == 'ON') ? false : true);
+    SendState(greenLedSocket, (state == 'ON') ? false : true);
 }
 
 function ChangeYellowLED() {
-    console.log('change yellow led');
-    var newState = (document.getElementById('yellow led').innerHTML == 'ON') ? false : true;
-    yellowLedSocket.send(JSON.stringify({'value' : newState}));
+    var state = document.getElementById('yellow led').innerHTML.split(' ').slice(-1)[0];
+    console.log((state == 'ON') ? false : true);
+    SendState(yellowLedSocket, (state == 'ON') ? false : true);
+}
+
+function SendState(ws, state){
+    try {
+        ws.send(JSON.stringify({
+            'value': state
+        }));
+    } catch (error) {
+        console.log(error);
+    }
 }
