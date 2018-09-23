@@ -10,23 +10,21 @@ console.log('connecting to broker at ' + cloudBroker);
 const client = mqtt.connect(cloudBroker);
 
 SubscribeLEDs();
-setInterval(PublishAllInfo, 5000);
+setInterval(PublishAllInfo, 2000);
 
 function SubscribeLEDs(){
     client.subscribe('/pi/actuators/leds/update/red');
     client.subscribe('/pi/actuators/leds/update/green');
     client.subscribe('/pi/actuators/leds/update/yellow');
-    console.log('subscribed to leds');
+    console.log('Subscribed to leds');
 }
 
 client.on('message', (topic: string, message: string) => {
-    console.log('Got message on topic %s:%s', topic, message)
     DelegateMessage(topic, JSON.parse(message));
 })
 
 
 function DelegateMessage(topic: string, message: JSON) {
-    console.log(path.dirname(topic))
     if (path.dirname(topic) == '/pi/actuators/leds/update') {
         UpdateLed(path.basename(topic), message);
     } else {
@@ -36,17 +34,13 @@ function DelegateMessage(topic: string, message: JSON) {
 
 function UpdateLed(color : string, info : any) {
     let colors = ['red', 'yellow', 'green'];
-    console.log('checking color: ' + color);
     
     if (colors.indexOf(color) > -1) {
-        console.log('changing led state');
         m.SetLEDState(color, info.value ? 1 : 0);
     }
 }
 
 function PublishAllInfo() {
-    m.SetLEDState('red', 1);
-    console.log('sending sensor info to broker');
     PublishPirInfo();
     PublishTemperatureInfo();
     PublishHumidityInfo();

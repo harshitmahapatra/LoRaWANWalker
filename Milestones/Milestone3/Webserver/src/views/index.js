@@ -1,7 +1,4 @@
-console.log('start script');
-
 function subscribeToWs(url) {
-
     var socket = new WebSocket(url);
 
     socket.onmessage = function(event) {
@@ -12,7 +9,7 @@ function subscribeToWs(url) {
         console.log(error);
     };
     socket.onopen = function (event) {
-        console.log('opened websocket to ' + url);
+        console.log('Opened websocket to ' + url);
     };
     
     return socket;
@@ -74,19 +71,16 @@ function UpdateLED(info) {
 
 function ChangeRedLED() {
     var state = document.getElementById('red led').innerHTML.split(' ').slice(-1)[0];
-    console.log((state == 'ON') ? false : true);
     SendState(redLedSocket, (state == 'ON') ? false : true);
 }
 
 function ChangeGreenLED() {
     var state = document.getElementById('green led').innerHTML.split(' ').slice(-1)[0];
-    console.log((state == 'ON') ? false : true);
     SendState(greenLedSocket, (state == 'ON') ? false : true);
 }
 
 function ChangeYellowLED() {
     var state = document.getElementById('yellow led').innerHTML.split(' ').slice(-1)[0];
-    console.log((state == 'ON') ? false : true);
     SendState(yellowLedSocket, (state == 'ON') ? false : true);
 }
 

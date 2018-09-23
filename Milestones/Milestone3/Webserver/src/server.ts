@@ -2,13 +2,10 @@ import * as path from 'path';
 import * as WebSocket from 'ws';
 import { createServer } from 'http';
 import express = require('express');
-// import { MQTTClient } from "./MQTTClient";
 import * as mqtt from 'mqtt';
 import m from './model/model';
 
 const PORT = process.env.port || 8080;
-const localBroker = 'mqtt://localhost:8081';
-const testBroker = 'mqtt://test.mosquitto.org';
 const cloudBroker = 'mqtt://35.204.82.222';
 
 console.log('connecting to broker at ' + cloudBroker);
@@ -38,33 +35,25 @@ app.get('/index.js', (req, res) => {
 
 wss.on('connection', (ws: WebSocket, req: Request) => {
     let resource: string = req.url;
-    console.log('new Websocket connection for resource: ' + resource);
-    AddSub(resource, ws);
+    NewSub(resource, ws);
 
     ws.on('message', (info: string) => {
-        console.log('new led state: ' + JSON.parse(info).value);
-        console.log('/pi/actuators/leds/update/' + path.basename(resource));
         client.publish('/pi/actuators/leds/update/' + path.basename(resource), info);
     })
 })
 
-function ChangeLedState(led: string, value: boolean) {
-    let info: string = JSON.stringify({ "value": value });
-    client.publish('/pi/actuators/leds/update/' + led, info);
-}
-
 client.on('connect', () => {
-    console.log('successfully connected to broker');
+    console.log('Successfully connected to broker');
     client.subscribe('/pi/sensors/pir');
     client.subscribe('/pi/sensors/temperature');
     client.subscribe('/pi/sensors/humidity');
     client.subscribe('/pi/actuators/leds/red');
     client.subscribe('/pi/actuators/leds/yellow');
     client.subscribe('/pi/actuators/leds/green');
+    setInterval(SendAllInfo, 200);
 })
 
 client.on('message', (topic: string, message: string) => {
-    console.log('new mqtt message');
     DelegateMessage(topic, JSON.parse(message));
 })
 
@@ -88,6 +77,16 @@ function DelegateMessage(topic: string, info: JSON) {
     }
 }
 
+function SendAllInfo() {
+    SendPir();
+    SendTemperature();
+    SendHumidity();
+    SendRedLed();
+    SendYellowLed();
+    SendGreenLed();
+}
+
+//publish new states to relevant websockets
 function SendInfo(subList: Array<WebSocket>, info: JSON) {
     subList.forEach((ws: WebSocket, index: number) => {
         try {
@@ -99,32 +98,38 @@ function SendInfo(subList: Array<WebSocket>, info: JSON) {
 }
 
 function UpdatePir(info: JSON) {
-    SendInfo(pirSubs, info);
     m.SetPir(info);
 }
 
+function SendPir() {
+    SendInfo(pirSubs, m.GetPir());
+}
+
 function UpdateTemperature(info: JSON) {
-    SendInfo(tempSubs, info);
     m.SetTemperature(info);
 }
 
+function SendTemperature() {
+    SendInfo(tempSubs, m.GetTemperature());
+}
+
 function UpdateHumidity(info: JSON) {
-    SendInfo(humSubs, info);
     m.SetHumidity(info);
+}
+
+function SendHumidity() {
+    SendInfo(humSubs, m.GetHumidity());
 }
 
 function UpdateLed(color:string, info: JSON) {
     switch (color) {
         case 'red':
-            SendInfo(redLedSubs, info);
             m.SetRedLed(info);
             break;
         case 'green':
-            SendInfo(greenLedSubs, info);
             m.SetGreenLed(info);
             break;
         case 'yellow':
-            SendInfo(yellowLedSubs, info);
             m.SetYellowLed(info);
             break;
     
@@ -133,26 +138,43 @@ function UpdateLed(color:string, info: JSON) {
     }
 }
 
-function AddSub(url: string, ws: WebSocket) {
-    console.log('AddSub URL: ' + url)
+function SendRedLed() {
+    SendInfo(redLedSubs, m.GetRedLed());
+}
+
+function SendYellowLed() {
+    SendInfo(yellowLedSubs, m.GetYellowLed());
+}
+
+function SendGreenLed() {
+    SendInfo(greenLedSubs, m.GetGreenLed());
+}
+
+function NewSub(url: string, ws: WebSocket) {
     switch (url) {
         case '/pi/sensors/pir':
             pirSubs.push(ws);
+            SendPir();
             break;
         case '/pi/sensors/temperature':
             tempSubs.push(ws);
+            SendTemperature();
             break;
         case '/pi/sensors/humidity':
             humSubs.push(ws);
+            SendHumidity();
             break;
         case '/pi/actuators/leds/red':
             redLedSubs.push(ws);
+            SendRedLed();
             break;
         case '/pi/actuators/leds/yellow':
             yellowLedSubs.push(ws);
+            SendYellowLed();
             break;
         case '/pi/actuators/leds/green':
             greenLedSubs.push(ws);
+            SendGreenLed();
             break;
 
         default:

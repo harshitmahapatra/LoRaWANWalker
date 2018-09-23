@@ -1,43 +1,32 @@
 <!DOCTYPE html>
 <html>
-<script src="index.js"></script>
+    <script src="index.js"></script>
 
-<head>
-    <title>Team India's Raspberry Pi</title>
-</head>
+    <head>
+        <title>Team India's Raspberry Pi</title>
+    </head>
 
-<body>
-    <h2>State of actuators</h2>
+    <body>
+        <h2>State of actuators</h2>
+        <div>
+            <div id="red led">The red led is OFF</div>
+            <button onclick="ChangeRedLED();">Change LED state</button>
+        </div>
+        <div>
+            <div id="green led">The green led is OFF</div>
+            <button onclick="ChangeGreenLED();">Change LED state</button>
+        </div>
+        <div>
+            <div id="yellow led">The yellow led is OFF</div>
+            <button onclick="ChangeYellowLED();">Change LED state</button>
+        </div>
 
-    <div>
-        <div id="red led">The red led is OFF</div>
-    
-        <button onclick="ChangeRedLED();">Change LED state</button>
-
-    </div>
-
-    <div>
-        <div id="green led">The green led is OFF</div>
-    
-        <button onclick="ChangeGreenLED();">Change LED state</button>
-    </div>
-
-    <div>
-        <div id="yellow led">The yellow led is OFF</div>
-    
-        <button onclick="ChangeYellowLED();">Change LED state</button>
-
-    </div>
-
-    <h2>State of Sensors</h2>
-        <h3>Temperature sensor</h2>
-            <div id="temperature"> The current temperature is 0 degrees celcius</div>
-        <h3>Humidity sensor</h2>
-            <div id="humidity"> The current humidity level is 0%</div>
-        <h3>Movement sensor</h2>
-            <div id="movement"> There is no movement</div>
-
-</body>
-
-
+        <h2>State of Sensors</h2>
+            <h3>Temperature sensor</h2>
+                <div id="temperature"> The current temperature is 0 degrees celcius</div>
+            <h3>Humidity sensor</h2>
+                <div id="humidity"> The current humidity level is 0%</div>
+            <h3>Movement sensor</h2>
+                <div id="movement"> There is no movement</div>
+    </body>
 </html>
