@@ -16,6 +16,8 @@
             </li> 
         </ul>
     </div>
+
+
     <script>
     function subscribeToWs(url, msg) {
 
@@ -37,8 +39,12 @@
             }
         };
     }
-    //subscribeToWs(':8080/pi/sensors', 'test message');
+    subscribeToWs('ws://192.168.0.107:8081/pi/sensors', 'test message');
     </script>
+
+
+
+
 </body>
 
 </html>
