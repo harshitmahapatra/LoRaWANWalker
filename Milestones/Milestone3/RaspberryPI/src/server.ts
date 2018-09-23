@@ -10,7 +10,7 @@ console.log('connecting to broker at ' + cloudBroker);
 const client = mqtt.connect(cloudBroker);
 
 SubscribeLEDs();
-setInterval(PublishAllInfo, 2000);
+setInterval(PublishAllInfo, 5000);
 
 function SubscribeLEDs(){
     client.subscribe('/pi/actuators/leds/update/red');
