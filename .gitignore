@@ -1,13 +1,30 @@
+%Usual folders
+**/.git/*
+**/.idea/*
+**/.ipynb_checkpoints/**
+**/cmake-build-debug/**
+**/.vscode/*
 
-*/.git/*
-*/.idea/*
+%Usual files
+%Latex
+*.aux
+*.bbl
+*.blg
+*.log
+*.synctex.gz
+
+CMakeLists.txt
+**/a.out
+**.DS_Store
+**/*.log
+*.img
+
+%Specific folders
 */docker/*
 **/node\_modules/*
 **/iot-project-master/*
 **/build/*
 **/zips/*
 **/*.log
-
-
 *.img
 
