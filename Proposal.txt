@@ -1,0 +1,34 @@
+Introduction:
+	We will fit the following sensors into a walker:
+		-An accelerometer that will allow tracking of how much the walker is being used
+		-A GPS that will allow the municipality to have an overview of the position of each user
+		-Pulse sensors on each handle, in order to track the user's heart rate overtime	
+
+	These sensors will the be connected to an Arduino that transmits the data through LoRaWAN to a Raspberry PI that will be the LoRaWAN Gateway. 	
+	
+
+Use case – a short story to illustrate the why & how:
+
+	All the people using the walker will be streaming their sensor data to a central server belonging to the Municipality. These data are then used to analyse both the overall use of the walkers, something that interests the manufacturing companies, and the over-time change of the health indicators in order to track long-term progress of the users well-being.
+
+
+
+A description of how and why IoT/P2P will be used:
+	
+	How IoT: We will use sensors to gather data and send it to a remote server
+	Why: Seems like the only way to gather data from a moving object like a walker. Since the end goal is having all the data in a central server owned by the municipality and the infrastructure for LoRaWAN is already considerably developed in Aarhus, we thought that would be a good protocol to use. We considered the possibility of getting sensors with built-in LoRaWAN capabilities, but doing that would restrict our choice of sensors, they would be considerably more expensive, and the work to be done by us would be reduced, meaning a smaller "delta" in our project.
+
+
+Questions we seek to answer:
+	Can we help make better walkers by analysing how and where they are used?
+	Can we track the progress of a walker user buy measuring some health parameters throught their walker?
+
+Architecture:
+	*drew it on paper*	
+
+
+
+
+
+Ideas:
+-Include a gsm adapter in the arduino, that way we can have bigger upload speeds, allowing us to have real-time updates which in turn would allow for use-cases of emergency situations and we would also be able to send video.
