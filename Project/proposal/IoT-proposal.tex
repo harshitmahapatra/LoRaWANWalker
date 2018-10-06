@@ -46,7 +46,7 @@ au614711@post.au.dk}
 \maketitle
 
 \section{Introduction}
-Our project is about using IoT to monitor a walker user's health and walker's use. 
+Our project is about using IoT to track health indicators of a walker's user along with measuring the usage statistics of the walker itself.
 
 We plan on fitting the following sensors into a walker:
 \begin{enumerate}
@@ -54,7 +54,7 @@ We plan on fitting the following sensors into a walker:
 	\item A GPS that will allow the municipality to have an overview of the position of each user.
 	\item Pulse sensors on each handle, in order to track the user's heart rate overtime.
 	
-These sensors will the be connected to an Arduino that transmits the data through LoRaWAN to a Raspberry PI that will be a LoRaWAN gateway connected to a server.
+These sensors will the be connected to an Arduino that transmits the data through LoRaWAN to a Raspberry PI that will be a gateway connected to the server.
 \end{enumerate}	
 
  	
@@ -64,9 +64,9 @@ These sensors will the be connected to an Arduino that transmits the data throug
 
 \section{Usage of Internet of Things}
 
-How: We will use sensors to gather data and send it to a remote server
+How: We will use sensors to gather data and send it to a remote server.
 	
-Why: IoT seems like a good way to gather data from a moving object like a walker. Since the infrastructure for LoRaWAN is already considerably developed in Aarhus, we thought it would be a good protocol to use for streaming data from walkers to the central server owned by the municipality.
+Why: IoT seems like a good way to gather data from a moving object like a walker. Since the infrastructure for LoRaWAN is considerably developed in Aarhus, we thought it would be a good protocol to use for streaming data from walkers to the central server.
 
 We considered the possibility of getting sensors with built-in LoRaWAN capabilities, but doing so would increase cost of the project, restrict our choice of sensors, and the work to be done by us would be reduced, meaning a smaller "delta" in our project. Thus, we decided on an architecture where individual sensors are connected to an Arduino which has a LoRaWAN tranceiver.
 
