@@ -1,16 +1,3 @@
 https://randomnerdtutorials.com/guide-to-neo-6m-gps-module-with-arduino/
 http://neutrofoton.github.io/blog/2017/05/04/arduino-and-neo-6m-gps-module/
 
-/lib/Adafruit_10DOF-master/Adafruit_10DOF.h
-accelGetOrientation
-magTiltCompensation
-magGetOrientation
-fusionGetOrientation
-
-/lib/Adafruit_BMP085_Unified-master/Adafruit_BMP085_U.h
-getTemperature
-getPressure
-pressureToAltitude
-seaLevelForAltitude
-pressureToAltitude
-seaLevelForAltitude
