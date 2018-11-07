@@ -8,9 +8,9 @@
 
 using namespace std;
 
-SoftwareSerial GpsConnection(6, 7);
-HX711 RightHandle(11,10); //Port 10 11
-HX711 LeftHandle(8,9); //Port 8 9
+SoftwareSerial GpsConnection(6, 7); //Port 6 7
+HX711 RightHandle(8,9); //Port 8 9
+HX711 LeftHandle(11,10); //Port 10 11
 MPU9250 IMU(Wire,0x68); //Port SCL SDA
 int status; 
 
