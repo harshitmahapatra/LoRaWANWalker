@@ -1,3 +1,3 @@
 #include <HX711.h>
 
-void GetPressure(HX711 ,HX711);
+String GetPressure(HX711 ,HX711);

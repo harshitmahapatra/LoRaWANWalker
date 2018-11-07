@@ -10,7 +10,7 @@ long val = 0;
 float count = 0;
 float value = 0;
 
-void GetPressure(HX711 rightHandle,HX711 leftHandle){
+String GetPressure(HX711 rightHandle,HX711 leftHandle){
   //MinMaxAVG
 
   float rightValue, smallestRight=0, biggestRight=0, avgRight=0, 
