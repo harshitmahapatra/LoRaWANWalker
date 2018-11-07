@@ -16,6 +16,8 @@ void GetPressure(HX711 rightHandle,HX711 leftHandle){
   float rightValue, smallestRight=0, biggestRight=0, avgRight=0, 
         leftValue, smallestLeft=0, biggestLeft=0, avgLeft=0;
   int samples=15;
+
+  //Getting data line Min/Max/Avg
   for(size_t i = 0; i < samples; i++)
   {
       rightValue=rightHandle.read();
@@ -45,6 +47,7 @@ void GetPressure(HX711 rightHandle,HX711 leftHandle){
   avgRight=avgRight/samples;
   avgLeft=avgLeft/samples;
 
+  //Converting to String
   String output="";
   output+=rightValue;
   output+=smallestRight;

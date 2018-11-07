@@ -36,6 +36,7 @@ String GetRelevantData(String s)
   return relevantData;
 }
 
+//Cut output at specific comma
 String CutStringAtComma(String s, int from)
 {
   int fromPosition, toPosition, counter=0;
@@ -58,6 +59,7 @@ String CutStringAtComma(String s, int from)
   return s.substring(fromPosition,toPosition);
 }
 
+//Cut whole String to get the needed line
 String CutGpsString(String s)
 {
   int save=0;
