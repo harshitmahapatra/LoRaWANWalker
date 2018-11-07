@@ -1,0 +1,31 @@
+Where to find 
+
+
+10DOF
+
+https://learn.adafruit.com/adafruit-10-dof-imu-breakout-lsm303-l3gd20-bmp180/software
+
+/lib/Adafruit_10DOF-master/Adafruit_10DOF.h
+accelGetOrientation
+magTiltCompensation
+magGetOrientation
+fusionGetOrientation
+
+/lib/Adafruit_BMP085_Unified-master/Adafruit_BMP085_U.h
+getTemperature
+getPressure
+pressureToAltitude
+seaLevelForAltitude
+pressureToAltitude
+seaLevelForAltitude
+
+
+GPS
+
+https://randomnerdtutorials.com/guide-to-neo-6m-gps-module-with-arduino/
+
+
+Pressure Sensor 
+
+https://www.youtube.com/watch?v=nGUpzwEa4vg
+
