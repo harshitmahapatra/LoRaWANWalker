@@ -1,8 +1,7 @@
 #include <Arduino.h>
 #include <MPU9250.h>
 
-// an MPU9250 object with the MPU-9250 sensor on I2C bus 0 with address 0x68
-
+//Finds out if the walker is moving or not
 String IsMoving(MPU9250 IMU) {
   IMU.readSensor();
   float isMovingValue = IMU.getAccelX_mss()-0.20 + IMU.getAccelY_mss()+1.59 + IMU.getAccelZ_mss()+9.61;
