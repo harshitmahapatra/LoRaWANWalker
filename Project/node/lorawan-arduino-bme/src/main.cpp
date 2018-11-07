@@ -27,6 +27,13 @@
 #include <hal/hal.h>
 #include <SPI.h>
 
+#include "LoraEncoder.h"
+#include "Movement.h"
+#include <SoftwareSerial.h>
+#include <GPS.h>
+#define GPS_TX 4
+#define GPS_RX 3
+
 // LoRaWAN NwkSKey, network session key
 // This is the default Semtech key, which is used by the prototype TTN
 // network initially.
@@ -50,7 +57,7 @@ void os_getArtEui (u1_t* buf) { }
 void os_getDevEui (u1_t* buf) { }
 void os_getDevKey (u1_t* buf) { }
 
-static uint8_t mydata[6];
+static uint8_t mydata[7];
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
@@ -142,6 +149,10 @@ void onEvent (ev_t ev) {
     }
 }
 
+////////////OUR STUFF//////////////////
+// SoftwareSerial gpsSensor(GPS_TX, GPS_RX);
+MPU9250 accelerometer(Wire, 0x68); //Port SCL SDA
+///////////**///////////////////
 
 void setup() {
     Serial.begin(9600);
@@ -207,32 +218,61 @@ void setup() {
     // Set data rate and transmit power (note: txpow seems to be ignored by the library)
     LMIC_setDrTxpow(DR_SF7,14);
 
+    ////////////OUR STUFF//////////////////
+
+    Serial.print("size of bool:");
+    Serial.println(sizeof(bool));
+
+    // gpsSensor.begin(9600);
+
+    // start communication with Accelerometer
+    int status = accelerometer.begin();
+    if (status < 0)
+    {
+        Serial.println(status);
+        Serial.println("accelerometer setup failed");
+        while (1)
+        {
+        }
+    }
+    Serial.println("accelerometer setup was successful");
+
+    ///////////**///////////////////
 }
 
 void loop() {
-    Serial.print("bla: ");
+    //String gpsData = GetGpsData(gpsSensor);
+    //Serial.println(gpsData);
+    bool isMoving = IsMoving(accelerometer);
+    //bool isMoving = 1;
+    
 
     int16_t temperature = 2544;
     int16_t barometer = 5355;
     int16_t humidity = 5929;
 
-    
+    byte buffer[2];
+    LoraEncoder encoder(buffer);
+    encoder.writeHumidity(99.99);
+    // buffer == {0x0f, 0x27}
+
     Serial.print("temperature: ");
     Serial.println(temperature);
     Serial.print("barometer: ");
     Serial.println(barometer);
     Serial.print("humidity: ");
     Serial.println(humidity);
-    
-    //shift bits and store the value in bytes
+    Serial.print("isMoving: ");
+    Serial.println(isMoving);
 
+    //shift bits and store the value in bytes
     mydata[0] = (temperature >> 8) & 0xFF;
     mydata[1] = temperature & 0xFF;
     mydata[2] = (barometer >>8) & 0xFF;
     mydata[3] = barometer & 0xFF;
     mydata[4] = (humidity >> 8) & 0xFF;
     mydata[5] = humidity & 0xFF;
-
+    mydata[6] = isMoving & 0xFF;
 
     // Start job
     do_send(&sendjob);
