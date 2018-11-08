@@ -36,5 +36,9 @@ https://www.youtube.com/watch?v=mzwovYcozvI
 
 
 Heartbeat
+OWN
 
+Micro Switch
+http://blogmasterwalkershop.com.br/arduino/como-usar-com-arduino-chave-fim-de-curso-micro-switch/
 
+Temperature
