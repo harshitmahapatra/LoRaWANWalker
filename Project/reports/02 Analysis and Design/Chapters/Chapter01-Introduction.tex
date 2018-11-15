@@ -7,24 +7,9 @@ Furthermore, current development in the field of machine learning and big data h
 
 Healthcare is a field of growing interest for this data collection, as the remote monitoring of patients not only allows us to reduce our response time for emergencies but also gives us valuable insights about the patient's health, which in turn leads to better diagnosis and insight about a disability or disease.
 
-Our project is about building a smart walker which leverages the low power sensor technology of LoRaWAN, the decentralized computing of cloud and the power of data analysis to monitor and analyze the health parameters of it's user.
+Our project consists of building a smart walker which leverages the low power networking capabilities of the LoRaWAN protocol, decentralized computing in the cloud and the power of data analysis to monitor and analyze the health parameters of it's user.
 
-
-More concretely, we aim to build a walker consisting of an accelerometer, a GPS module, pulse, and pressure sensors. The accelerometer will allow us to track the usage statistics of the walker. GPS sensors will allow us to track the position and common usage area of walkers. The pulse and pressure sensors will be used to monitor the health of the walker's user.
-
-
-These sensors are connected to an Arduino board that transmits the collected data through a low-cost, low-power and secure communication provided by LoRaWAN to a Raspberry PI that acts as a gateway, which is connected to an MQTT server. The MQTT server, in turn, is subscribed to by a web server which has web applications for analyzing and storing the data.
-
-
-The walker will be streaming the data collected by the sensors to a central server belonging to the Municipality. This data is then used to analyze both the overall use of the walkers, information that is highly interesting for the manufacturing companies, and the over-time change of the health indicators in order to track the long-term progress of the user's well-being.
-
-Since the infrastructure for LoRaWAN is considerably developed in Aarhus, we are confident it would be a good protocol to use for streaming data from walkers to a central server.
-
-It should, however, be noted that the LoRaWAN protocol has low bandwidth and is thus not suitable for real-time monitoring in cases where the sensor data is large is size. To circumvent, this problem we aim to make our sensor node capable of transmitting data over GSM while keeping power usage in check. The minimum viable product of our project, however, is a LoRaWAN smart walker.
-
-We aim to explore whether it is possible to determine the usage of walker remotely using accelerometer and GPS data. We also intend our walker to be a proof of concept of remote health monitoring system using LoRaWAN. Lastly, we would like to explore whether we can measure the overall health of a walker user using the collected data.
-
-It should be noted that we will probably not get to the analysis point because our project intends to be the foundation for a larger scheme with the next steps including the analysis of collected data.
+More concretely, we aim to track usage statistics, the position and common usage area of walkers, and monitor some health parameters of the user.
 
 %%% Local Variables:
 %%% mode: latex
