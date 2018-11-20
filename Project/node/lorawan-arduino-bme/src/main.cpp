@@ -27,6 +27,7 @@
 #include <hal/hal.h>
 #include <SPI.h>
 
+#include "Pressure.h"
 #include "LoraEncoder.h"
 #include "Movement.h"
 #include <SoftwareSerial.h>
@@ -37,16 +38,16 @@
 // LoRaWAN NwkSKey, network session key
 // This is the default Semtech key, which is used by the prototype TTN
 // network initially.
-static const PROGMEM u1_t NWKSKEY[16] = { 0x72, 0x37, 0x20, 0x33, 0x3C, 0xB9, 0x84, 0x7F, 0x02, 0xEE, 0xFE, 0xC4, 0xC2, 0x17, 0xE1, 0xD1 };
+static const PROGMEM u1_t NWKSKEY[16] = {0xAE, 0x27, 0x06, 0x2D, 0xD5, 0x3C, 0x64, 0xEE, 0x38, 0x25, 0x52, 0xAD, 0xB9, 0x35, 0xB8, 0xE6};
 
 // LoRaWAN AppSKey, application session key
 // This is the default Semtech key, which is used by the prototype TTN
 // network initially.
-static const u1_t PROGMEM APPSKEY[16] = { 0x67, 0x4A, 0xD3, 0xB5, 0x44, 0x21, 0x6D, 0x3A, 0x78, 0x12, 0x79, 0x81, 0xD6, 0x1A, 0x60, 0x9B };
+static const u1_t PROGMEM APPSKEY[16] = {0xB1, 0x8A, 0x0E, 0xE6, 0x37, 0x29, 0xDC, 0xF1, 0xB1, 0x35, 0x72, 0xD3, 0x56, 0x37, 0xF3, 0x1B};
 
 // LoRaWAN end-device address (DevAddr)
 // See http://thethingsnetwork.org/wiki/AddressSpace
-static const u4_t DEVADDR = 0x2601129F; // <-- Change this address for every node!
+static const u4_t DEVADDR = 0x26011086; // <-- Change this address for every node!
 
 //BME280 bme;
 
@@ -57,7 +58,7 @@ void os_getArtEui (u1_t* buf) { }
 void os_getDevEui (u1_t* buf) { }
 void os_getDevKey (u1_t* buf) { }
 
-static uint8_t mydata[7];
+static uint8_t mydata[19];
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
@@ -150,15 +151,15 @@ void onEvent (ev_t ev) {
 }
 
 ////////////OUR STUFF//////////////////
-// SoftwareSerial gpsSensor(GPS_TX, GPS_RX);
-MPU9250 accelerometer(Wire, 0x68); //Port SCL SDA
+// SoftwareSerial gpsSensor(GPS_TX, GPS_RX);    //GPS
+// MPU9250 accelerometer(Wire, 0x68);              //Port SCL SDA       Accelerometer
+// HX711 RightHandle(2, 1);                        //Port 5 4           Right handle pressure sensor
+// HX711 LeftHandle(3, 4);                         //Port 6 7           Left handle pressure sensor
 ///////////**///////////////////
 
 void setup() {
     Serial.begin(9600);
-    // if(!bme.init()){
-    //     Serial.println("Device error!");
-    // }
+
     Serial.println(F("Starting"));
 
     #ifdef VCC_ENABLE
@@ -220,41 +221,57 @@ void setup() {
 
     ////////////OUR STUFF//////////////////
 
-    Serial.print("size of bool:");
-    Serial.println(sizeof(bool));
-
     // gpsSensor.begin(9600);
 
-    // start communication with Accelerometer
-    int status = accelerometer.begin();
-    if (status < 0)
-    {
-        Serial.println(status);
-        Serial.println("accelerometer setup failed");
-        while (1)
-        {
-        }
-    }
-    Serial.println("accelerometer setup was successful");
+    // // start communication with Accelerometer
+    // int status = accelerometer.begin();
+    // if (status < 0)
+    // {
+    //     Serial.println(status);
+    //     Serial.println("accelerometer setup failed");
+    //     while (1)
+    //     {
+    //     }
+    // }
+    // Serial.println("accelerometer setup was successful");
 
     ///////////**///////////////////
 }
 
 void loop() {
+    // Serial.println("Getting GPS data...");
     //String gpsData = GetGpsData(gpsSensor);
     //Serial.println(gpsData);
-    bool isMoving = IsMoving(accelerometer);
-    //bool isMoving = 1;
     
+    Serial.println("Getting Accelerometer data...");
+    //bool isMoving = IsMoving(accelerometer);    //Get Accelerometer data
 
+    // /*---------------PRESSURE DATA--------------------*/
+    // Serial.println("Getting Pressure data...");
+    // PressureData rightHandleData = GetPressure(RightHandle, SensorID::four_black);
+    // PressureData leftHandleData = GetPressure(LeftHandle, SensorID::ten);
+
+    // //translate float value to int 16 bit *100 get rid of the .
+    // int16_t rightAvg = (int16_t)(rightHandleData.GetAvg() * 100);
+    // int16_t rightMax = (int16_t)(rightHandleData.GetMax() * 100);
+    // int16_t rightMin = (int16_t)(rightHandleData.GetMin() * 100);
+    // int16_t leftAvg = (int16_t)(leftHandleData.GetAvg() * 100);
+    // int16_t leftMax = (int16_t)(leftHandleData.GetMax() * 100);
+    // int16_t leftMin = (int16_t)(leftHandleData.GetMin() * 100);
+    // /*---------------PRESSURE DATA--------------------*/
+
+    // /*---------------MOCK DATA--------------------*/
     int16_t temperature = 2544;
     int16_t barometer = 5355;
     int16_t humidity = 5929;
-
-    byte buffer[2];
-    LoraEncoder encoder(buffer);
-    encoder.writeHumidity(99.99);
-    // buffer == {0x0f, 0x27}
+    int16_t rightAvg = 60;
+    int16_t rightMax = 75;
+    int16_t rightMin = 30;
+    int16_t leftAvg = 45;
+    int16_t leftMax = 64;
+    int16_t leftMin = 12;
+    bool isMoving = 1;
+    /*---------------MOCK DATA--------------------*/
 
     Serial.print("temperature: ");
     Serial.println(temperature);
@@ -264,15 +281,39 @@ void loop() {
     Serial.println(humidity);
     Serial.print("isMoving: ");
     Serial.println(isMoving);
+    Serial.print("Right handle avg: ");
+    Serial.println(rightAvg);
+    Serial.print("Right handle max: ");
+    Serial.println(rightMax);
+    Serial.print("Right handle min: ");
+    Serial.println(rightMin);
+    Serial.print("Left handle avg: ");
+    Serial.println(leftAvg);
+    Serial.print("Left handle max: ");
+    Serial.println(leftMax);
+    Serial.print("Left handle min: ");
+    Serial.println(leftMin);
 
     //shift bits and store the value in bytes
-    mydata[0] = (temperature >> 8) & 0xFF;
+    mydata[0] = (temperature >> 8) & 0xFF;      //temp
     mydata[1] = temperature & 0xFF;
-    mydata[2] = (barometer >>8) & 0xFF;
+    mydata[2] = (barometer >>8) & 0xFF;         //alt
     mydata[3] = barometer & 0xFF;
-    mydata[4] = (humidity >> 8) & 0xFF;
+    mydata[4] = (humidity >> 8) & 0xFF;         //hum
     mydata[5] = humidity & 0xFF;
-    mydata[6] = isMoving & 0xFF;
+    mydata[6] = (rightAvg >> 8) & 0xFF;         //rightAvg
+    mydata[7] = rightAvg & 0xFF;
+    mydata[8] = (rightMax >> 8) & 0xFF;         //rightMax
+    mydata[9] = rightMax & 0xFF;
+    mydata[10] = (rightMin >> 8) & 0xFF;        //rightMin
+    mydata[11] = rightMin & 0xFF;
+    mydata[6] = (leftAvg >> 8) & 0xFF;          //leftAvg
+    mydata[7] = leftAvg & 0xFF;
+    mydata[8] = (leftMax >>8) & 0xFF;           //leftMax
+    mydata[9] = leftMax & 0xFF;
+    mydata[10] = (leftMin >> 8) & 0xFF;        //leftMin
+    mydata[11] = leftMin & 0xFF;
+    mydata[12] = isMoving & 0xFF;
 
     // Start job
     do_send(&sendjob);

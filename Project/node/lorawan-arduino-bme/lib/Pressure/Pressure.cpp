@@ -15,8 +15,7 @@ PressureData GetPressure(HX711 handle, SensorID sensor)
 
   float pressure, min = 0, max = 0, total = 0, avg = 0;
   int samples=15;
-  Serial.print("RAW READ");
-  Serial.println(handle.read());
+
   //Getting data line Min/Max/Avg
   for(size_t i = 0; i < samples; i++)
   {
@@ -31,8 +30,6 @@ PressureData GetPressure(HX711 handle, SensorID sensor)
     {
       pressure = float(handle.read() - 8240692) / 219056;
     }
-
-
 
     if (pressure < min)
       min = pressure;
