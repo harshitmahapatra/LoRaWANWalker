@@ -161,29 +161,16 @@ void onEvent (ev_t ev) {
 ////////////OUR STUFF//////////////////
 // SoftwareSerial gpsSensor(GPS_TX, GPS_RX);       //GPS
 MPU9250 accelerometer(Wire, 0x68);                 //Port SCL SDA       Accelerometer
-// HX711 RightHandle(2, 1);                        //Port 5 4           Right handle pressure sensor
-// HX711 LeftHandle(3, 4);                         //Port 6 7           Left handle pressure sensor
-HX711 RightHandle = HX711(34,35); //Port 9 8
+HX711 RightHandle = HX711(34, 35);                 //Port 34 35         Right handle pressure sensor
+// HX711 leftHandle = HX711(36, 37);                 //Port 36 37         Left handle pressure sensor
 
 void setup() {
     Serial.begin(9600);
 
     Serial.println(F("Starting"));
 
-    Serial.println("!ST PRESSURE TEST");
-    PressureData rightHandleData = GetPressure(RightHandle, SensorID::ten);
-    rightHandleData.PrintValues();
-
-
     // LMIC initf
     os_init();
-    rightHandleData = GetPressure(RightHandle, SensorID::ten);
-    rightHandleData.PrintValues();
-    // pinMode(5, INPUT);
-
-    // pinMode(52, OUTPUT);
-    // pinMode(53, INPUT);
-
 
     // Reset the MAC state. Session and pending data transfers will be discarded.
     LMIC_reset();
@@ -267,6 +254,8 @@ void loop() {
     //double temperature = accelerometer.getTemperature_C();
     Serial.print("Accelerometer isMoving: ");
     Serial.println(isMoving);
+    Serial.print("Accelerometer temperature: ");
+    Serial.println(accelerometer.getTemperature_C());
     /*---------------ACCELEROMETER DATA--------------------*/
 
     // /*---------------PRESSURE DATA--------------------*/
