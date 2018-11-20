@@ -50,6 +50,10 @@ static const u1_t PROGMEM APPSKEY[16] = {0xB1, 0x8A, 0x0E, 0xE6, 0x37, 0x29, 0xD
 // See http://thethingsnetwork.org/wiki/AddressSpace
 static const u4_t DEVADDR = 0x26011086; // <-- Change this address for every node!
 
+// void PrintPressure(){
+//     PressureData rightHandleData = GetPressure(RightHandle, SensorID::ten);
+//     rightHandleData.PrintValues();
+// }
 //BME280 bme;
 
 // These callbacks are only used in over-the-air activation, so they are
@@ -75,6 +79,9 @@ const lmic_pinmap lmic_pins = {
 };
 
 void do_send(osjob_t* j){
+    // HX711 RightHandle(52, 53); //Port 9 8
+    // PressureData rightHandleData = GetPressure(RightHandle, SensorID::ten);
+    // rightHandleData.PrintValues();
     // Check if there is not a current TX/RX job running
     if (LMIC.opmode & OP_TXRXPEND) {
         Serial.println(F("OP_TXRXPEND, not sending"));
@@ -153,25 +160,31 @@ void onEvent (ev_t ev) {
 
 ////////////OUR STUFF//////////////////
 // SoftwareSerial gpsSensor(GPS_TX, GPS_RX);       //GPS
-// MPU9250 accelerometer(Wire, 0x68);              //Port SCL SDA       Accelerometer
+MPU9250 accelerometer(Wire, 0x68);                 //Port SCL SDA       Accelerometer
 // HX711 RightHandle(2, 1);                        //Port 5 4           Right handle pressure sensor
 // HX711 LeftHandle(3, 4);                         //Port 6 7           Left handle pressure sensor
-///////////**///////////////////
+HX711 RightHandle = HX711(34,35); //Port 9 8
 
 void setup() {
     Serial.begin(9600);
 
     Serial.println(F("Starting"));
 
-    #ifdef VCC_ENABLE
-    // For Pinoccio Scout boards
-    pinMode(VCC_ENABLE, OUTPUT);
-    digitalWrite(VCC_ENABLE, HIGH);
-    delay(1000);
-    #endif
+    Serial.println("!ST PRESSURE TEST");
+    PressureData rightHandleData = GetPressure(RightHandle, SensorID::ten);
+    rightHandleData.PrintValues();
 
-    // LMIC init
+
+    // LMIC initf
     os_init();
+    rightHandleData = GetPressure(RightHandle, SensorID::ten);
+    rightHandleData.PrintValues();
+    // pinMode(5, INPUT);
+
+    // pinMode(52, OUTPUT);
+    // pinMode(53, INPUT);
+
+
     // Reset the MAC state. Session and pending data transfers will be discarded.
     LMIC_reset();
 
@@ -225,21 +238,23 @@ void setup() {
     // gpsSensor.begin(9600);
 
     // // start communication with Accelerometer
-    // int status = accelerometer.begin();
-    // if (status < 0)
-    // {
-    //     Serial.println(status);
-    //     Serial.println("accelerometer setup failed");
-    //     while (1)
-    //     {
-    //     }
-    // }
-    // Serial.println("accelerometer setup was successful");
-
+    int status = accelerometer.begin();
+    if (status < 0)
+    {
+        Serial.println(status);
+        Serial.println("accelerometer setup failed");
+        while (1)
+        {
+        }
+    }
+    Serial.println("accelerometer setup was successful");
     ///////////**///////////////////
+
 }
 
 void loop() {
+    //PrintPressure();
+
     /*---------------GPS DATA--------------------*/
     //Serial.println("Getting GPS data...");
     //String gpsData = GetGpsData(gpsSensor);
@@ -247,8 +262,11 @@ void loop() {
     /*---------------GPS DATA--------------------*/
     
     /*---------------ACCELEROMETER DATA--------------------*/
-    //Serial.println("Getting Accelerometer data...");
-    //bool isMoving = IsMoving(accelerometer);    //Get Accelerometer data
+    Serial.println("Getting Accelerometer data...");
+    bool isMoving = IsMoving(accelerometer);    //Get Accelerometer data
+    //double temperature = accelerometer.getTemperature_C();
+    Serial.print("Accelerometer isMoving: ");
+    Serial.println(isMoving);
     /*---------------ACCELEROMETER DATA--------------------*/
 
     // /*---------------PRESSURE DATA--------------------*/
@@ -265,6 +283,14 @@ void loop() {
     // int16_t leftMin = (int16_t)(leftHandleData.GetMin() * 100);
     // /*---------------PRESSURE DATA--------------------*/
 
+
+    // HX711 RightHandle = HX711(5, 52); //Port 9 8
+    PressureData rightHandleData = GetPressure(RightHandle, SensorID::ten);
+    rightHandleData.PrintValues();
+
+
+
+
     /*---------------HEART RATE DATA--------------------*/
     //Serial.println("Getting Heart Rate data...");
     //int16_t avgHR = (int16_t)GetAvgHR(pulseSensor);    //Get Accelerometer data
@@ -278,7 +304,7 @@ void loop() {
     int16_t leftMax = 64;
     int16_t leftMin = 12;
     int16_t avgHR = 60;
-    bool isMoving = 1;
+    // bool isMoving = 1;
     /*---------------MOCK DATA--------------------*/
 
     Serial.print("Right handle avg: ");
