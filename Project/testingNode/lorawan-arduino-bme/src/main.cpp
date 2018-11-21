@@ -265,8 +265,8 @@ void loop() {
 
     // /*---------------PRESSURE DATA--------------------*/
     // Serial.println("Getting Pressure data...");
-    PressureData rightHandleData = GetPressure(RightHandle, SensorID::ten);
-    PressureData leftHandleData = GetPressure(LeftHandle, SensorID::four_black);
+    PressureData rightHandleData = GetPressure(RightHandle, SensorID::four_black);
+    PressureData leftHandleData = GetPressure(LeftHandle, SensorID::ten);
 
     // translate float value to int 16 bit *100 get rid of the .
     int16_t rightAvg = (int16_t)(rightHandleData.GetAvg() * 100);
