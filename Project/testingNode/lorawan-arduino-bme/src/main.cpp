@@ -29,11 +29,13 @@
 #include "Pressure.h"
 //#include "LoraEncoder.h"
 #include "Movement.h"
+#include "Pulse.h"
 //#include <SoftwareSerial.h>
 // #include <GPS.h>
 // #define GPS_TX 4
 // #define GPS_RX 3
 //#define GPS_RX 3
+#define HEARTBEAT_PIN A15
 
 #define DATA_SIZE 15
 // LoRaWAN NwkSKey, network session key
@@ -161,13 +163,16 @@ void onEvent (ev_t ev) {
 ////////////OUR STUFF//////////////////
 // SoftwareSerial gpsSensor(GPS_TX, GPS_RX);       //GPS
 MPU9250 accelerometer(Wire, 0x68);                 //Port SCL SDA       Accelerometer
-HX711 RightHandle = HX711(34, 35);                 //Port 34 35         Right handle pressure sensor
-// HX711 leftHandle = HX711(36, 37);                 //Port 36 37         Left handle pressure sensor
+HX711 RightHandle = HX711(36, 37);                 //Port 34 35         Right handle pressure sensor
+HX711 LeftHandle = HX711(34, 35);                 //Port 36 37         Left handle pressure sensor
 
 void setup() {
     Serial.begin(9600);
 
     Serial.println(F("Starting"));
+
+    //Heartbeatpin
+    pinMode(HEARTBEAT_PIN, INPUT_PULLUP);
 
     // LMIC initf
     os_init();
@@ -260,39 +265,40 @@ void loop() {
 
     // /*---------------PRESSURE DATA--------------------*/
     // Serial.println("Getting Pressure data...");
-    // PressureData rightHandleData = GetPressure(RightHandle, SensorID::four_black);
-    // PressureData leftHandleData = GetPressure(LeftHandle, SensorID::ten);
+    PressureData rightHandleData = GetPressure(RightHandle, SensorID::ten);
+    PressureData leftHandleData = GetPressure(LeftHandle, SensorID::four_black);
 
     // translate float value to int 16 bit *100 get rid of the .
-    // int16_t rightAvg = (int16_t)(rightHandleData.GetAvg() * 100);
-    // int16_t rightMax = (int16_t)(rightHandleData.GetMax() * 100);
-    // int16_t rightMin = (int16_t)(rightHandleData.GetMin() * 100);
-    // int16_t leftAvg = (int16_t)(leftHandleData.GetAvg() * 100);
-    // int16_t leftMax = (int16_t)(leftHandleData.GetMax() * 100);
-    // int16_t leftMin = (int16_t)(leftHandleData.GetMin() * 100);
+    int16_t rightAvg = (int16_t)(rightHandleData.GetAvg() * 100);
+    int16_t rightMax = (int16_t)(rightHandleData.GetMax() * 100);
+    int16_t rightMin = (int16_t)(rightHandleData.GetMin() * 100);
+    int16_t leftAvg = (int16_t)(leftHandleData.GetAvg() * 100);
+    int16_t leftMax = (int16_t)(leftHandleData.GetMax() * 100);
+    int16_t leftMin = (int16_t)(leftHandleData.GetMin() * 100);
     // /*---------------PRESSURE DATA--------------------*/
 
 
-    // HX711 RightHandle = HX711(5, 52); //Port 9 8
-    PressureData rightHandleData = GetPressure(RightHandle, SensorID::ten);
-    rightHandleData.PrintValues();
-
-
-
-
     /*---------------HEART RATE DATA--------------------*/
-    //Serial.println("Getting Heart Rate data...");
-    //int16_t avgHR = (int16_t)GetAvgHR(pulseSensor);    //Get Accelerometer data
+    Serial.println("Getting Heart Rate data...");
+    int16_t avgHR;
+    if (isMoving == true)
+    {
+        avgHR = (int16_t)GetAvgHR(HEARTBEAT_PIN); //Get Accelerometer data
+    }
+    else
+    {
+        avgHR = (int16_t)0;
+    }
     /*---------------HEART RATE DATA--------------------*/
 
     // /*---------------MOCK DATA (13 bytes)--------------------*/
-    int16_t rightAvg = 60;
-    int16_t rightMax = 75;
-    int16_t rightMin = 30;
-    int16_t leftAvg = 45;
-    int16_t leftMax = 64;
-    int16_t leftMin = 12;
-    int16_t avgHR = 60;
+    // int16_t rightAvg = 60;
+    // int16_t rightMax = 75;
+    // int16_t rightMin = 30;
+    // int16_t leftAvg = 45;
+    // int16_t leftMax = 64;
+    // int16_t leftMin = 12;
+    // int16_t avgHR = 60;
     // bool isMoving = 1;
     /*---------------MOCK DATA--------------------*/
 
