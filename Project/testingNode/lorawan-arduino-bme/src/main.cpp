@@ -163,8 +163,8 @@ void onEvent (ev_t ev) {
 ////////////OUR STUFF//////////////////
 // SoftwareSerial gpsSensor(GPS_TX, GPS_RX);       //GPS
 MPU9250 accelerometer(Wire, 0x68);                 //Port SCL SDA       Accelerometer
-HX711 RightHandle = HX711(36, 37);                 //Port 34 35         Right handle pressure sensor
-HX711 LeftHandle = HX711(34, 35);                 //Port 36 37         Left handle pressure sensor
+HX711 RightHandle = HX711(34, 35);                 //Port 36 37         Right handle pressure sensor
+HX711 LeftHandle = HX711(36, 37);                  //Port 34 35         Left handle pressure sensor
 
 void setup() {
     Serial.begin(9600);
@@ -248,15 +248,15 @@ void loop() {
     //PrintPressure();
 
     /*---------------GPS DATA--------------------*/
-    //Serial.println("Getting GPS data...");
-    //String gpsData = GetGpsData(gpsSensor);
-    //Serial.println(gpsData);
+    Serial.println("Getting GPS data...");
+    String gpsData = GetGpsData(gpsSensor);
+    Serial.println(gpsData);
     /*---------------GPS DATA--------------------*/
     
     /*---------------ACCELEROMETER DATA--------------------*/
     Serial.println("Getting Accelerometer data...");
     bool isMoving = IsMoving(accelerometer);    //Get Accelerometer data
-    //double temperature = accelerometer.getTemperature_C();
+    double temperature = accelerometer.getTemperature_C();
     Serial.print("Accelerometer isMoving: ");
     Serial.println(isMoving);
     Serial.print("Accelerometer temperature: ");
@@ -265,8 +265,8 @@ void loop() {
 
     // /*---------------PRESSURE DATA--------------------*/
     // Serial.println("Getting Pressure data...");
-    PressureData rightHandleData = GetPressure(RightHandle, SensorID::four_black);
-    PressureData leftHandleData = GetPressure(LeftHandle, SensorID::ten);
+    PressureData rightHandleData = GetPressure(RightHandle, SensorID::ten);
+    PressureData leftHandleData = GetPressure(LeftHandle, SensorID::four_black);
 
     // translate float value to int 16 bit *100 get rid of the .
     int16_t rightAvg = (int16_t)(rightHandleData.GetAvg() * 100);
@@ -275,6 +275,13 @@ void loop() {
     int16_t leftAvg = (int16_t)(leftHandleData.GetAvg() * 100);
     int16_t leftMax = (int16_t)(leftHandleData.GetMax() * 100);
     int16_t leftMin = (int16_t)(leftHandleData.GetMin() * 100);
+    if(rightAvg < 0) rightAvg = 0;
+    if(rightMax < 0) rightMax = 0;
+    if(rightMin < 0) rightMin = 0;
+    if(leftAvg < 0) leftAvg = 0;
+    if(leftMax < 0) leftMax = 0;
+    if(leftMin < 0) leftMin = 0;
+    
     // /*---------------PRESSURE DATA--------------------*/
 
 
