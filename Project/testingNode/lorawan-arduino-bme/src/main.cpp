@@ -163,8 +163,8 @@ void onEvent (ev_t ev) {
 ////////////OUR STUFF//////////////////
 // SoftwareSerial gpsSensor(GPS_TX, GPS_RX);       //GPS
 MPU9250 accelerometer(Wire, 0x68);                 //Port SCL SDA       Accelerometer
-HX711 RightHandle = HX711(34, 35);                 //Port 36 37         Right handle pressure sensor
-HX711 LeftHandle = HX711(36, 37);                  //Port 34 35         Left handle pressure sensor
+HX711 LeftHandle = HX711(34, 35);                 //Port 34 35         Left handle pressure sensor
+HX711 RightHandle = HX711(36, 37);                //Port 36 37         Right handle pressure sensor
 
 void setup() {
     Serial.begin(9600);
@@ -248,9 +248,9 @@ void loop() {
     //PrintPressure();
 
     /*---------------GPS DATA--------------------*/
-    Serial.println("Getting GPS data...");
-    String gpsData = GetGpsData(gpsSensor);
-    Serial.println(gpsData);
+    // Serial.println("Getting GPS data...");
+    // String gpsData = GetGpsData(gpsSensor);
+    // Serial.println(gpsData);
     /*---------------GPS DATA--------------------*/
     
     /*---------------ACCELEROMETER DATA--------------------*/

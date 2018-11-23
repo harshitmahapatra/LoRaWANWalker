@@ -28,7 +28,7 @@ PressureData GetPressure(HX711 handle, SensorID sensor)
       }
       else if (sensor == SensorID::four_black)
       {
-        pressure = float(handle.read() - 8524000) / 215380;
+        pressure = float(handle.read() - 8548772) / 215380;
       }
       else
       {
