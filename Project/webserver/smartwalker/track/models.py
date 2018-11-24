@@ -2,14 +2,18 @@ from django.db import models
 
 # Create your models here.
 class SensorData(models.Model):
-    celcius = models.DecimalField(max_digits=10,decimal_places=7)
-    humidity = models.DecimalField(max_digits=10,decimal_places=7)
-    pressure = models.IntegerField(default=0)
+    leftHandPressure = models.DecimalField(max_digits=10,decimal_places=4, default=0)
+    rightHandPressure = models.DecimalField(max_digits=10,decimal_places=4, default=0)
+    heartRate = models.DecimalField(max_digits=10, decimal_places=4, default=0)
     movement = models.BooleanField(default=False)
     
     def __str__(self):
-        summary = "Celcius: " + str(self.celcius) + " Humidity: " + str(self.humidity) + " Pressure: " + str(self.pressure) + " Movement: " + str(self.movement) + "\n"
+        summary = \
+            "Left hand pressure: " + str(self.leftHandPressure) + \
+            " Right hand pressure: " + str(self.rightHandPressure) + \
+            " Heart rate: " + str(self.heartRate) + \
+            " Movement: " + str(self.movement) + "\n"
         return summary
+
     def getsummary(self):
-        summary = "Celcius: " + str(self.celcius) + " Humidity: " + str(self.humidity) + " Pressure: " + str(self.pressure) + " Movement: " + str(self.movement) + "\n"
-        return summary
+        return self.__str__()

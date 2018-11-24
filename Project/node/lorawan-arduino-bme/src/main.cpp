@@ -161,10 +161,13 @@ void onEvent (ev_t ev) {
 }
 
 ////////////OUR STUFF//////////////////
-// SoftwareSerial gpsSensor(GPS_TX, GPS_RX);       //GPS
-MPU9250 accelerometer(Wire, 0x68);                 //Port SCL SDA       Accelerometer
+// SoftwareSerial gpsSensor(GPS_TX, GPS_RX);      //GPS
+MPU9250 accelerometer(Wire, 0x68);                //Port SCL SDA       Accelerometer
 HX711 LeftHandle = HX711(34, 35);                 //Port 34 35         Left handle pressure sensor
 HX711 RightHandle = HX711(36, 37);                //Port 36 37         Right handle pressure sensor
+unsigned long stopTime;
+unsigned long maxStoppedTime = 30000;             //30 seconds
+////////////OUR STUFF//////////////////
 
 void setup() {
     Serial.begin(9600);
@@ -229,7 +232,7 @@ void setup() {
 
     // gpsSensor.begin(9600);
 
-    // // start communication with Accelerometer
+    // start communication with Accelerometer
     int status = accelerometer.begin();
     if (status < 0)
     {
@@ -244,24 +247,34 @@ void setup() {
 
 }
 
-void loop() {
-    //PrintPressure();
-
+int PollSensors(){
     /*---------------GPS DATA--------------------*/
     // Serial.println("Getting GPS data...");
     // String gpsData = GetGpsData(gpsSensor);
     // Serial.println(gpsData);
-    /*---------------GPS DATA--------------------*/
-    
+    /*-------------------------------------------*/
+
     /*---------------ACCELEROMETER DATA--------------------*/
     Serial.println("Getting Accelerometer data...");
-    bool isMoving = IsMoving(accelerometer);    //Get Accelerometer data
-    double temperature = accelerometer.getTemperature_C();
-    Serial.print("Accelerometer isMoving: ");
-    Serial.println(isMoving);
-    Serial.print("Accelerometer temperature: ");
-    Serial.println(accelerometer.getTemperature_C());
-    /*---------------ACCELEROMETER DATA--------------------*/
+    bool isMoving = IsMoving(accelerometer); //Get Accelerometer data
+    /*-----------------------------------------------------*/
+
+    if (!isMoving){
+        Serial.print("Walker is Stopped");
+
+        if (stopTime == 0) {
+            Serial.println("Just Stopped");
+            stopTime = millis();
+        } else if(millis() - stopTime > maxStoppedTime){
+            Serial.println("Been stopped for a while, dont read sensors");
+            return 0;
+        }
+    }
+    else {
+        stopTime = 0;
+    }
+
+    Serial.println("Walker is active");
 
     // /*---------------PRESSURE DATA--------------------*/
     // Serial.println("Getting Pressure data...");
@@ -270,22 +283,27 @@ void loop() {
 
     // translate float value to int 16 bit *100 get rid of the .
     int16_t rightAvg = (int16_t)(rightHandleData.GetAvg() * 100);
-    int16_t rightMax = (int16_t)(rightHandleData.GetMax() * 100);
-    int16_t rightMin = (int16_t)(rightHandleData.GetMin() * 100);
+    // int16_t rightMax = (int16_t)(rightHandleData.GetMax() * 100);
+    // int16_t rightMin = (int16_t)(rightHandleData.GetMin() * 100);
     int16_t leftAvg = (int16_t)(leftHandleData.GetAvg() * 100);
-    int16_t leftMax = (int16_t)(leftHandleData.GetMax() * 100);
-    int16_t leftMin = (int16_t)(leftHandleData.GetMin() * 100);
-    if(rightAvg < 0) rightAvg = 0;
-    if(rightMax < 0) rightMax = 0;
-    if(rightMin < 0) rightMin = 0;
-    if(leftAvg < 0) leftAvg = 0;
-    if(leftMax < 0) leftMax = 0;
-    if(leftMin < 0) leftMin = 0;
-    
-    // /*---------------PRESSURE DATA--------------------*/
+    // int16_t leftMax = (int16_t)(leftHandleData.GetMax() * 100);
+    // int16_t leftMin = (int16_t)(leftHandleData.GetMin() * 100);
+    if (rightAvg < 0)
+        rightAvg = 0;
+    // if (rightMax < 0)
+    //     rightMax = 0;
+    // if (rightMin < 0)
+    //     rightMin = 0;
+    if (leftAvg < 0)
+        leftAvg = 0;
+    // if (leftMax < 0)
+    //     leftMax = 0;
+    // if (leftMin < 0)
+    //     leftMin = 0;
 
+    // /*------------------------------------------------*/
 
-    /*---------------HEART RATE DATA--------------------*/
+    /*---------------HEART RATE DATA---------------------*/
     Serial.println("Getting Heart Rate data...");
     int16_t avgHR;
     if (isMoving == true)
@@ -296,9 +314,9 @@ void loop() {
     {
         avgHR = (int16_t)0;
     }
-    /*---------------HEART RATE DATA--------------------*/
+    /*---------------------------------------------------*/
 
-    // /*---------------MOCK DATA (13 bytes)--------------------*/
+    // /*---------------MOCK DATA (13 bytes)-------------*/
     // int16_t rightAvg = 60;
     // int16_t rightMax = 75;
     // int16_t rightMin = 30;
@@ -307,45 +325,61 @@ void loop() {
     // int16_t leftMin = 12;
     // int16_t avgHR = 60;
     // bool isMoving = 1;
-    /*---------------MOCK DATA--------------------*/
+    /*---------------------------------------------------*/
 
     Serial.print("Right handle avg: ");
     Serial.println(rightAvg);
-    Serial.print("Right handle max: ");
-    Serial.println(rightMax);
-    Serial.print("Right handle min: ");
-    Serial.println(rightMin);
+    // Serial.print("Right handle max: ");
+    // Serial.println(rightMax);
+    // Serial.print("Right handle min: ");
+    // Serial.println(rightMin);
     Serial.print("Left handle avg: ");
     Serial.println(leftAvg);
-    Serial.print("Left handle max: ");
-    Serial.println(leftMax);
-    Serial.print("Left handle min: ");
-    Serial.println(leftMin);
+    // Serial.print("Left handle max: ");
+    // Serial.println(leftMax);
+    // Serial.print("Left handle min: ");
+    // Serial.println(leftMin);
     Serial.print("avgHR: ");
     Serial.println(avgHR);
     Serial.print("isMoving: ");
     Serial.println(isMoving);
-    
-    //shift bits and store the value in bytes
-    mydata[0] = (rightAvg >> 8) & 0xFF;         //rightAvg
-    mydata[1] = rightAvg & 0xFF;
-    mydata[2] = (rightMax >> 8) & 0xFF;         //rightMax
-    mydata[3] = rightMax & 0xFF;
-    mydata[4]= (rightMin >> 8) & 0xFF;          //rightMin
-    mydata[5]= rightMin & 0xFF;
-    mydata[6] = (leftAvg >> 8) & 0xFF;          //leftAvg
-    mydata[7] = leftAvg & 0xFF;
-    mydata[8] = (leftMax >>8) & 0xFF;           //leftMax
-    mydata[9] = leftMax & 0xFF;
-    mydata[10]= (leftMin >> 8) & 0xFF;          //leftMin
-    mydata[11]= leftMin & 0xFF;
-    mydata[12] = (avgHR >> 8) & 0xFF;           //avgHR
-    mydata[13] = avgHR & 0xFF;
-    mydata[14] = isMoving & 0xFF;               //isMoving
 
-    // Start job
-    do_send(&sendjob);
-    
-    os_runloop_once();
+    //shift bits and store the value in bytes
+    // mydata[0] = (rightAvg >> 8) & 0xFF; //rightAvg
+    // mydata[1] = rightAvg & 0xFF;
+    // mydata[2] = (rightMax >> 8) & 0xFF; //rightMax
+    // mydata[3] = rightMax & 0xFF;
+    // mydata[4] = (rightMin >> 8) & 0xFF; //rightMin
+    // mydata[5] = rightMin & 0xFF;
+    // mydata[6] = (leftAvg >> 8) & 0xFF; //leftAvg
+    // mydata[7] = leftAvg & 0xFF;
+    // mydata[8] = (leftMax >> 8) & 0xFF; //leftMax
+    // mydata[9] = leftMax & 0xFF;
+    // mydata[10] = (leftMin >> 8) & 0xFF; //leftMin
+    // mydata[11] = leftMin & 0xFF;
+    // mydata[12] = (avgHR >> 8) & 0xFF; //avgHR
+    // mydata[13] = avgHR & 0xFF;
+    // mydata[14] = isMoving & 0xFF; //isMoving
+
+    mydata[0] = (rightAvg >> 8) & 0xFF; //rightAvg
+    mydata[1] = rightAvg & 0xFF;
+    mydata[2] = (leftAvg >> 8) & 0xFF; //leftAvg
+    mydata[3] = leftAvg & 0xFF;
+    mydata[4] = (avgHR >> 8) & 0xFF; //avgHR
+    mydata[5] = avgHR & 0xFF;
+    mydata[6] = isMoving & 0xFF; //isMoving
+
+    return 1;
+}
+
+void loop()
+{
+    if (PollSensors())
+    {
+        // Start job
+        do_send(&sendjob);
+
+        os_runloop_once();
+    }
     delay(15000);
 }

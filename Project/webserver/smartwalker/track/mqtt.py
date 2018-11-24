@@ -20,9 +20,11 @@ def on_message(client, userdata, msg):
     full_json = Payload(msg.payload)
     data = full_json.__dict__["payload_fields"]
     print(data)
-    #sd = SensorData(celcius = data["celcius"],humidity = data["humidity"], pressure = data["pressure"], movement = bool(data["m"]))
-    #sd.save()
+    sd = SensorData(leftHandPressure=data["leftPressure"], rightHandPressure=data["rightPressure"], heartRate=data["avgHR"], movement=data["isMoving"])
+    print(sd)
+    sd.save()
     print("succesfull!!")
+    #sd = SensorData(celcius = data["celcius"],humidity = data["humidity"], pressure = data["pressure"], movement = bool(data["m"]))
     
 def on_disconnect(client, userdata, rc):
     client.loop_stop(force=False)
