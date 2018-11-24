@@ -1,0 +1,1 @@
+int GetAvgHR(int8_t);

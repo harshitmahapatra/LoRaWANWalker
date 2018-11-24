@@ -1,20 +1,16 @@
 #include <Arduino.h>
-#define SIGNAL_PIN 0
-#define BUTTON_PIN 7
 
-int BPM, avgValue = 0, LastTime;
 
-void setup()
+int BPM, avgValue, LastTime, InitTime;
+
+int GetAvgHR(int8_t SIGNAL_PIN)
 {
-    Serial.begin(9600);
     LastTime = millis();
-    pinMode(BUTTON_PIN, INPUT_PULLUP);
-}
-
-void loop()
-{
-    if (digitalRead(BUTTON_PIN) == LOW)
+    avgValue = 550;
+    BPM=0;
+    while(!(60<BPM && BPM<120))
     {
+        //Serial.println(avgValue);
         //Serial.println(analogRead(0));
 
         avgValue = avgValue * 0.95 + analogRead(SIGNAL_PIN) * 0.05;
@@ -32,7 +28,10 @@ void loop()
             //Serial.print("    ");
             //Serial.print(analogRead(0)-avgValue);
             //Serial.print("    ");
-            Serial.println(BPM);
-            delay(450);
+            //Serial.println(BPM);
+            delay(400);
         }
         delay(5);
+    }
+    return BPM;
+}
