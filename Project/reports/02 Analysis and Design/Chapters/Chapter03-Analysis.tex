@@ -9,22 +9,10 @@ In \cite{erdoush2014wireless} the authors proposed an architecture with a sensor
 In \cite{postolache2011smart} the authors built a smart walker which uses bluetooth to connect to a nearby mobile phone and use it for analysis and computation of data. This approach has several demerits such as, the range of bluetooth, the inaccurate assumption that walker users will always have a smartphone with them, system being dependent on the computational power of the smartphone and low security of bluetooth. Moreover, we need to also take into consideration the energy consumption of both the sensors on the walker and that of the smartphone.
 
 Given that the LoRaWAN protocol overcomes exactly these demerits, it makes sense to build a smart walker which uses LoRaWAN to send data to a server.
-This is exactly what we want to test with our hypothesis which can be stated as "Is it practical to monitor walkers and their users by sending data over LoRaWAN?". We define a system to be practical if it has the following properties:
+This is exactly what we want to test with our hypothesis.
 
-\begin{enumerate}
-	\item Feasibility: We define a system to be feasible if it is possible to build a system in a given time frame with finite resources.
-	\item Consistency: We define a system to be consistent if it behaves the same way over a period of time in response to a given action.
-	\item Accuracy: We defience a system to be accurate if its output has low deviation with respect to the true value of a given measurement.
-	\item Reliability: We define a system to be reliable if it has a low probability of failure.
-	\item Durability: We define a system to be reliable if it has a long operational life.
-	\item Modularity: We define a system to be modular if it is relatively easy to add or remove components from it.
-	\item Scalability: We define a system to be scalable based on how well it performs in case of increase in the number of users.
-	\item Servicability: We define a system to be servicable if it relatively easy to diagnose and fix errors occuring in the system.
-\end{enumerate}
 
 We also decided to collect the following information from the sensors based on previous work \cite{postolache2011smart} and our requirements: 
-
-
 
 \subsubsection{Location tracking:}
 This allows us to analyse how sedentary this user is and take preventive action. The collected data can also be used for tracking what kind of areas people using walkers are more likely to frequent, getting insights into what areas are good for walker users and what areas might be worth investing in more infrastructure.

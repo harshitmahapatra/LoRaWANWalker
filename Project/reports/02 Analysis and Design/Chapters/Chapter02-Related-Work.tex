@@ -1,10 +1,18 @@
 \chapter{Related Work}
 \label{cha:related-work}
 
+This section briefly covers the relevant related work. At first we have a look at comprehensive surveys about using Internet of Things for healthcare and mobile health monitoring systems. We then look at an example architecture which uses Arduino and Raspberry Pi for monitoring of environment using WPAN. We then move on to a system which uses the same components but uses LoRaWAN protocol instead of WPAN. We then briefly take a diversion to give a brief summary about LoRaWAN, its working and security. This is followed by a description of recent implementation of smart walker. Finally we have a look at studies describing some of the applications of collected data. 
+
 
 A comprehensive survey on the application of the Internet of Things for healthcare was done by Islam et al. \cite{islam2015internet}. The paper presented the current IoT healthcare networks. It discussed the topology, architecture, and platform of the said networks. It also presented the current security models used in healthcare networks and proposed a novel security model for the same. Finally, the paper briefly presented some of the IoT healthcare technologies such as grid computing, big data, ambient intelligence, etc.
 
 Alahmadi et al. \cite{alahmadi2011smart} in their paper discussed in detail about the architecture of mobile e-health monitoring systems. They proposed a decentralized architecture, where the sensors are connected to a mobile device via Bluetooth, which in turn is connected to a server over the internet. They also presented a Wide Area Network architecture in which the mobile device is connected to a base station, which in turn is connected to a server over the internet. This server can then be accessed by the healthcare professionals to provide proper advice in case of unusual biosignals.
+
+Ferdoush et al. \cite{ferdoush2014wireless} have done interesting work on the application of Wireless Personal Area Network (WPAN) for environment monitoring. They use Arduino Uno as their sensor node and the Raspberry Pi as their gateway. The Raspberry Pi itself acts as a hub containing the gateway application, database server, PHP web application, web server, and HTML web interface.
+
+
+Mdhaffar et al. \cite{mdhaffar2017iot} have used a hardware setup similar to Ferdoush but with LoRaWAN to monitor healthcare. They collected sensor data using Arduino and sent it to a Raspberry Pi acting as the gateway using LoRaWAN. The Pi then forwards the data to a network server which is connected to an application server. They collected data on blood pressure, glucose level and temperature and were able to successfully monitor the said data. They were also able to get a large coverage area with low power consumption. 
+
 
 A survey on the LoRaWAN technology was presented by Silva et al. \cite{de2017lorawan}. The paper presents the advantages of LoRaWAN over GSM architecture. This includes low power consumption, low maintenance, cheap hardware, and well-defined security measures. It then also presents some of the disadvantages of LoRaWAN such as low bandwidth, slow transmission rate and lack of established infrastructure. It then presents the architecture of a typical LoRaWAN network consisting of sensor nodes, gateway, network server and web application. 
 This is followed by a brief presentation of the two-layer security of LoRaWAN networks in the network and application layer respectively.
@@ -15,16 +23,9 @@ The paper also presents various possible attacks such as compromising the device
 
 Another interesting paper about the security of LoRaWAN was presented by Tomasin et al. \cite{tomasin2017security}. It presents a detailed analysis of attacks on the join procedure of LoRaWAN.
 
-
-Ferdoush et al. \cite{ferdoush2014wireless} have done interesting work on the application of Wireless Personal Area Network (WPAN) for environment monitoring. They use Arduino Uno as their sensor node and the Raspberry Pi as their gateway. The Raspberry Pi itself acts as a hub containing the gateway application, database server, PHP web application, web server, and HTML web interface. This architecture fails to leverage the cloud infrastructure model.
-
-
-Mdhaffar et al. \cite{mdhaffar2017iot} have used a hardware setup similar to Ferdoush but with LoRaWAN to monitor healthcare. They collected sensor data using Arduino and sent it to a Raspberry Pi acting as the gateway using LoRaWAN. The Pi then forwards the data to a network server which is connected to an application server. This is quite similar to our project's architecture. They collected data on blood pressure, glucose level and temperature and were able to successfully monitor the said data. They were also able to get a large coverage area with low power consumption. 
-
 Although several attempts have been made to create a smart walker, the most similar one to our project was done by Postolache et al. \cite{postolache2011smart}. In their project they connected a MEMS accelerometer, Doppler radar and flexible force sensor to an Arduino fixed to a walker. The Arduino then sent the sensor data to an Android device via Bluetooth. The mobile device contained an application to monitor and analyze the data. This approach is significantly different from ours, as our project relies on the cloud for monitoring and analysis of collected data. Furthermore, in our project, the walker is connected to a LoRaWAN gateway directly as we do not expect the walker users to always carry a smartphone, and we aim to achieve remote monitoring with a range far greater than that of Bluetooth.
 
 Banaee et al. \cite{banaee2013data} in their paper present the various use cases for data collected through health monitoring systems. They propose that the data can be used for anomaly detection, decision making and sending an alarm to authorities in case of emergencies. They further discuss the architecture for mining the said and the use of various popular machine learning and statistical algorithms for the same. They also present a brief summary of the various types of acquired data and their properties.
-
 
 
 Gondalia et al.\cite{gondalia2018iot} recently presented an interesting paper on the remote health tracking of soldiers in battlefield using IoT. They propose an architecture in which each soldier has a sensor node which is connected to a base node belonging to squadron leader. The connection between the base node and sensor node is via Wireless Body Area Sensor Networks (WBASN). The squadron leader's node, in turn, is connected to a control room via LoRaWAN. The control room contains access to the cloud which is then used for storage and analysis. They further propose that the collected data can be fed to a K-Means clustering algorithm to classify sensor status at different events such as sitting, walking, sleeping, etc.
