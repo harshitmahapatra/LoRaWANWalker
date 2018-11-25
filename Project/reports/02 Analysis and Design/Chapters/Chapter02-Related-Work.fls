@@ -1,0 +1,8 @@
+PWD /Users/dkthmare/University/IoT/Project/reports/02 Analysis and Design/Chapters
+INPUT /usr/local/texlive/2018/texmf.cnf
+INPUT /usr/local/texlive/2018/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT Chapter02-Related-Work.tex
+OUTPUT Chapter02-Related-Work.log
+INPUT /usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm

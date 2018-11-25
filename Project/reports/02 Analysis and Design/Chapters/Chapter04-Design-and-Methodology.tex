@@ -2,36 +2,45 @@
 \label{cha:design-and-method}
 
 Based on our analysis and the information we want to collect, we decided on the following architecture for our system:
+
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\linewidth]{gfx/image1}
+\includegraphics[width=1\linewidth]{gfx/architecture}
 \caption{Proposed architecture}
 \label{fig:image1}
 \end{figure}
 
-Based on our proposed architecture, we can summarize the components and their functionalities as follows:
+\subsection{Components and their interactions: }
 
-\begin{center}
-\begin{tabular}{|c|c|}
-\hline
-Component	& Function \\ 
-\hline
-Walker	&  Helps user walk\\ 
-LoRaWAN Node	& Collects and sends param \\ 
-Sensors		& Extracts user/walker info \\ 
-LoRaWAN Gateway	& Relays LoRaWAN packets  \\ 
-Server	& Receives and stores data \\
-\hline
 
-\end{tabular} 
+\subsubsection{LoRaWAN node}
+Polls the sensors in predefined intervals and sends them through LoRaWAN every few minutes
 
-\end{center}
+\subsubsection{LoRaWAN gateway}
+Receives LoRaWAN packets and relays them to "The Things Network" through the Semtech UDP protocol
 
-The proposed architecture can be realized in a number of ways, meaning we had to make the following choices:
+\subsubsection{The Things Network (TTN)}
+It is possible to have our gateway communicate directly with our server, but we decided to use TTN because it provides some very useful features out of the box, some of them being:
+
 \begin{itemize}
-	\item Use sensors with inbuilt LoRa functionality or use a single-board computer connected to sensors and LoRa transmitter ?
-	\item What hardware to use to interface with the sensors and act as the node ?
-	\item What hardware to use as LoRaWAN gateway ?
+	\item Node authentication
+	\item Packet deserialization
+	\item Integration with MQTT, HTTP, Google Cloud, Amazon AWS and Azure
+	\item Encryption
+	\item Has thousands of registered gateways
+\end{itemize}
+
+TTN has become the standard in LoRaWAN applications, due to its unparalleled potencial for scalability, integration and security. In our case it deserializes the packets coming from the gateways and publishes them in an MQTT broker 
+
+\subsubsection{Server}
+The server will subscribe to the MQTT broker on TTN and store the information received from there, while also exposing an API that can be used, for example, to have other services process the data and display it to the interested parties
+
+
+\subsection{The proposed architecture can be realized in a number of ways, meaning we had to make the following choices:}
+\begin{itemize}
+	\item Use sensors with inbuilt LoRa functionality or use a single-board computer connected to sensors and LoRa transmitter?
+	\item What hardware to use to interface with the sensors and act as the node?
+	\item What hardware to use as LoRaWAN gateway?
 \end{itemize}
 
 
@@ -105,7 +114,7 @@ To test consistency we will devise some usage scenarios and for each of them get
 In order to measure accuracy we need to find the difference between the measured value of each sensor and compare it to the true value. This means we need a test tailored to each sensor. For this, we will perform 10 measurements from each sensor after performing identical displacement or task and then find standard deviation of the measured values from the true value.
 
 \subsubsection{Reliability:}
-To measure reliability we will use the walker until we get 20 measurements and calculate the percentage of times they got stored in the server’s database
+To measure reliability we will use the walker for 30 minutes and calculate the percentage of times the sensor data got stored in the server’s database
 
 
 \subsubsection{Durability:}
