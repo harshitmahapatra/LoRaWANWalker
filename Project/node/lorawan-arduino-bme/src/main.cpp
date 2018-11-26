@@ -306,14 +306,14 @@ int PollSensors(){
     /*---------------HEART RATE DATA---------------------*/
     Serial.println("Getting Heart Rate data...");
     int16_t avgHR;
-    if (isMoving == true)
-    {
+    // if (isMoving == true)
+    // {
         avgHR = (int16_t)GetAvgHR(HEARTBEAT_PIN); //Get Accelerometer data
-    }
-    else
-    {
-        avgHR = (int16_t)0;
-    }
+    // }
+    // else
+    // {
+    //     avgHR = (int16_t)0;
+    // }
     /*---------------------------------------------------*/
 
     // /*---------------MOCK DATA (13 bytes)-------------*/

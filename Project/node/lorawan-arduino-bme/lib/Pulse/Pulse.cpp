@@ -41,5 +41,5 @@ int GetAvgHR(int8_t SIGNAL_PIN)
         delay(10);
       
     }
-    return BPM;
+    return BPM/2;
 }
