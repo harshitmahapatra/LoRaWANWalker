@@ -43,8 +43,6 @@ The server will subscribe to the MQTT broker on TTN and store the information re
 	\item What hardware to use as LoRaWAN gateway?
 \end{itemize}
 
-
-
 \subsection{Single-board Computer vs Inbuilt LoRa Sensors:}
 
 We had the option of using a single-board computer (SBC) to interface with all of the sensors (Arduino or Rpi) or using sensors with inbuilt LoRaWAN capabilities.
@@ -101,7 +99,7 @@ Due to its superior computational power, inbuilt networking capabilities, we dec
 Our reasoning is supported by the arguments put forward in \cite{postolache2011smart}.
 
 
-\subsection{Experiments:}
+\subsection{Experiments}
 In order to test our hypothesis, we designed the following experiments:
 
 \subsubsection{Feasibility:}
@@ -116,11 +114,8 @@ In order to measure accuracy we need to find the difference between the measured
 \subsubsection{Reliability:}
 To measure reliability we will use the walker for 30 minutes and calculate the percentage of times the sensor data got stored in the server’s database
 
-
 \subsubsection{Durability:}
 Unfortunately, we don’t have enough time to test the durability of our system, so we’ll leave this as a possible improvement over our project
-
-
 
 \subsubsection{Modularity:}
 In order to test the modularity of the system, we will deliberately only integrate the GPS sensor in the testing phase of the project, this way we can measure how much time it takes and analyse the complications brought by doing so.

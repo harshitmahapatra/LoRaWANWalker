@@ -3,16 +3,14 @@ from .deserializer import Payload
 from .models import SensorData
 APPID  = "56470000001"
 PW    = "ttn-account-v2.oi0FW4p2vZlZgXx1hutQzHfE8EfU9HTeSMY89cEfONc"
-#SensorData.objects.all().delete()
+# SensorData.objects.all().delete()
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
 
-    # Subscribing in on_connect() means that if we lose the connection and
-    # reconnect then subscriptions will be renewed.
+    # subscribe to all the devices
     client.subscribe('+/devices/+/up')
-    #client.subscribe('test')
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
@@ -20,11 +18,16 @@ def on_message(client, userdata, msg):
     full_json = Payload(msg.payload)
     data = full_json.__dict__["payload_fields"]
     print(data)
-    sd = SensorData(leftHandPressure=data["leftPressure"], rightHandPressure=data["rightPressure"], heartRate=data["avgHR"], movement=data["isMoving"])
+    sd = SensorData(\
+        leftHandPressure=data["leftPressure"], \
+        rightHandPressure=data["rightPressure"], \
+        heartRate=data["avgHR"], \
+        movement=data["isMoving"]
+    )
+
     print(sd)
     sd.save()
     print("succesfull!!")
-    #sd = SensorData(celcius = data["celcius"],humidity = data["humidity"], pressure = data["pressure"], movement = bool(data["m"]))
     
 def on_disconnect(client, userdata, rc):
     client.loop_stop(force=False)
