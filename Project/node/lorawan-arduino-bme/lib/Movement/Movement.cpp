@@ -7,10 +7,18 @@
 //Finds out if the walker is moving or not
 bool IsMoving(MPU9250 IMU)
 {
-  IMU.readSensor();
+  int i;
+  for(i = 0; i < 1; i++){
+    IMU.readSensor();
+    // float isMovingValue = IMU.getAccelX_mss() - 0.20 + IMU.getAccelY_mss() + 1.59 + IMU.getAccelZ_mss() + 9.61;
+    float isMovingValue = abs(IMU.getGyroX_rads()) + abs(IMU.getGyroY_rads()) + abs(IMU.getGyroZ_rads());
 
-  // float isMovingValue = IMU.getAccelX_mss() - 0.20 + IMU.getAccelY_mss() + 1.59 + IMU.getAccelZ_mss() + 9.61;
-  float isMovingValue = abs(IMU.getGyroX_rads()) + abs(IMU.getGyroY_rads()) + abs(IMU.getGyroZ_rads());
+    if (isMovingValue > THRESHOLD)
+    {
+      return true;
+    }
 
-  return (isMovingValue > THRESHOLD);
+    delay(20);
+  }
+  return false;
 }
