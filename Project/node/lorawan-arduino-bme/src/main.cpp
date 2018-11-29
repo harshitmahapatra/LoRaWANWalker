@@ -308,7 +308,7 @@ int PollSensors(){
     int16_t avgHR;
     // if (isMoving == true)
     // {
-        avgHR = (int16_t)GetAvgHR(HEARTBEAT_PIN); //Get Accelerometer data
+        avgHR = (int16_t)GetAvgHRMain(HEARTBEAT_PIN); //Get Accelerometer data
     // }
     // else
     // {
