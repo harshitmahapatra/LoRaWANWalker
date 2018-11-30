@@ -30,11 +30,10 @@
 //#include "LoraEncoder.h"
 #include "Movement.h"
 #include "Pulse.h"
-//#include <SoftwareSerial.h>
-// #include <GPS.h>
-// #define GPS_TX 4
-// #define GPS_RX 3
-//#define GPS_RX 3
+#include <SoftwareSerial.h>
+#include <GPS.h>
+#define GPS_RX 32
+#define GPS_TX 33
 #define HEARTBEAT_PIN A15
 
 #define DATA_SIZE 15
@@ -161,7 +160,7 @@ void onEvent (ev_t ev) {
 }
 
 ////////////OUR STUFF//////////////////
-// SoftwareSerial gpsSensor(GPS_TX, GPS_RX);      //GPS
+SoftwareSerial gpsSensor(GPS_TX, GPS_RX);         //GPS
 MPU9250 accelerometer(Wire, 0x68);                //Port SCL SDA       Accelerometer
 HX711 LeftHandle = HX711(34, 35);                 //Port 34 35         Left handle pressure sensor
 HX711 RightHandle = HX711(36, 37);                //Port 36 37         Right handle pressure sensor
@@ -230,7 +229,7 @@ void setup() {
 
     ////////////OUR STUFF//////////////////
 
-    // gpsSensor.begin(9600);
+    gpsSensor.begin(9600);
 
     // start communication with Accelerometer
     int status = accelerometer.begin();
@@ -249,9 +248,9 @@ void setup() {
 
 int PollSensors(){
     /*---------------GPS DATA--------------------*/
-    // Serial.println("Getting GPS data...");
-    // String gpsData = GetGpsData(gpsSensor);
-    // Serial.println(gpsData);
+    Serial.println("Getting GPS data...");
+    String gpsData = GetGpsData(gpsSensor);
+    Serial.println(gpsData);
     /*-------------------------------------------*/
 
     /*---------------ACCELEROMETER DATA--------------------*/

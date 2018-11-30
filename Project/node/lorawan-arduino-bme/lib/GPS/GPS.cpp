@@ -20,7 +20,8 @@ String GetGpsData(SoftwareSerial ss)
   }
   delay(2000);
   out = CutGpsString(out);
-  return GetRelevantData("$GPGGA,110617.00,41XX.XXXXX,N,00831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42");
+  //return GetRelevantData("$GPGGA,110617.00,41XX.XXXXX,N,00831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42");
+  return GetRelevantData(out);
 }
 
 String GetRelevantData(String s)
