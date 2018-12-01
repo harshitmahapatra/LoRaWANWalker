@@ -23,6 +23,8 @@
     </style>
     <table table class="alt">
         <tr>
+            <th>Node ID</th>
+            <th>Timestamp</th>
             <th>Heart Beat (bpm)</th>
             <th>Movement Detection</th>
             <th>Left Hand Pressure (kg)</th>
@@ -30,7 +32,8 @@
         </tr>
         {% for data_point in data_lines %}
         <tr>
-            
+                <th>{{ data_point.nodeID }}</th>
+                <th>{{ data_point.timestamp }}</th>
                 <th>{{ data_point.heartRate }}</th>
                 <th>{{ data_point.movement }}</th>
                 <th>{{ data_point.leftHandPressure }}</th>

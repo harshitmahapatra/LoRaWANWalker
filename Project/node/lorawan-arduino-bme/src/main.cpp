@@ -249,8 +249,13 @@ void setup() {
 int PollSensors(){
     /*---------------GPS DATA--------------------*/
     Serial.println("Getting GPS data...");
-    String gpsData = GetGpsData(gpsSensor);
-    Serial.println(gpsData);
+    GetGpsData(gpsSensor);
+    float latitude = GetLatitude();
+    float longitude = GetLongitude();
+    Serial.print("latitude: ")
+    Serial.println(latitude)
+    Serial.print("longitude: ")
+    Serial.println(longitude)
     /*-------------------------------------------*/
 
     /*---------------ACCELEROMETER DATA--------------------*/

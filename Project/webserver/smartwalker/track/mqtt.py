@@ -1,6 +1,8 @@
 import paho.mqtt.client as mqtt
 from .deserializer import Payload
 from .models import SensorData
+from datetime import datetime
+
 APPID  = "56470000001"
 PW    = "ttn-account-v2.oi0FW4p2vZlZgXx1hutQzHfE8EfU9HTeSMY89cEfONc"
 # SensorData.objects.all().delete()
@@ -15,14 +17,19 @@ def on_connect(client, userdata, flags, rc):
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     #print(msg.topic+" "+str(msg.payload))
-    full_json = Payload(msg.payload)
-    data = full_json.__dict__["payload_fields"]
-    print(data)
+    print("bla" + str(msg.payload))
+    print("bla" + str(msg))
+
+    payload = Payload(msg.payload).__dict__
+    fields = payload["payload_fields"]
+    print(payload)
     sd = SensorData(\
-        leftHandPressure=data["leftPressure"], \
-        rightHandPressure=data["rightPressure"], \
-        heartRate=data["avgHR"], \
-        movement=data["isMoving"]
+        leftHandPressure=fields["leftPressure"], \
+        rightHandPressure=fields["rightPressure"], \
+        heartRate=fields["avgHR"], \
+        movement=fields["isMoving"], \
+        timestamp=datetime.now(), \
+        nodeID=payload["dev_id"]
     )
 
     print(sd)

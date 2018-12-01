@@ -6,11 +6,12 @@
 //         time,latitude,longitude,
 //  $GPGGA,110617.00,41XX.XXXXX,N,00831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42
 //
-
+float _latitude, _longitude;
 
 String GetGpsData(SoftwareSerial ss)
 { 
   String out = "";
+  out.
   while (ss.available() > 0){
     // get the byte data from the GPS
     byte gpsData = ss.read();
@@ -20,30 +21,35 @@ String GetGpsData(SoftwareSerial ss)
   }
   delay(2000);
   out = CutGpsString(out);
-  //return GetRelevantData("$GPGGA,110617.00,41XX.XXXXX,N,00831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42");
-  return GetRelevantData(out);
+  return GetRelevantData("$GPGGA,110617.00,4145.56675,N,00831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42");
+  //return GetRelevantData(out);
 }
 
-String GetRelevantData(String s)
-{
-  //Output String
-  String relevantData="";
+float GetLatitude(){
+  return _latitude;
+}
 
+float GetLongitude(){
+  return _latitude;
+}
+
+void GetRelevantData(String s)
+{
   //Time
-  String locationTime = CutStringAtComma(s,0);
-  relevantData += locationTime.substring(0,locationTime.length()-3);
+  // String locationTime = CutStringAtComma(s,0);
+  // relevantData += locationTime.substring(0,locationTime.length()-3);
 
   //Latitude
   String latitude = CutStringAtComma(s,1);
-  relevantData += ",";
-  relevantData += latitude;
+  Serial.println("converting %s to float", latitude)
+  _latitude = latitude.toFloat()
+  Serial.println("converting %f to float", _latitude)
 
   //Longitude
   String longitude = CutStringAtComma(s,3);
-  relevantData += ",";
-  relevantData += longitude;
-
-  return relevantData;
+  Serial.println("converting %s to float", longitude)
+  _longitude = longitude.toFloat()
+  Serial.println("converting %f to float", _longitude)
 }
 
 //Cut output at specific comma
