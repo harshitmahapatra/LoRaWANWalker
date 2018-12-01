@@ -36,6 +36,7 @@
 #define GPS_TX 33
 #define HEARTBEAT_PIN A15
 
+//lefthandle(2) righthandle(2) hr(2) lat(4) long(4) mov(1)
 #define DATA_SIZE 15
 // LoRaWAN NwkSKey, network session key
 // This is the default Semtech key, which is used by the prototype TTN
@@ -250,8 +251,8 @@ int PollSensors(){
     /*---------------GPS DATA--------------------*/
     Serial.println("Getting GPS data...");
     GetGpsData(gpsSensor);
-    float latitude = GetLatitude();
-    float longitude = GetLongitude();
+    int32_t latitude = GetLatitude();
+    int32_t longitude = GetLongitude();
     /*-------------------------------------------*/
 
     /*---------------ACCELEROMETER DATA--------------------*/
@@ -283,23 +284,11 @@ int PollSensors(){
 
     // translate float value to int 16 bit *100 get rid of the .
     int16_t rightAvg = (int16_t)(rightHandleData.GetAvg() * 100);
-    // int16_t rightMax = (int16_t)(rightHandleData.GetMax() * 100);
-    // int16_t rightMin = (int16_t)(rightHandleData.GetMin() * 100);
     int16_t leftAvg = (int16_t)(leftHandleData.GetAvg() * 100);
-    // int16_t leftMax = (int16_t)(leftHandleData.GetMax() * 100);
-    // int16_t leftMin = (int16_t)(leftHandleData.GetMin() * 100);
     if (rightAvg < 0)
         rightAvg = 0;
-    // if (rightMax < 0)
-    //     rightMax = 0;
-    // if (rightMin < 0)
-    //     rightMin = 0;
     if (leftAvg < 0)
         leftAvg = 0;
-    // if (leftMax < 0)
-    //     leftMax = 0;
-    // if (leftMin < 0)
-    //     leftMin = 0;
 
     // /*------------------------------------------------*/
 
@@ -308,7 +297,7 @@ int PollSensors(){
     int16_t avgHR;
     // if (isMoving == true)
     // {
-        avgHR = (int16_t)GetAvgHRMain(HEARTBEAT_PIN); //Get Accelerometer data
+    avgHR = (int16_t)GetAvgHRMain(HEARTBEAT_PIN); //Get Accelerometer data
     // }
     // else
     // {
@@ -329,37 +318,16 @@ int PollSensors(){
 
     Serial.print("Right handle avg: ");
     Serial.println(rightAvg);
-    // Serial.print("Right handle max: ");
-    // Serial.println(rightMax);
-    // Serial.print("Right handle min: ");
-    // Serial.println(rightMin);
     Serial.print("Left handle avg: ");
     Serial.println(leftAvg);
-    // Serial.print("Left handle max: ");
-    // Serial.println(leftMax);
-    // Serial.print("Left handle min: ");
-    // Serial.println(leftMin);
     Serial.print("avgHR: ");
     Serial.println(avgHR);
+    Serial.print("latitude: ");
+    Serial.println(latitude);
+    Serial.print("longitude: ");
+    Serial.println(longitude);
     Serial.print("isMoving: ");
     Serial.println(isMoving);
-
-    //shift bits and store the value in bytes
-    // mydata[0] = (rightAvg >> 8) & 0xFF; //rightAvg
-    // mydata[1] = rightAvg & 0xFF;
-    // mydata[2] = (rightMax >> 8) & 0xFF; //rightMax
-    // mydata[3] = rightMax & 0xFF;
-    // mydata[4] = (rightMin >> 8) & 0xFF; //rightMin
-    // mydata[5] = rightMin & 0xFF;
-    // mydata[6] = (leftAvg >> 8) & 0xFF; //leftAvg
-    // mydata[7] = leftAvg & 0xFF;
-    // mydata[8] = (leftMax >> 8) & 0xFF; //leftMax
-    // mydata[9] = leftMax & 0xFF;
-    // mydata[10] = (leftMin >> 8) & 0xFF; //leftMin
-    // mydata[11] = leftMin & 0xFF;
-    // mydata[12] = (avgHR >> 8) & 0xFF; //avgHR
-    // mydata[13] = avgHR & 0xFF;
-    // mydata[14] = isMoving & 0xFF; //isMoving
 
     mydata[0] = (rightAvg >> 8) & 0xFF; //rightAvg
     mydata[1] = rightAvg & 0xFF;
@@ -367,7 +335,15 @@ int PollSensors(){
     mydata[3] = leftAvg & 0xFF;
     mydata[4] = (avgHR >> 8) & 0xFF; //avgHR
     mydata[5] = avgHR & 0xFF;
-    mydata[6] = isMoving & 0xFF; //isMoving
+    mydata[6] = (latitude >> 24) & 0xFF;
+    mydata[7] = (latitude >> 16) & 0xFF;
+    mydata[8] = (latitude >> 8) & 0xFF;
+    mydata[9] = latitude & 0xFF;
+    mydata[10] = (longitude >> 24) & 0xFF;
+    mydata[11] = (longitude >> 16) & 0xFF;
+    mydata[12] = (longitude >> 8) & 0xFF;
+    mydata[13] = longitude & 0xFF;
+    mydata[14] = isMoving & 0xFF; //isMoving
 
     return 1;
 }
