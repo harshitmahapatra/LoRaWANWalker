@@ -1,10 +1,10 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-String CutGpsString(String);
-String GetGpsData(SoftwareSerial);
-String CutStringAtComma(String, int);
-void GetRelevantData(String);
+char* CutGpsString(char*);
+void GetGpsData(SoftwareSerial);
+char* CutStringAtComma(char*, int);
+void GetRelevantData(char*);
 float GetLatitude();
 float GetLongitude();
-String removeDot(String);
+char* removeDot(char*);

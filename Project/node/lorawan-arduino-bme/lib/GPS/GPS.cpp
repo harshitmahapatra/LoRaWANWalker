@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "GPS.h"
 #include <SoftwareSerial.h>
+#include <string.h>
 
 //GPS DATA FORMAT
 //         time,latitude,longitude,
@@ -8,20 +9,22 @@
 //
 int32_t _latitude, _longitude;
 
-String GetGpsData(SoftwareSerial ss)
+void GetGpsData(SoftwareSerial ss)
 { 
-  String out = "";
+  char* out = "";
   while (ss.available() > 0){
     // get the byte data from the GPS
-    byte gpsData = ss.read();
-    char h = (char)gpsData;
-    out+= h;
-    uint8_t i = 0;
+    // byte gpsData = ss.read();
+    // char h = (char)gpsData;
+    // out+= h;
+    // uint8_t i = 0;
+    Serial.print('|');
   }
-  delay(2000);
-  out = CutGpsString(out);
-  GetRelevantData("$GPGGA,110617.00,4145.56675,N,10831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42");
-  //return GetRelevantData(out);
+  Serial.println(' ');
+  char* mock = "$GPGGA,110617.00,4145.56675,N,10831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42";
+  GetRelevantData(mock);
+  //out = CutGpsString(out);
+  //GetRelevantData(out);
 }
 
 float GetLatitude(){
@@ -32,56 +35,62 @@ float GetLongitude(){
   return _longitude;
 }
 
-void GetRelevantData(String s)
+void GetRelevantData(char* s)
 {
   //Time
   // String locationTime = CutStringAtComma(s,0);
   // relevantData += locationTime.substring(0,locationTime.length()-3);
-
+  const char* s2=s;
+  char* a;
+  char* b;
+  a = strdup(s2);
+  b = strdup(s2);
   //Latitude
-  String latitude = CutStringAtComma(s,1);
+  char* latitude = CutStringAtComma(a,2);
+  Serial.println(latitude);
   latitude = removeDot(latitude);
-  _latitude = latitude.toInt();
+  Serial.println(latitude);
+  _latitude = atoi(latitude);
+  Serial.println(_latitude);
   //Longitude
-  String longitude = CutStringAtComma(s,3);
+  char* longitude = CutStringAtComma(b,4);
+  Serial.println(longitude);
   longitude = removeDot(longitude);
-  _longitude = longitude.toInt();
+  Serial.println(longitude);
+  _longitude = atoi(longitude);
+  Serial.println(_longitude);
 }
 
-String removeDot(String s)
+char* removeDot(char* s)
 {
-  String snew="";
-  for(char c:s)
+  char outChar[strlen(s)];
+  int counter=0;
+  for(int i = 0; s[i] != '\0'; i++) 
   {
-    if(c!='.')
-    {
-      snew+=c;
-    }
+      if(s[i]!='.')
+      {
+          outChar[counter]=s[i];
+          counter++;
+      }
   }
-  return snew;
+  return outChar;
 }
 
 //Cut output at specific comma
-String CutStringAtComma(String s, int from)
+char* CutStringAtComma(char* s, int from)
 {
-  int fromPosition, toPosition, counter=0;
-  
-  for(size_t i = 0; i < s.length(); i++)
-  {
-    if(s[i]==',')
-    {
-      counter++;
+  int c=0;
+  char *pt;
+  pt = strtok (s,",");
+  while (pt != NULL) {
+        if(c==from)
+        {
+            return pt;
+        }
+        pt = strtok (NULL, ",");
+        c++;
     }
-    if(from==counter)
-    {
-      fromPosition = i+2;
-    }
-    if(from+1==counter)
-    {
-      toPosition = i+1;
-    }
-  }
-  return s.substring(fromPosition,toPosition);
+  return "";
 }
 
 //Cut whole String to get the needed line

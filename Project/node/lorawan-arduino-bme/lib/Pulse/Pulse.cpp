@@ -48,14 +48,15 @@ int GetAvgHRMain(int8_t SIGNAL_PIN)
 {
   int PastPulse = 0;
   int GetPulse = GetAvgHR(SIGNAL_PIN);
-  int32_t time = millis();
+  int32_t timeEnd = millis()+16000;
   while(abs(PastPulse-GetPulse)>10)
   {
     PastPulse = GetPulse;
     GetPulse = GetAvgHR(SIGNAL_PIN);
-    while(time+15000>millis())
+    if(timeEnd<millis())
     {
-      return -1;
+      Serial.println("Pulse timeout");
+      return 0;
     }
   }
   return PastPulse/2;
