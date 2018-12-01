@@ -21,7 +21,7 @@ void GetGpsData(SoftwareSerial ss)
     Serial.print('|');
   }
   Serial.println(' ');
-  char* mock = "$GPGGA,110617.00,4145.56675,N,10831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42";
+  char mock[] = "$GPGGA,110617.00,4145.56675,N,10831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42";
   GetRelevantData(mock);
   //out = CutGpsString(out);
   //GetRelevantData(out);
@@ -35,7 +35,7 @@ float GetLongitude(){
   return _longitude;
 }
 
-void GetRelevantData(char* s)
+void GetRelevantData(char s[])
 {
   //Time
   // String locationTime = CutStringAtComma(s,0);
@@ -61,23 +61,23 @@ void GetRelevantData(char* s)
   Serial.println(_longitude);
 }
 
-char* removeDot(char* s)
+char* removeDot(char str[])
 {
-  char outChar[strlen(s)];
-  int counter=0;
-  for(int i = 0; s[i] != '\0'; i++) 
+  int i,c;
+  for(i=0;i<strlen(str);i++)
   {
-      if(s[i]!='.')
-      {
-          outChar[counter]=s[i];
-          counter++;
-      }
+    if(str[i]=='.')
+    {
+        c = i;
+    }
   }
-  return outChar;
+
+  memmove(str+c, str+c+1, strlen(str)-c);    
+
 }
 
 //Cut output at specific comma
-char* CutStringAtComma(char* s, int from)
+char* CutStringAtComma(char s[], int from)
 {
   int c=0;
   char *pt;
