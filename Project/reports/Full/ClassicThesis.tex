@@ -56,8 +56,8 @@
 \frenchspacing
 \raggedbottom
 \selectlanguage{american} % american ngerman
-\renewcommand*{\bibname}{new name}
-\setbibpreamble{}
+%\renewcommand*{\bibname}{new name}
+%\setbibpreamble{}
 \pagenumbering{roman}
 \pagestyle{plain}
 %********************************************************************
@@ -67,9 +67,9 @@
 \include{FrontBackmatter/Titlepage}
 \include{FrontBackmatter/Titleback}
 \pagestyle{scrheadings}
-%\cleardoublepage\include{FrontBackmatter/Dedication}
-%\cleardoublepage\include{FrontBackmatter/Abstract}
-%\cleardoublepage\include{FrontBackmatter/Contents}
+\cleardoublepage\include{FrontBackmatter/Dedication}
+\cleardoublepage\include{FrontBackmatter/Abstract}
+\cleardoublepage\include{FrontBackmatter/Contents}
 %********************************************************************
 % Mainmatter
 %*******************************************************
@@ -94,22 +94,22 @@ forming the foundation of the next.\\\hspace{7cm}\emph{Niels Olof Bouvin}}
 \input{Chapters/Chapter02-Related-Work.tex}
 \input{Chapters/Chapter03-Analysis.tex}
 \input{Chapters/Chapter04-Design-and-Methodology.tex}
-%\input{Chapters/Chapter05-Implementation.tex}
-%\input{Chapters/Chapter06-Evaluation.tex}
-%\input{Chapters/Chapter07-Conclusion.tex}
+\input{Chapters/Chapter05-Implementation.tex}
+\input{Chapters/Chapter06-Evaluation.tex}
+\input{Chapters/Chapter07-Conclusion.tex}
 
 
 
-%\part{Some Kind of Manual}
+\part{Some Kind of Manual}
 %\cleardoublepage\include{FrontBackmatter/Publications}
-%\cleardoublepage\include{FrontBackmatter/Acknowledgments}
-%\include{Chapters/ChapterM01}
-%\cleardoublepage
+\cleardoublepage\include{FrontBackmatter/Acknowledgments}
+\include{Chapters/ChapterM01}
+\cleardoublepage
 
-%\part{The Showcase}
-%\include{Chapters/ChapterM02}
+\part{The Showcase}
+\include{Chapters/ChapterM02}
 %\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
-%\include{Chapters/ChapterM03}
+\include{Chapters/ChapterM03}
 
 
 
@@ -120,14 +120,14 @@ forming the foundation of the next.\\\hspace{7cm}\emph{Niels Olof Bouvin}}
 \appendix
 %\renewcommand{\thechapter}{\alph{chapter}}
 \cleardoublepage
-%\part{Appendix}
-%\include{Chapters/ChapterM0A}
+\part{Appendix}
+\include{Chapters/ChapterM0A}
 %********************************************************************
 % Other Stuff in the Back
 %*******************************************************
 \cleardoublepage\include{FrontBackmatter/Bibliography}
-%\cleardoublepage\include{FrontBackmatter/Declaration}
-%\cleardoublepage\include{FrontBackmatter/Colophon}
+\cleardoublepage\include{FrontBackmatter/Declaration}
+\cleardoublepage\include{FrontBackmatter/Colophon}
 % ********************************************************************
 % Game Over: Restore, Restart, or Quit?
 %*******************************************************

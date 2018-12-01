@@ -1,0 +1,112 @@
+%*******************************************************
+% Foreword
+%*******************************************************
+
+\chapter*{Some Thoughts on Tooling}
+\label{cha:some-thoughts-tool}
+
+
+As can be gleaned from the very existence of this guide, I very much
+favour PDF\LaTeX\ as the best way to format a thesis. Once it has been
+properly setup and configured, it is unparalleled in consistent
+quality of output.  While excellent online editors exist, notably
+Share\LaTeX\footnote{\url{https://www.sharelatex.com/} accessed 2018/6/27.} and
+Overleaf\footnote{\url{https://www.overleaf.com/} accessed 2018/6/27.}, I would hesitate
+to recommend their use for a whole thesis, as I find that dedicated
+text editors, such as GNU Emacs, Vim, Sublime Text, or Visual Studio
+Code are vastly superior.  They are mature text editing platforms, and
+provide excellent support, not only for \LaTeX\ itself, but also for
+versioning, and thus for collaboration.
+
+If you prefer a more visual tool, there are specialised \LaTeX\
+editors, such as \mLyX\footnote{\url{https://www.lyx.org/} accessed
+  2018/6/27.}, which is available for Linux, Windows, and macOS, \TeX
+nicCenter\footnote{\url{http://www.texniccenter.org/} accessed
+  2018/6/27.} for Windows, which this very document comes prepared
+for, and \TeX studio\footnote{\url{http://texstudio.sourceforge.net}
+  accessed 2018/7/3.}, available for Linux, Windows, and macOS.
+
+My own setup has for decades consisted of GNU Emacs with the packages
+AUC\TeX\footnote{\url{https://www.gnu.org/software/auctex/} accessed 2018/6/27.} combined
+with
+Ref\TeX\footnote{\url{https://www.gnu.org/software/auctex/reftex.html} accessed 2018/6/27.}
+(both easily installed from inside Emacs: Options $\rightarrow$ Manage
+Emacs Packages) and I have yet to see anything getting close to the
+power of that combination.
+
+\section*{Installing \LaTeX}
+\label{sec:installing-latex}
+
+Installing and maintaining \LaTeX\ used to be a bit daunting, but is today
+quite straightforward using \TeX\
+Live\footnote{\url{https://tug.org/texlive/} accessed 2018/6/27.} for Windows,
+Mac\negthinspace\TeX\footnote{\url{https://tug.org/mactex/} accessed 2018/6/27.} for mac\-OS, and your
+favourite package manager for your flavour of Linux (search for `\texttt{texlive}').
+
+\section*{Handling Bibliographies}
+\label{sec:handl-bibl}
+
+\mBibTeX\ is indispensable when it comes to handling references. I have
+included a starting set of references with this guide, but you will
+obviously need to add your own as your work progresses.  That is very
+much aided by tools---I use the excellent
+Bibdesk\footnote{\url{https://bibdesk.sourceforge.net/} accessed
+  2018/6/27.} (part of the Mac\negthinspace\TeX\ distribution mentioned above) on
+macOS to handle my bibliographies, and a Windows alternative could be
+the
+Mendeley\footnote{\url{https://blog.mendeley.com/2011/10/25/howto-use-mendeley-to-create-citations-using-latex-and-bibtex/}
+  accessed 2018/6/27.}  desktop client, which can export to
+\mBibTeX. If you find yourself with references in another format than
+the one you need,
+\texttt{bibutils}\footnote{\url{https://sourceforge.net/p/bibutils/home/Bibutils/}
+  accessed 2018/7/4.} may come in handy.
+
+Once you have your references, proper tools, such as Ref\TeX\
+mentioned above, make inserting references a breeze.  The best place
+to find references in general is Google
+Scholar\footnote{\url{https://scholar.google.dk/} accessed
+  2018/6/27.}, which, just as most of the sites referenced by it, can
+export to \mBibTeX. As you create your entries,
+you should take care to ensure that all fields required for others to
+find the referenced work are filled out correctly.
+
+While Google Scholar is fine for finding references, you will
+occasionally need to retrieve papers from ACM, IEEE, or some other
+paywalled site.  The AU Library has accounts with these and many other
+publishers, so if you access the sites from within AU (or through the
+AU VPN), you can usually download without restriction.
+
+\section*{Creating Figures}
+\label{sec:creating-figures}
+
+PDF\LaTeX\ can include figures in many formats, notably \acs{PDF},
+\acs{PNG}, and \acs{JPG}, but it is also possible to create quite
+sophisticated native \LaTeX\ figures using, \eg
+Tikz\footnote{\url{http://www.texample.net/tikz/examples/area/computer-science/}
+  accessed 2018/6/27.}. See \autoref{sec:some-notes-tables} for more
+details.
+
+\section*{Getting Help}
+\label{sec:getting-help}
+
+An good starting point would be the \LaTeX\ wiki
+books\footnote{\url{https://en.wikibooks.org/wiki/LaTeX} accessed 2018/6/27.}, which does
+an admirable job of covering material for beginners and advanced users
+alike.  \url{https://tex.stackexchange.com/} is an excellent resource
+for tricky \LaTeX\ related questions. If you prefer your reference
+material in hard copy, the two seminal works are \LaTeX: A Document
+Preparation System: User's Guide And Reference
+Manual~\cite{Lamport1994:LADPSUGARM1994} by Leslie Lamport, the creator of \LaTeX,
+and The \LaTeX\ Companion~\cite{Mittelbach2004:TLC2004}
+by Mittelbach \etal
+
+\section*{This Document is Duplex}
+\label{sec:print-this-docum}
+
+It may seem obvious, but just to be clear: this document style is intended to be printed duplex.
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../ClassicThesis"
+%%% End:

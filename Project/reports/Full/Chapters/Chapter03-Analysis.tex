@@ -1,0 +1,36 @@
+\chapter{Analysis}
+\label{cha:analysis}
+
+Based on our study, we found that Internet of Things can be used for healthcare with mobile sensors and LoRaWAN given its properties such as  security, high range, less cost, low power consumption and compatibility with cloud architecture is a viable protocol to use for the purpose. We also found that work has been done on building smart walkers which use bluetooth technology.
+
+In \cite{erdoush2014wireless} the authors proposed an architecture with a sensor and server to monitor remote environment with an Arduino acting as a node and a Raspberry Pi acting as a server. This system is easy to set up and the wide availability of suggested hardware makes it even more attractive. However, the system fails to leverage the cloud architecture and is limited by the computing capability of Pi, hence we in our project decided to use Pi as a gateway to connect to a server instead of the Pi acting as a server itself.
+
+
+In \cite{postolache2011smart} the authors built a smart walker which uses bluetooth to connect to a nearby mobile phone and use it for analysis and computation of data. This approach has several demerits such as, the range of bluetooth, the inaccurate assumption that walker users will always have a smartphone with them, system being dependent on the computational power of the smartphone and low security of bluetooth. Moreover, we need to also take into consideration the energy consumption of both the sensors on the walker and that of the smartphone.
+
+Given that the LoRaWAN protocol overcomes exactly these demerits, it makes sense to build a smart walker which uses LoRaWAN to send data to a server.
+This is exactly what we want to test with our hypothesis.
+
+We also decided to collect the following information from the sensors based on previous work \cite{postolache2011smart} and our requirements: 
+
+\subsubsection{Location tracking:}
+This allows us to analyse how sedentary this user is and take preventive action. The collected data can also be used for tracking what kind of areas people using walkers are more likely to frequent, getting insights into what areas are good for walker users and what areas might be worth investing in more infrastructure.
+
+Location tracking will also allow us to know quite precisely how often the walker is being used, making it possible to, for example, analyse what kind of patients are more dependent on the walker and also allows the manufacturers to match usage statistics to how long the walker lasts.
+
+\subsubsection{Heart rate:}
+The heart rate variability, maximum, minimum and average, can give us great insights into the user’s health over time. This in turn allows us to compare how much strain different walkers put on the user.
+
+\subsubsection{Pressure applied by the hands}
+This allows us to track how much the user relies on the walker.
+
+\subsubsection{Movement tracking}
+This allows us to measure the peed at which the user is walking. If we track both handles independently, together with the pressure measures, we can in a crude way analyse gait of the user.
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../ClassicThesis"
+%%% End:
+

@@ -2050,20 +2050,41 @@
     <bcf:datasource type="file" datatype="bibtex">AMiede_Publications.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">islam2015internet</bcf:citekey>
-    <bcf:citekey order="2">alahmadi2011smart</bcf:citekey>
-    <bcf:citekey order="3">ferdoush2014wireless</bcf:citekey>
-    <bcf:citekey order="4">mdhaffar2017iot</bcf:citekey>
-    <bcf:citekey order="5">de2017lorawan</bcf:citekey>
-    <bcf:citekey order="6">aras2017exploring</bcf:citekey>
-    <bcf:citekey order="7">tomasin2017security</bcf:citekey>
-    <bcf:citekey order="8">postolache2011smart</bcf:citekey>
-    <bcf:citekey order="9">banaee2013data</bcf:citekey>
-    <bcf:citekey order="10">gondalia2018iot</bcf:citekey>
-    <bcf:citekey order="11">erdoush2014wireless</bcf:citekey>
-    <bcf:citekey order="12">postolache2011smart</bcf:citekey>
-    <bcf:citekey order="13">postolache2011smart</bcf:citekey>
+    <bcf:citekey order="1">Lamport1994:LADPSUGARM1994</bcf:citekey>
+    <bcf:citekey order="2">Mittelbach2004:TLC2004</bcf:citekey>
+    <bcf:citekey order="3">islam2015internet</bcf:citekey>
+    <bcf:citekey order="4">alahmadi2011smart</bcf:citekey>
+    <bcf:citekey order="5">ferdoush2014wireless</bcf:citekey>
+    <bcf:citekey order="6">mdhaffar2017iot</bcf:citekey>
+    <bcf:citekey order="7">de2017lorawan</bcf:citekey>
+    <bcf:citekey order="8">aras2017exploring</bcf:citekey>
+    <bcf:citekey order="9">tomasin2017security</bcf:citekey>
+    <bcf:citekey order="10">postolache2011smart</bcf:citekey>
+    <bcf:citekey order="11">banaee2013data</bcf:citekey>
+    <bcf:citekey order="12">gondalia2018iot</bcf:citekey>
+    <bcf:citekey order="13">erdoush2014wireless</bcf:citekey>
     <bcf:citekey order="14">postolache2011smart</bcf:citekey>
+    <bcf:citekey order="15">postolache2011smart</bcf:citekey>
+    <bcf:citekey order="16">postolache2011smart</bcf:citekey>
+    <bcf:citekey order="17">knuth:1974</bcf:citekey>
+    <bcf:citekey order="18">knuth:1974</bcf:citekey>
+    <bcf:citekey order="19">bringhurst:2002</bcf:citekey>
+    <bcf:citekey order="20">bringhurst:2002</bcf:citekey>
+    <bcf:citekey order="21">taleb:2012</bcf:citekey>
+    <bcf:citekey order="22">taleb:2012</bcf:citekey>
+    <bcf:citekey order="23">bentley:1999</bcf:citekey>
+    <bcf:citekey order="24">bentley:1999</bcf:citekey>
+    <bcf:citekey order="25">cormen:2001</bcf:citekey>
+    <bcf:citekey order="26">cormen:2001</bcf:citekey>
+    <bcf:citekey order="27">dueck:trio</bcf:citekey>
+    <bcf:citekey order="28">dueck:trio</bcf:citekey>
+    <bcf:citekey order="29">knuth:1976</bcf:citekey>
+    <bcf:citekey order="30">knuth:1976</bcf:citekey>
+    <bcf:citekey order="31">sommerville:1992</bcf:citekey>
+    <bcf:citekey order="32">sommerville:1992</bcf:citekey>
+    <bcf:citekey order="36">knuth:1976</bcf:citekey>
+    <bcf:citekey order="37">knuth:1976</bcf:citekey>
+    <bcf:citekey order="38">knuth:1976</bcf:citekey>
   </bcf:section>
   <bcf:sortlist section="0" name="nyt/global" type="entry" sortscheme="nyt" sortnamekeyscheme="global">
   <bcf:sorting>
