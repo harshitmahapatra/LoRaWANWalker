@@ -252,10 +252,6 @@ int PollSensors(){
     GetGpsData(gpsSensor);
     float latitude = GetLatitude();
     float longitude = GetLongitude();
-    Serial.print("latitude: ")
-    Serial.println(latitude)
-    Serial.print("longitude: ")
-    Serial.println(longitude)
     /*-------------------------------------------*/
 
     /*---------------ACCELEROMETER DATA--------------------*/

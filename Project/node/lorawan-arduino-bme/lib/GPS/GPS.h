@@ -4,4 +4,7 @@
 String CutGpsString(String);
 String GetGpsData(SoftwareSerial);
 String CutStringAtComma(String, int);
-String GetRelevantData(String);
+void GetRelevantData(String);
+float GetLatitude();
+float GetLongitude();
+String removeDot(String);

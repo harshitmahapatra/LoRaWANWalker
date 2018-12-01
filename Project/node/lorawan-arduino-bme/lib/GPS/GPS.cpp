@@ -1,4 +1,4 @@
-
+#include <Arduino.h>
 #include "GPS.h"
 #include <SoftwareSerial.h>
 
@@ -6,12 +6,11 @@
 //         time,latitude,longitude,
 //  $GPGGA,110617.00,41XX.XXXXX,N,00831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42
 //
-float _latitude, _longitude;
+int32_t _latitude, _longitude;
 
 String GetGpsData(SoftwareSerial ss)
 { 
   String out = "";
-  out.
   while (ss.available() > 0){
     // get the byte data from the GPS
     byte gpsData = ss.read();
@@ -21,7 +20,7 @@ String GetGpsData(SoftwareSerial ss)
   }
   delay(2000);
   out = CutGpsString(out);
-  return GetRelevantData("$GPGGA,110617.00,4145.56675,N,00831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42");
+  GetRelevantData("$GPGGA,110617.00,4145.56675,N,10831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42");
   //return GetRelevantData(out);
 }
 
@@ -41,15 +40,25 @@ void GetRelevantData(String s)
 
   //Latitude
   String latitude = CutStringAtComma(s,1);
-  Serial.println("converting %s to float", latitude)
-  _latitude = latitude.toFloat()
-  Serial.println("converting %f to float", _latitude)
-
+  latitude = removeDot(latitude);
+  _latitude = latitude.toInt();
   //Longitude
   String longitude = CutStringAtComma(s,3);
-  Serial.println("converting %s to float", longitude)
-  _longitude = longitude.toFloat()
-  Serial.println("converting %f to float", _longitude)
+  longitude = removeDot(longitude);
+  _longitude = longitude.toInt();
+}
+
+String removeDot(String s)
+{
+  String snew="";
+  for(char c:s)
+  {
+    if(c!='.')
+    {
+      snew+=c;
+    }
+  }
+  return snew;
 }
 
 //Cut output at specific comma
