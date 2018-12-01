@@ -48,10 +48,15 @@ int GetAvgHRMain(int8_t SIGNAL_PIN)
 {
   int PastPulse = 0;
   int GetPulse = GetAvgHR(SIGNAL_PIN);
-  while(abs(PastPulse-GetPulse)>7)
+  int32_t time = millis();
+  while(abs(PastPulse-GetPulse)>10)
   {
     PastPulse = GetPulse;
     GetPulse = GetAvgHR(SIGNAL_PIN);
+    while(time+15000>millis())
+    {
+      return -1;
+    }
   }
-  return PastPulse;
+  return PastPulse/2;
 }

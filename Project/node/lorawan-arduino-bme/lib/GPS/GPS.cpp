@@ -29,7 +29,7 @@ float GetLatitude(){
 }
 
 float GetLongitude(){
-  return _latitude;
+  return _longitude;
 }
 
 void GetRelevantData(String s)
