@@ -2,7 +2,7 @@
 #include <SoftwareSerial.h>
 
 char* CutGpsString(char*);
-void GetGpsData(SoftwareSerial);
+void GetGpsData(String);
 char* CutStringAtComma(char*, int);
 void GetRelevantData(char*);
 float GetLatitude();

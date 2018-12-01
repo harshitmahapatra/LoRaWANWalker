@@ -9,17 +9,10 @@
 //
 int32_t _latitude, _longitude;
 
-void GetGpsData(SoftwareSerial ss)
+void GetGpsData(String stringInput)
 { 
-  char* out = "";
-  while (ss.available() > 0){
-    // get the byte data from the GPS
-    // byte gpsData = ss.read();
-    // char h = (char)gpsData;
-    // out+= h;
-    // uint8_t i = 0;
-    Serial.print('|');
-  }
+  char charInput[1024];
+  strcpy(charInput, stringInput.c_str());
   Serial.println(' ');
   char mock[] = "$GPGGA,110617.00,4145.56675,N,10831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42";
   GetRelevantData(mock);

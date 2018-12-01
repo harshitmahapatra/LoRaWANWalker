@@ -32,8 +32,8 @@
 #include "Pulse.h"
 #include <SoftwareSerial.h>
 #include <GPS.h>
-#define GPS_RX 40
-#define GPS_TX 41
+#define GPS_RX 12
+#define GPS_TX 13
 #define HEARTBEAT_PIN A15
 
 //lefthandle(2) righthandle(2) hr(2) lat(4) long(4) mov(1)
@@ -172,6 +172,8 @@ unsigned long maxStoppedTime = 30000;             //30 seconds
 void setup() {
     Serial.begin(9600);
 
+    gpsSensor.begin(9600);
+
     Serial.println(F("Starting"));
 
     //Heartbeatpin
@@ -230,8 +232,6 @@ void setup() {
 
     ////////////OUR STUFF//////////////////
 
-    gpsSensor.begin(9600);
-
     // start communication with Accelerometer
     int status = accelerometer.begin();
     if (status < 0)
@@ -272,7 +272,15 @@ int PollSensors(){
 
     /*---------------GPS DATA--------------------*/
     Serial.println("Getting GPS data...");
-    GetGpsData(gpsSensor);
+    String out = "";
+    while (gpsSensor.available() > 0){
+        // get the byte data from the GPS
+        byte gpsData = gpsSensor.read();
+        char h = (char)gpsData;
+        out+= h;
+    }
+    
+    GetGpsData(out);
     int32_t latitude,longitude;
     latitude = GetLatitude();
     longitude = GetLongitude();
