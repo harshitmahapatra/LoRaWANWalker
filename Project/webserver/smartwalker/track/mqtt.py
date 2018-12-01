@@ -16,25 +16,22 @@ def on_connect(client, userdata, flags, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    #print(msg.topic+" "+str(msg.payload))
-    print("bla" + str(msg.payload))
-    print("bla" + str(msg))
-
     payload = Payload(msg.payload).__dict__
+
     fields = payload["payload_fields"]
-    print(payload)
+
     sd = SensorData(\
+        nodeID=payload["dev_id"], \
         leftHandPressure=fields["leftPressure"], \
         rightHandPressure=fields["rightPressure"], \
         heartRate=fields["avgHR"], \
-        movement=fields["isMoving"], \
-        timestamp=datetime.now(), \
-        nodeID=payload["dev_id"]
+        latitude=fields["latitude"], \
+        longitude=fields["longitude"], \
+        movement=fields["isMoving"] \
     )
 
-    print(sd)
     sd.save()
-    print("succesfull!!")
+    print("Stored data point successfully")
     
 def on_disconnect(client, userdata, rc):
     client.loop_stop(force=False)

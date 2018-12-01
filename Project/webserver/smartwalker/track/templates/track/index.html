@@ -29,6 +29,8 @@
             <th>Movement Detection</th>
             <th>Left Hand Pressure (kg)</th>
             <th>Right Hand Pressure (kg)</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
         </tr>
         {% for data_point in data_lines %}
         <tr>
@@ -38,6 +40,8 @@
                 <th>{{ data_point.movement }}</th>
                 <th>{{ data_point.leftHandPressure }}</th>
                 <th>{{ data_point.rightHandPressure }}</th>
+                <th>{{ data_point.latitude }}</th>
+                <th>{{ data_point.longitude }}</th>
             </tr>
         {% endfor %}
     </table>

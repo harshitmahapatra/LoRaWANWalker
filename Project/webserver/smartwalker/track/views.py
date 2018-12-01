@@ -7,7 +7,6 @@ def index(request):
     all_objects = SensorData.objects.all()
     template = loader.get_template('track/index.html')
 
-    print(data for data in all_objects)
     context = {
         'data_lines': [data for data in all_objects]
     }
