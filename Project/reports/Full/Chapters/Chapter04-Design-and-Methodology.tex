@@ -109,7 +109,7 @@ In order to consider our hypothesis feasible we need to have some data being col
 To test consistency we will devise some usage scenarios and for each of them get 10 measurements. We will then compare the precision within and between scenarios by getting the variance.
 
 \subsubsection{Accuracy:}
-In order to measure accuracy we need to find the difference between the measured value of each sensor and compare it to the true value. This means we need a test tailored to each sensor. For this, we will perform 10 measurements from each sensor after performing identical displacement or task and then find standard deviation of the measured values from the true value.
+In order to measure accuracy we need to find the difference between the measured value of each sensor and compare it to the true value. This means we need a test tailored to each sensor. For this, we will perform 10 measurements from each sensor and then find the standard deviation of the measured values from the true value.
 
 \subsubsection{Reliability:}
 To measure reliability we will use the walker for 30 minutes and calculate the percentage of times the sensor data got stored in the server’s database
@@ -126,6 +126,16 @@ With the resources at our disposal, we will, additionally to the walker, have an
 \subsubsection{Serviceability:}
 One of the members of the team will disconnect random cables connecting the sensors to the node and we will then have another member get the system back up and running while measuring the time it took
 
+\subsubsection{Latency:}
+We will use the walker for 30 minutes and get the average, maximum, minimum and variance of the latency
+
+\subsubsection{Throughput:}
+We will increase the ammount of bytes being sent by the node until 
+
+\subsubsection{Energy:}
+We will leave the walker idle for around 12 hours while measuring the energy comsumption.
+We will also use the walker for 30 minutes while measuring the energy comsumption. 
+We can then, for both scenarios, calculate how much the node consumes per hour in both modes and how much it will last on common 9V batteries. We can also compare these values to how much it would consume if it had no sensors.
 
 %%% Local Variables:
 %%% mode: latex

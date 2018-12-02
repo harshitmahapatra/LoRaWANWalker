@@ -1,6 +1,54 @@
 \chapter{Evaluation}
 \label{cha:evaluation}
 
+Having in mind our hypothesis: "Is it practical to monitor walkers and their users by sending data over LoRaWAN?"
+
+The parameters of our system that have to be measured to test practicality were outlined in the introduction and the tests we intended to run were outlined in the "Design and Methodology" chapter.
+
+\section{Expected outcomes}
+\subsubsection{Feasibility:}
+We expect to be able to build and use the system, this is just a baseline parameter.
+
+\subsubsection{Consistency:}
+\begin{enumerate}
+	\item Location: Our module's datasheet does not provide a precision threshold, so we don't know what to expect
+	\item Heart Rate: The sensor we are using is very sensitive to noise, so we expect the value to vary quite a lot.
+	\item Movement: 
+	\item Pressure: 
+\end{enumerate}
+
+\subsubsection{Accuracy:}
+\begin{enumerate}
+	\item Location: According to the specification, the NEO 6M module should be accurate within 2 meters
+	\item Heart Rate: The sensor we are using is very sensitive and we have to extract the heart rate from the raw pulse, so we expect the value to vary quite a lot.
+	\item Movement: We are only using the accelerometer to measure if the walker is moving, so we expect an accuracy of 100\%  
+	\item Pressure: 
+\end{enumerate}
+
+In order to measure accuracy we need to find the difference between the measured value of each sensor and compare it to the true value. This means we need a test tailored to each sensor. For this, we will perform 10 measurements from each sensor after performing identical displacement or task and then find standard deviation of the measured values from the true value.
+
+\subsubsection{Reliability:}
+We expect the system to have a reliability upwards of 95\%, there is no reason it should fail, besides a sporadic LoRaWAN packet being dropped.
+
+\subsubsection{Modularity:}
+Having in consideration how much time it took us to mount the current sensors, we expect to take around 1 or 2 days to integrate the GPS sensor into the system.
+
+\subsubsection{Scalability:}
+With the resources at our disposal, we will, additionally to the walker, have another node collecting pressure data and sending it through our system. If both of the node’s data get safely stored in the server, we can be confident that our system supports at least two walkers
+
+\subsubsection{Serviceability:}
+One of the members of the team will disconnect random cables connecting the sensors to the node and we will then have another member get the system back up and running while measuring the time it took
+
+\subsubsection{Latency:}
+We will use the walker for 30 minutes and get the average, maximum, minimum and variance of the latency
+
+\subsubsection{Throughput:}
+We will increase the ammount of bytes being sent by the node until 
+
+\subsubsection{Energy:}
+We will leave the walker idle for around 12 hours while measuring the energy comsumption.
+We will also use the walker for 30 minutes while measuring the energy comsumption. 
+We can then, for both scenarios, calculate how much the node consumes per hour in both modes and how much it will last on common 9V batteries. We can also compare these values to how much it would consume if it had no sensors.
 
 %%% Local Variables:
 %%% mode: latex

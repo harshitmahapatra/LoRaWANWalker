@@ -5,10 +5,6 @@
 - Add timestamp and nodeID to each data point
 - Store with (timestamp+nodeID) as primary key
 
-
-
-
-
 # Tests
 
 ## Modularity
@@ -19,7 +15,7 @@
 - Leave it overnight
 
 ## Consistency
-- Walk around for 10 measurements, putting bands on the pressure sensors
+Compare the data we get by using it for 30 minutes
 
 ## Accuracy
 Pressure we tested (completely accurate)
@@ -36,3 +32,11 @@ Add primary key
 
 ## Reliability
 To measure reliability we will use the walker for 30 minutes and calculate the percentage of times the sensor data got stored in the server’s database
+
+
+
+# MEGA EXPERIMENT (30 minutes)
+
+- monitor energy with usb thingy
+- use all the sensors (consistency)
+- use max's watch
