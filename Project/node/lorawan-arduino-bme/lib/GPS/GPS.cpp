@@ -19,33 +19,23 @@ int32_t GetLongitude(){
 
 void ParseGpsData(String gpsData)
 { 
-    Serial.println("enter parseGPSData: \n" + gpsData)
     gpsData = CutGpsString(gpsData);
 
-    out = CutGpsString(out);
-    Serial.println("Line we want from gps: \n" + out)
-
-    GetRelevantData("$GPGGA,110617.00,41XX.XXXXX,N,00831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42");
-    //GetRelevantData(out);
+    GetRelevantData("$GPGGA,110617.00,4123.45635,N,00831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42");
+    //GetRelevantData(gpsData);
 }
 
 void GetRelevantData(String s)
 {
     //Latitude
     String latitude = CutStringAtComma(s,1);
-    Serial.println("latitude after cutting: " + latitude);
     latitude = removeDot(latitude);
-    Serial.println("latitude after cutting the dot: " + latitude);
-    _latitude = atoi(latitude);
-    Serial.println(_latitude);
+    _latitude = latitude.toInt();
 
     //Longitude
     String longitude = CutStringAtComma(s,3);
-    Serial.println("longitude after cutting: " + longitude);
     longitude = removeDot(longitude);
-    Serial.println("longitude after cutting the dot: " + longitude);
-    _longitude = atoi(longitude);
-    Serial.println(_longitude);
+    _longitude = longitude.toInt();
 }
 
 //Cut output at specific comma
@@ -87,14 +77,13 @@ String CutGpsString(String s)
 
 String removeDot(String str)
 {
-//   int i,c;
-//   for(i=0;i<strlen(str);i++)
-//   {
-//     if(str[i]=='.')
-//     {
-//         c = i;
-//     }
-//   }
-//   memmove(str+c, str+c+1, strlen(str)-c);  
-    return "11061700";
+  String strOut="";
+  for(char c:str)
+  {
+    if(c!='.')
+    {
+      strOut+=c;
+    }
+  }
+  return strOut;
 }

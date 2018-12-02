@@ -278,14 +278,16 @@ int PollSensors(){
         byte gpsData = gpsSensor.read();
         char h = (char)gpsData;
         out+= h;
+        Serial.print("|");
     }
-    
-    GetGpsData(out);
+    Serial.println(' ');
+    Serial.println(out);
+    ParseGpsData(out);
     int32_t latitude,longitude;
     latitude = GetLatitude();
     longitude = GetLongitude();
-    // Serial.println(latitude);
-    // Serial.println(longitude);
+    Serial.println(latitude);
+    Serial.println(longitude);
     /*-------------------------------------------*/
 
     // /*---------------PRESSURE DATA--------------------*/
