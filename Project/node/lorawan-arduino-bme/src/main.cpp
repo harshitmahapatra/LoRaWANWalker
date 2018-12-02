@@ -278,16 +278,11 @@ int PollSensors(){
         byte gpsData = gpsSensor.read();
         char h = (char)gpsData;
         out+= h;
-        Serial.print("|");
     }
-    Serial.println(' ');
-    Serial.println(out);
     ParseGpsData(out);
     int32_t latitude,longitude;
     latitude = GetLatitude();
     longitude = GetLongitude();
-    Serial.println(latitude);
-    Serial.println(longitude);
     /*-------------------------------------------*/
 
     // /*---------------PRESSURE DATA--------------------*/
@@ -335,9 +330,9 @@ int PollSensors(){
     Serial.println(leftAvg);
     Serial.print("avgHR: ");
     Serial.println(avgHR);
-    Serial.print("latitude: ");
+    Serial.print("Latitude: ");
     Serial.println(latitude);
-    Serial.print("longitude: ");
+    Serial.print("Longitude: ");
     Serial.println(longitude);
     Serial.print("isMoving: ");
     Serial.println(isMoving);
