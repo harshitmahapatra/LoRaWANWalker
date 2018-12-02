@@ -270,6 +270,25 @@ int PollSensors(){
 
     Serial.println("Walker is active");
 
+    /*---------------PRESSURE DATA--------------------*/
+    // Serial.println("Getting Pressure data...");
+    PressureData rightHandleData = GetPressure(RightHandle, SensorID::ten);
+    PressureData leftHandleData = GetPressure(LeftHandle, SensorID::four_black);
+
+    // translate float value to int 16 bit *100 get rid of the .
+    int16_t rightAvg = (int16_t)(rightHandleData.GetAvg() * 100);
+    int16_t leftAvg = (int16_t)(leftHandleData.GetAvg() * 100);
+    rightAvg-=0;
+    leftAvg-=0;
+    if (rightAvg < 0)
+        rightAvg = 0;
+    if (leftAvg < 0)
+        leftAvg = 0;
+    Serial.println(rightAvg);
+    Serial.println(leftAvg);
+
+    /*------------------------------------------------*/
+
     /*---------------GPS DATA--------------------*/
     Serial.println("Getting GPS data...");
     String out = "";
@@ -284,21 +303,6 @@ int PollSensors(){
     latitude = GetLatitude();
     longitude = GetLongitude();
     /*-------------------------------------------*/
-
-    // /*---------------PRESSURE DATA--------------------*/
-    // Serial.println("Getting Pressure data...");
-    PressureData rightHandleData = GetPressure(RightHandle, SensorID::ten);
-    PressureData leftHandleData = GetPressure(LeftHandle, SensorID::four_black);
-
-    // translate float value to int 16 bit *100 get rid of the .
-    int16_t rightAvg = (int16_t)(rightHandleData.GetAvg() * 100);
-    int16_t leftAvg = (int16_t)(leftHandleData.GetAvg() * 100);
-    if (rightAvg < 0)
-        rightAvg = 0;
-    if (leftAvg < 0)
-        leftAvg = 0;
-
-    // /*------------------------------------------------*/
 
     /*---------------HEART RATE DATA---------------------*/
     Serial.println("Getting Heart Rate data...");
