@@ -11,9 +11,9 @@ int32_t _latitude, _longitude;
 
 void GetGpsData(String stringInput)
 { 
+  stringInput = CutGpsString(stringInput);
   char charInput[1024];
   strcpy(charInput, stringInput.c_str());
-  Serial.println(' ');
   char mock[] = "$GPGGA,110617.00,4145.56675,N,10831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42";
   GetRelevantData(mock);
   //out = CutGpsString(out);
@@ -64,9 +64,7 @@ char* removeDot(char str[])
         c = i;
     }
   }
-
   memmove(str+c, str+c+1, strlen(str)-c);    
-
 }
 
 //Cut output at specific comma

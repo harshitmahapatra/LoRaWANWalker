@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-char* CutGpsString(char*);
+String CutGpsString(String);
 void GetGpsData(String);
 char* CutStringAtComma(char*, int);
 void GetRelevantData(char*);
