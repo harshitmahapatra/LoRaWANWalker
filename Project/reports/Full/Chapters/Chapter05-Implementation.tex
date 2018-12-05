@@ -20,7 +20,7 @@ The implementation of each component of our system is described in details in th
 \subsection{Node:} 
 
 \subsubsection{Hardware:}
-The node consists of an Arduino Mega xxx with a Dragino LoRa hat xxx. The node is powered by a xxx battery pack. The node also consists of a breadboard, which contains two Analog to Digital converter and a gps sensor. The entire node setup is mounted on the front face of the lower left leg of the walker. The accelerometer is directly connected to the arduino and is mounted on the back face of the left leg of walker. Two pressure sensors are mounted on the handles of the walker and are connected to the A/D converters in the breadboard, which in turn are connected to the arduino. The pulse sensor is mounted on the left handle and is on top of a button and is directly connected to the arduino. The pulse sensor is only activated if the underlying button is pressed. 
+The node consists of an Arduino Mega (R3 ATmega2560) with a Seeedstudio Dragino Lora Shield (868 M Frequency). The node is powered by a standard 9V battery pack. The node also consists of a breadboard, which contains two Analog to Digital converter and a gps sensor. The entire node setup is mounted on the front face of the lower left leg of the walker. The accelerometer is directly connected to the arduino and is mounted on the back face of the left leg of walker. Two pressure sensors are mounted on the handles of the walker and are connected to the A/D converters in the breadboard, which in turn are connected to the arduino. The pulse sensor is mounted on the left handle and is on top of a button and is directly connected to the arduino. The pulse sensor is only activated if the underlying button is pressed. 
 
 The circuit diagram of the node is as follows:
 
@@ -41,20 +41,20 @@ Each LoRa packet contains the application id and key that is required by the thi
 \subsection{Pressure:}
 
 \subsubsection{Hardware:}
-For measuring pressure we used two HX711 sensors connected to the arduino via A/D converter module xxx. 
+For measuring pressure we used two 10kg Aluminum Alloy pressure sensors connected to the Arduino via a HX711 AD converter module. 
 
 \subsubsection{Software:}
-The sensor data was collected using HX711 library along with standard arduino library.
+The sensor data was collected using HX711 library to transform the analog signal along with standard Arduino library. 
 
 \subsection{Pulse:}
 
 
 \subsection{Hardware:}
-For pulse, we used the xxx sensor attached to a Lilypad button. The sensor was connected in a way that the pulse is read only when the button is pressed. This was done to prevent unnecessary read when the patient's finger is not on the sensor.
+For pulse, we used the pulse sensor from pulsesensor.com.
 
 
 \subsubsection{Software:}
-For reading the data from the sensor, simple analog read was used. This data is then processed to get average heart rate of the patient.
+For reading the data from the sensor, simple analog read was used. This data is then processed to get average heart rate of the patient by looking at the heardbeat pattern.
 
 
 
@@ -70,7 +70,7 @@ The library used to read the accelerometer's output was sensor specific MPU9250 
 \subsection{GPS:}
 
 \subsection{Hardware:}
-For measuring GPS we used the xxx sensor.
+For measuring GPS we used the GY-GPS6MV2 sensor.
 
 \subsubsection{Software:}
 The library used to read GPS data was SoftwareSerial. The read data was parsed to get the value of latitude and longitude, which were then converted to bytes.
