@@ -5,50 +5,148 @@ Having in mind our hypothesis: "Is it practical to monitor walkers and their use
 
 The parameters of our system that have to be measured to test practicality were outlined in the introduction and the tests we intended to run were outlined in the "Design and Methodology" chapter.
 
-\section{Expected outcomes}
-\subsubsection{Feasibility:}
-We expect to be able to build and use the system, this is just a baseline parameter.
+\section{Feasibility}
+\subsubsection{Feasibility}
+As a baseline for our 
 
-\subsubsection{Consistency:}
-\begin{enumerate}
-	\item Location: Our module's datasheet does not provide a precision threshold, so we don't know what to expect
-	\item Heart Rate: The sensor we are using is very sensitive to noise, so we expect the value to vary quite a lot.
-	\item Movement: 
-	\item Pressure: 
-\end{enumerate}
+We expected to be able to build and use the system, this is just a baseline parameter.
 
-\subsubsection{Accuracy:}
-\begin{enumerate}
-	\item Location: According to the specification, the NEO 6M module should be accurate within 2 meters
-	\item Heart Rate: The sensor we are using is very sensitive and we have to extract the heart rate from the raw pulse, so we expect the value to vary quite a lot.
-	\item Movement: We are only using the accelerometer to measure if the walker is moving, so we expect an accuracy of 100\%  
-	\item Pressure: 
-\end{enumerate}
+We managed to successfully send data from sensors on the walker to our server, so we can say 
 
-In order to measure accuracy we need to find the difference between the measured value of each sensor and compare it to the true value. This means we need a test tailored to each sensor. For this, we will perform 10 measurements from each sensor after performing identical displacement or task and then find standard deviation of the measured values from the true value.
 
-\subsubsection{Reliability:}
-We expect the system to have a reliability upwards of 95\%, there is no reason it should fail, besides a sporadic LoRaWAN packet being dropped.
 
-\subsubsection{Modularity:}
-Having in consideration how much time it took us to mount the current sensors, we expect to take around 1 or 2 days to integrate the GPS sensor into the system.
+\section{Normal Usage}
 
-\subsubsection{Scalability:}
-With the resources at our disposal, we will, additionally to the walker, have another node collecting pressure data and sending it through our system. If both of the node’s data get safely stored in the server, we can be confident that our system supports at least two walkers
+	\subsection{Pourpose}
+	We are running this big experiment because measuring accuracy, consistency, reliability, latency and energy consumption, all have in common the fact that the best way to get data on these parameters is simply using the walker, so we devised this test, which has the goal of helping us simultaneously assess all the aforementioned quality parameters.
 
-\subsubsection{Serviceability:}
-One of the members of the team will disconnect random cables connecting the sensors to the node and we will then have another member get the system back up and running while measuring the time it took
+	\subsection{Expectations}
+		\subsubsection{Consistency}
+			We have different expectations, depending on the sensor:
 
-\subsubsection{Latency:}
-We will use the walker for 30 minutes and get the average, maximum, minimum and variance of the latency
+			\begin{enumerate}
+				\item Location: Our module's datasheet does not provide a precision threshold, so we don't know what to expect
+				\item Heart Rate: The sensor we are using is very sensitive to noise and we have no way of keeping our heart rate constant when running the test, so we expect the readings to vary quite a lot.
+				\item Movement: Since this is a boolean value, we expect it to be quite consistent, always reporting movement or no movement, given the same scenario.
+				\item Pressure: We expect that if we manage to put constant force on the pressure sensors, they will give consistent readings
+			\end{enumerate}
 
-\subsubsection{Throughput:}
-We will increase the ammount of bytes being sent by the node until 
+		\subsubsection{Accuracy}
+			Again, each sensor can be said to be accurate if it meets conditions specific to it 
 
-\subsubsection{Energy:}
-We will leave the walker idle for around 12 hours while measuring the energy comsumption.
-We will also use the walker for 30 minutes while measuring the energy comsumption. 
-We can then, for both scenarios, calculate how much the node consumes per hour in both modes and how much it will last on common 9V batteries. We can also compare these values to how much it would consume if it had no sensors.
+			\begin{enumerate}
+				\item Location: According to the specification, the NEO 6M module should be accurate within 2 meters, so that is our expectation.
+				\item Heart Rate: The sensor we are using is very sensitive to the pressure put on it and the thickness of the person's skin. We are also calculating the user's heart rate by processing the raw pulse data, so we don't expect much accuracy
+				\item Movement: We are only using the accelerometer to measure if the walker is moving, so we expect an accuracy of 100\%, since we see no reason it would give an erroneous report
+				\item Pressure: The pressure sensor we use does not provide an accuracy threshold, but from our preliminary usage it seems to be at least 95\% accurate
+			\end{enumerate}
+
+		\subsection{Reliability}
+			The only failure we could see happening in this experiment would be LoRaWAN packets being sent from the node to the gateway being dropped, which doesn't seem to happen very often. We are thus expecting at least 90\% reliability
+
+		\subsection{Latency}
+			The air-time of LoRaWAN packets is dependent on the payload, the distance to the gateway, the spreading factor and much more, so it is hard for us to make an accurate prediction. We have nonetheless noticed, while building our system, that the time between packets is usually between 4 and 9 minutes, so we are expecting an average of around 6 minutes and a high standard deviation from the mean.
+		\newline
+		\newline
+		\newline
+		\subsection{Energy consumption}
+			The power consumption of our components is as follows:
+
+			\begin{table}[h]
+				\begin{tabular}{@{}ll@{}}
+					\toprule
+					Sensor         & Max current draw (mA) \\ \midrule
+					Pulse          & 4                     \\
+					Pressure (x2)  & 3                     \\
+					Accelerometer  & 0.5                   \\
+					GPS            & 57                    \\
+					LoRaWAN shield & 10                    \\
+					Mega 2560      & 80                    \\
+					Total          & 159                   \\ \bottomrule
+				\end{tabular}
+			\end{table}
+
+			Based on this, we expect the current draw to be around 160mA
+	\subsection{Parameters}
+		We had on of our team's members use the walker normally for 30 minutes, while the information was coming in and stored in our server for analysis. There were only three details:
+
+		\begin{itemize}
+		  \item In order to test the accuracy of the heart rate, we had the team member testing the walker use an Iwatch for comparison
+		  \item In order to test the consistency of the pressure sensor readings, we put an elastic band applying constant force on the right handle's sensor
+		  \item In order to measure the current draw we used a USB Current Meter during the experiment
+		\end{itemize}
+	\subsection{Results}
+		\subsubsection{Consistency}
+			
+	\subsection{Matching results and expectations}
+
+
+
+\section{Idle Energy Consumption}
+
+	\subsection{Pourpose}
+
+	\subsection{Expectations}
+
+	\subsection{Parameters}
+
+	\subsection{Results}
+
+	\subsection{Matching results and expectations}
+
+
+
+
+
+
+
+
+
+
+
+\section{Modularity}
+	\subsection{Pourpose}
+	This experiment has the goal of figuring out how quickly a new sensor can be added to the walker. Our walker is a proof of concept for something bigger, so it is important to know how extensible it is.
+
+	\subsection{Expectations}
+	Having in consideration how much time it took us to mount, get readings, and send the current sensor's information, we expect to take around 1 or 2 days to integrate the GPS sensor into the system. 
+
+	\subsection{Parameters}
+	For this experiment, we had two of the team's members work exclusively on integrating the GPS sensor into the system. This consisted in mounting it on the walker, getting some readings, figuring out the best way to encode the data for sending over LoRaWAN, and then adapting the rest of the components to handle the latitude and longitude.
+
+	\subsection{Results}
+	Integrating GPS into the system ended up taking 2 whole days, not only was it hard to find a port layout which allowed all the sensors to work, but library support is also not very good, so after unsuccessfully trying to use external libraries, we ended up implementing it ourselves, which took some extra time.
+
+	\subsection{Matching results and expectations}
+	Integrating GPS into our system took as much time as we were roughly expecting, perhaps it is on the higher end of our expectation because of the usual delays that come with getting the right documentation for sensors and how they interplay with the other components.
+
+
+
+\section{Scalability}
+
+	\subsection{Pourpose}
+
+	\subsection{Expectations}
+
+	\subsection{Parameters}
+
+	\subsection{Results}
+
+	\subsection{Matching results and expectations}
+
+
+\section{Throughput}
+
+	\subsection{Pourpose}
+
+	\subsection{Expectations}
+
+	\subsection{Parameters}
+
+	\subsection{Results}
+
+	\subsection{Matching results and expectations}
+
 
 %%% Local Variables:
 %%% mode: latex

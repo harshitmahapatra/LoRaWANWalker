@@ -24,9 +24,15 @@ time        hr.      press      energy
 ## Energy
 ### IDLE
 
+# Run 1
 12:30 ~ 2498mAh,
-		0.2A
+		0.2A = 200mA
 01:00 ~ 200mAh
+
+# Run 2
+18:00 ~ 3505mAh,
+
+01:00 ~ 195mAh
 
 Battery types
 - Zinc(400 mAh) 		-> 02:00h
@@ -39,14 +45,14 @@ Battery types
 2nd stint: 104mAh -> 208mAh/h
 
 ---
-## Latency
+## Latency (min: 4:24, max: 8:06, avg: 6:05)
 
-# 1st run
+# 1st run (avg: 7:18)
 7:35
 8:06
 6:47
 6:13
-# 2nd run
+# 2nd run (avg: 5:05)
 6:00
 4:43
 5:05
@@ -61,7 +67,7 @@ Battery types
 accuracy
 We measured the pressure 5 times with a 1kg bag of rice and always got a measurement of exactly 1.00.
 
-# 1st run (avg:0.41 sd:0.0336)
+# 1st run (avg:0.41 sd:0.0336 or 0.082%)
 0.45
 0.39
 0.45
