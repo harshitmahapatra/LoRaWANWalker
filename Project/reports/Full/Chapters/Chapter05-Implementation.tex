@@ -4,9 +4,9 @@
 The final implementation of our system was follows:
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\linewidth]{gfx/implementation_arch}
+\includegraphics[width=1\linewidth]{gfx/architecture_implementation_h}
 \caption[]{Implemented Architecture}
-\label{fig:implementation_arch}
+\label{fig:image2}
 \end{figure}
 
 It differed from the overall design in the following ways:
@@ -18,6 +18,13 @@ The implementation of each component of our system is described in details in th
 
 
 \subsection{Node:} 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\linewidth]{gfx/node_diagram}
+	\caption[]{Implemented Architecture ot the Node}
+	\label{fig:architecture_node}
+\end{figure}
 
 \subsubsection{Hardware:}
 The node consists of an Arduino Mega (R3 ATmega2560) with a Seeedstudio Dragino Lora Shield (868 M Frequency). The node is powered by a standard 9V battery pack. The node also consists of a breadboard, which contains two Analog to Digital converter and a gps sensor. The entire node setup is mounted on the front face of the lower left leg of the walker. The accelerometer is directly connected to the arduino and is mounted on the back face of the left leg of walker. Two pressure sensors are mounted on the handles of the walker and are connected to the A/D converters in the breadboard, which in turn are connected to the arduino. The pulse sensor is mounted on the left handle and is on top of a button and is directly connected to the arduino. The pulse sensor is only activated if the underlying button is pressed. 
