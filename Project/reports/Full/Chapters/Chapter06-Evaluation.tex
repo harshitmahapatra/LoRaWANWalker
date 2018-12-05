@@ -67,6 +67,7 @@ We managed to successfully send data from sensors on the walker to our server, s
 			\end{table}
 
 			Based on this, we expect the current draw to be around 160mA
+
 	\subsection{Parameters}
 		We had on of our team's members use the walker normally for 30 minutes, while the information was coming in and stored in our server for analysis. There were only three details:
 
@@ -75,23 +76,69 @@ We managed to successfully send data from sensors on the walker to our server, s
 		  \item In order to test the consistency of the pressure sensor readings, we put an elastic band applying constant force on the right handle's sensor
 		  \item In order to measure the current draw we used a USB Current Meter during the experiment
 		\end{itemize}
-	\subsection{Results}
-		\subsubsection{Consistency}
-			
-	\subsection{Matching results and expectations}
 
+	\subsection{Results}
+		\subsection{Latency}
+
+			Here are the times, in minutes and seconds, between packets:
+			\begin{table}[h]
+				\begin{tabular}{@{}lll@{}}
+					Gap 	    &	First Run   & 	Second run 	 \\
+					1st - 2nd 	&	7:35		& 	6:00     	 \\
+					2nd - 3rd 	&	8:06    	& 	4:43         \\
+					3rd - 4th 	&	6:47		& 	5:05         \\
+					4th - 5th 	&	6:13    	& 	5:14         \\
+					5th - 6th 	&	         	& 	4:24         \\
+				\end{tabular}
+			\end{table}
+
+			For the 1st run we got an average of 7:18
+
+		\subsubsection{Heart Rate}
+			First run:
+			\begin{table}[h]
+				\begin{tabular}{@{}ll@{}}
+					Our Reading & IWatch Reading \\
+					60          & 72             \\
+					70          & 76             \\
+					00          & 82             \\
+					65          & 72             \\
+					66          & 74            
+				\end{tabular}
+			\end{table}
+			Second Run:
+			\begin{table}[h]
+				\begin{tabular}{@{}ll@{}}
+					Our Reading & IWatch Reading \\
+					72          & 64             \\
+					00          & 64             \\
+					62          & 72             \\
+					65          & 70             \\
+					61          & 65      		 \\      
+					64          & 64
+				\end{tabular}
+			\end{table}
+
+
+	\subsection{Matching results and expectations}
+		\subsubsection{Heart Rate}
+			In both runs we got a reading of 0 in on of the measures, so we will takes these as errors of the overall system and not take them into account in our statistical analysis.
+
+			In the first run we got a mean average percentage error(MAPS) of 11.27, between this and the second run, we found an improvement that could be done to the algorithm, so we changed it for the second run, where we got a MAPS of 7.94. Given the constraints mentioned in our expectations, these results are better than we expected, perhaps because %34r come up with explanation
+
+			We feel like doing a precision analysis is not appropriate, since there was a gap of several minutes between measurements and the person was walking around, so there is no reason we should expect the heart rate to keep constant.
 
 
 \section{Idle Energy Consumption}
 
 	\subsection{Pourpose}
-
+		Most of the time, the walker will not be in use, so it is important to know how much energy it draws while idle
 	\subsection{Expectations}
 
 	\subsection{Parameters}
-
+		We connected a USB Current Meter to the walker and left it idle for 5 minutes, while monitoring the current it was drawing
 	\subsection{Results}
-
+		The walker drew 0.2A throughout the 5 minutes, which
 	\subsection{Matching results and expectations}
 
 
@@ -104,7 +151,7 @@ We managed to successfully send data from sensors on the walker to our server, s
 
 
 
-\section{Modularity}
+\section{Integrating the GPS sensor}
 	\subsection{Pourpose}
 	This experiment has the goal of figuring out how quickly a new sensor can be added to the walker. Our walker is a proof of concept for something bigger, so it is important to know how extensible it is.
 
@@ -118,22 +165,22 @@ We managed to successfully send data from sensors on the walker to our server, s
 	Integrating GPS into the system ended up taking 2 whole days, not only was it hard to find a port layout which allowed all the sensors to work, but library support is also not very good, so after unsuccessfully trying to use external libraries, we ended up implementing it ourselves, which took some extra time.
 
 	\subsection{Matching results and expectations}
-	Integrating GPS into our system took as much time as we were roughly expecting, perhaps it is on the higher end of our expectation because of the usual delays that come with getting the right documentation for sensors and how they interplay with the other components.
+	Integrating GPS into our system took as much time as we were roughly expecting, perhaps it is on the higher end of our expectation because of the usual delays that come with getting the right documentation for sensors and how they interplay with the other components. While performing this experiment, coincidentally, we noticed that when the GPS wasn't working and we wanted to use the walker for other tests, we had to remove it, so we could also say the system is modular in the sense that it is easy to remove sensors.
 
 
 
-\section{Scalability}
+\section{Setting up the Arduino from scratch}
 
 	\subsection{Pourpose}
-
+		With this experiment we can get an idea of how scalable our system is, which is one of its most important features.
 	\subsection{Expectations}
-
+		We expect the first atempt to take around 4 minutes because we haven't registered a device in a while, but if the process is streamlined we expect it to take around 1:30 minutes, since it just requires navigating menues and slighly changing the node.
 	\subsection{Parameters}
-
+		We will, on the same computer, register a new device in The Things Network, change the node files to include its new authentication codes and upload them to the Arduino.
 	\subsection{Results}
-
+		The first atempt took 4:50 and the second one 01:02.
 	\subsection{Matching results and expectations}
-
+		The first atempt took a bit longer than expected, perhaps because we didn't remember very well how to navigate the menus and options on The Things Network. On the second run we were even faster than predicted, maybe because what takes the most time is simply navigating the menus, and after knowing exacly what do it is very fast. This experiment is not a complete demonstration of the scalability of our system, but it is the best we could come up with given the resources.
 
 \section{Throughput}
 

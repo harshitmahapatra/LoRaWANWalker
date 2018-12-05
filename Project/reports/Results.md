@@ -41,8 +41,8 @@ Battery types
 
 
 ### Moving around
-1st stint: 105mAh -> 210mAh/h 
-2nd stint: 104mAh -> 208mAh/h
+1st stint: 105mAh -> 210mA
+2nd stint: 104mAh -> 208mA
 
 ---
 ## Latency (min: 4:24, max: 8:06, avg: 6:05)
@@ -88,14 +88,14 @@ We measured the pressure 5 times with a 1kg bag of rice and always got a measure
 ### GPS
 
 ### Heart Rate
-# 1st run (avg: sd:2.629)
+# 1st run (avg error: 8.25)
 12 6 7 8 diffs
 60->72
 70->76
 00->82
 65->72
 66->74
-# 2nd run
+# 2nd run (avg error: 5.4)
 8 10 5 4 0 diffs
 72->64
 00->64
@@ -118,5 +118,8 @@ Challenges:
 ## Reliability
 We used the walker continuously for 30 minutes two times, and the only failure was that on each of the runs, there was a reading that did not include the heart-rate. This means that out of the 12 packets sent (5 in the 1st run and 6 in the 2nd), 
 
+
+## Scalability
+4:50
 
 
