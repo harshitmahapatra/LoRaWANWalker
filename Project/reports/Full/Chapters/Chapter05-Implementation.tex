@@ -48,15 +48,11 @@ The sensor data was collected using HX711 library to transform the analog signal
 
 \subsection{Pulse:}
 
-
 \subsection{Hardware:}
-For pulse, we used the pulse sensor from pulsesensor.com.
-
+For pulse, we used the pulse sensor from pulsesensor.com. It is based on light. The LED shines light into capillary tissue, and the sensor reads the light that bounces back.
 
 \subsubsection{Software:}
 For reading the data from the sensor, simple analog read was used. This data is then processed to get average heart rate of the patient by looking at the heardbeat pattern.
-
-
 
 \subsection{Accelerometer:}
 
@@ -66,7 +62,6 @@ We used an MPU9250 accelerometer to measure whether the walker is moving or not.
 \subsubsection{Software:}
 The library used to read the accelerometer's output was sensor specific MPU9250 library. If the gyroscope reading from the accelerometer increased beyond a certain threshold, the walker was considered to be moving.
 
-
 \subsection{GPS:}
 
 \subsection{Hardware:}
@@ -74,8 +69,6 @@ For measuring GPS we used the GY-GPS6MV2 sensor.
 
 \subsubsection{Software:}
 The library used to read GPS data was SoftwareSerial. The read data was parsed to get the value of latitude and longitude, which were then converted to bytes.
-
-
 
 \subsection{Gateway:}
 
