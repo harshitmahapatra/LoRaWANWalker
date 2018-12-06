@@ -150,13 +150,13 @@ The parameters of our system that have to be measured to test practicality were 
 	\subsection{Pourpose}
 		Most of the time, the walker will not be in use, so it is important to know how much energy it draws while idle
 	\subsection{Expectations}
-		When the walker is not moving, the only activity the arduino does is checking the movement status every 15 seconds. We nonetheless have reason to think that just the fact that the sensors are connected has them draw current, so we expect the power consumption to be close but a bit less than to that of the walker in use, which we expected to be 160mA.
+		When the walker is not moving, the only activity the Arduino does is checking the movement status every 15 seconds. We nonetheless have reason to think that just the fact that the sensors are connected has them draw current, so we expect the power consumption to be close but a bit less than to that of the walker in use, which we expected to be 160mA.
 	\subsection{Parameters}
 		We connected a USB Current Meter to the walker and left it idle for 12:30h the first time and the 18:00h the second time
 	\subsection{Results}
 		During the 12:30h window, the walker drew 2498mAh, which equates to an average current of 200mA, while in the 18 hour run it drew 3505mAh, equating around 195mAh.
 	\subsection{Matching results and expectations}
-		As in the normal usage experiment, the arduino drew much more current than the expected, and the explanation we have is the same. It was, as we predicted, just a bit lower than that of the walker in use, meaning a future improvement over our system would be setting up the node such that the sensors are not drawing power while the walker is idle.
+		As in the normal usage experiment, the Arduino drew much more current than the expected, and the explanation we have is the same. It was, as we predicted, just a bit lower than that of the walker in use, meaning a future improvement over our system would be setting up the node such that the sensors are not drawing power while the walker is idle.
 
 \section{Integrating the GPS sensor}
 	\subsection{Pourpose}

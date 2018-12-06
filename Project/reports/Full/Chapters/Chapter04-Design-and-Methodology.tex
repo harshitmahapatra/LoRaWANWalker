@@ -19,7 +19,7 @@ Based on our analysis and the information we want to collect, we decided on the 
 	\subsection{LoRaWAN gateway}
 		Receives LoRaWAN packets and relays them to "The Things Network" through the Semtech UDP protocol
 
-	\subsection{The Things Network (TTN)}
+	\subsection{The Things Network (TTN)}\label{ttn_description}
 		It is possible to have our gateway communicate directly with our server, but we decided to use TTN because it provides some very useful features out of the box, some of them being:
 
 		\begin{itemize}
@@ -49,11 +49,11 @@ Based on our analysis and the information we want to collect, we decided on the 
 		In order to test the modularity of the system, we will deliberately only integrate the GPS sensor in the testing phase of the project, this way we can measure how much time it takes and analyse the complications brought by doing so.
 
 	\subsection{Testing the GPS sensor}
-		It would be hard for us to integrate the GPS data testing with the bigger experiment mentioned above, due to the fact that we would have to be outside for it to work, so we are divising an experiment just for it.
+		It would be hard for us to integrate the GPS data testing with the bigger experiment mentioned above, due to the fact that we would have to be outside for it to work and the sensors we are using break very easily, so we are divising an experiment just for it.
 		We are going to get the location of the walker 40 times and do some statistical analysis on that data.
 
 	\subsection{Setting up the Arduino from scratch}
-		Due to the fact that we only have one LoRaWAN hat for the Arduino, we are not able to have two setups running simultaneously, so we will re-register the arduino in "The Things Network" and re-upload the code to it, measuring how much time the process takes. We will do it once without practicing the process, and then one more time when we know exacly which steps to take. This experiment is the closest we can get to testing the scalability of our system.
+		Due to the fact that we only have one LoRaWAN hat for the Arduino, we are not able to have two setups running simultaneously, so we will re-register the Arduino in "The Things Network" and re-upload the code to it, measuring how much time the process takes. We will do it once without practicing the process, and then one more time when we know exacly which steps to take. This experiment is the closest we can get to testing the scalability of our system.
 
 	\subsection{Disconnecting cables}
 		In order to test serviceability, we will have someone disconnect random cables connecting the sensors to the node and we will then have another member of the team get the system back up and running while we measure the time it takes.

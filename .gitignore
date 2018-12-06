@@ -12,6 +12,8 @@
 *.blg
 *.log
 *.synctex.gz
+*.fdb_latexmk
+*.fls
 
 CMakeLists.txt
 **/a.out
