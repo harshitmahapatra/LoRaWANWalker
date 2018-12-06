@@ -1940,8 +1940,7 @@
     <bcf:citekey order="14">postolache2011smart</bcf:citekey>
     <bcf:citekey order="15">postolache2011smart</bcf:citekey>
     <bcf:citekey order="16">postolache2011smart</bcf:citekey>
-    <bcf:citekey order="17">knuth:1974</bcf:citekey>
-    <bcf:citekey order="18">knuth:1974</bcf:citekey>
+    <bcf:citekey order="17">dickens</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nyt">

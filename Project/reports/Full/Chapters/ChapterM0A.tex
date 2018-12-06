@@ -1,0 +1,170 @@
+%********************************************************************
+% Appendix
+%*******************************************************
+% If problems with the headers: get headings in appendix etc. right
+%\markboth{\spacedlowsmallcaps{Appendix}}{\spacedlowsmallcaps{Appendix}}
+\chapter{Appendix}
+
+
+\section{Appendix Data}
+In the following you can find all our test measurements:
+\begin{table}[h]
+	\begin{tabular}{@{}ll@{}}
+		\toprule
+		\textbf{Sensor}& \textbf{Max current draw (mA)} \\ \midrule
+		Pulse          & 4                     \\
+		Pressure (x2)  & 3                     \\
+		Accelerometer  & 0.5                   \\
+		GPS            & 57                    \\
+		LoRaWAN shield & 10                    \\
+		Mega 2560      & 80                    \\
+		Total          & 159                   \\ \bottomrule
+	\end{tabular}
+	\caption[Energy consumption Arduino]{Energy consumption Arduino}
+	\label{tab:EnergyConsumption}
+\end{table}
+
+\begin{table}[h]
+	\begin{tabular}{@{}lll@{}}
+		\toprule
+		\textbf{Gap}&\textbf{First Run}& \textbf{Second run} 	 \\ \midrule
+		1st - 2nd 	&	7:35		& 	6:00     	 \\
+		2nd - 3rd 	&	8:06    	& 	4:43         \\
+		3rd - 4th 	&	6:47		& 	5:05         \\
+		4th - 5th 	&	6:13    	& 	5:14         \\
+		5th - 6th 	&	         	& 	4:24         \\ \bottomrule
+	\end{tabular}
+	\caption[LoRaWAN latency]{LoRaWAN latency}
+	\label{tab:Latency}
+\end{table}
+
+\begin{table}[h]
+	\begin{tabular}{@{}ll@{}}
+		\toprule
+		\textbf{Our Reading} & \textbf{IWatch Reading }\\ \midrule
+		60          & 72             \\
+		70          & 76             \\
+		00          & 82             \\
+		65          & 72             \\
+		66          & 74             \\ \bottomrule
+	\end{tabular}
+	\caption[Measuring heart rate first run]{Measuring heart rate first run}
+	\label{tab:HeartRateFirst}
+\end{table}
+
+\begin{table}[h]
+	\begin{tabular}{@{}ll@{}}
+		\toprule
+		\textbf{Our Reading} & \textbf{IWatch Reading} \\ \midrule
+		72          & 64             \\
+		00          & 64             \\
+		62          & 72             \\
+		65          & 70             \\
+		61          & 65      		 \\      
+		64          & 64			 \\ \bottomrule
+	\end{tabular}
+	\caption[Measuring heart rate second run]{Measuring heart rate second run}
+	\label{tab:HeartRateSecond}
+\end{table}
+
+\begin{table}[h]
+	\begin{tabular}{@{}lllllllllll@{}}
+		\toprule
+		\textbf{Payload (bytes)} & 15  & 30  & 60 & 45  & 50  & 55 & 54 & 53 & 52 & 51  \\ \midrule
+		\textbf{Success} & yes & yes & no & yes & yes & no & no & no & no & yes \\ \bottomrule
+	\end{tabular}
+	\caption[Payload testing LoraWAN]{Payload testing LoraWAN}
+	\label{tab:LoraWanPayload}
+\end{table}
+
+
+\section{Code}
+Our implementation
+
+\subsection{Code hierarchy}
+\begin{lstlisting}[float=b,language=c,frame=tb,caption={Code hierarchy},label=lst:useless]
+|-- lib
+|   |-- GPS
+|   |   |-- GPS.cpp
+|   |   --- GPS.h
+|   |-- Lmic
+|   |   |-- aes
+|   |   |   |-- ideetron
+|   |   |   |   --- AES-128_V10.cpp
+|   |   |   |-- lmic.c
+|   |   |   --- other.c
+|   |   |-- hal
+|   |   |   |-- hal.cpp
+|   |   |   --- hal.h
+|   |   |-- lmic
+|   |   |   |-- config.h
+|   |   |   |-- hal.h
+|   |   |   |-- lmic.c
+|   |   |   |-- lmic.h
+|   |   |   |-- lorabase.h
+|   |   |   |-- oslmic.c
+|   |   |   |-- oslmic.h
+|   |   |   --- radio.c
+|   |   --- lmic.h
+|   |-- Movement
+|   |   |-- Movement.cpp
+|   |   --- Movement.h
+|   |-- MPU9250
+|   |   --- src
+|   |       |-- MPU9250.cpp
+|   |       --- MPU9250.h
+|   |-- Pressure
+|   |-- |-- HX711.cpp
+|   |   |-- HX711.h
+|   |   |-- Pressure.cpp
+|   |   --- Pressure.h
+|   |-- Pulse
+|   |   |-- Pulse.cpp
+|   |   --- Pulse.h
+|   --- readme.txt
+|-- platformio.ini
+--- src
+    ---  main.cpp
+\end{lstlisting}
+
+
+\subsection{Code Main}
+\begin{lstlisting}[float=b,language=c,frame=tb,caption={Code Main},label=lst:useless]
+
+HERE
+\end{lstlisting}
+
+\subsection{Code GPS}
+\begin{lstlisting}[float=b,language=c,frame=tb,caption={Code GPS},label=lst:useless]
+
+HERE
+\end{lstlisting}
+
+\subsection{Code Movement}
+\begin{lstlisting}[float=b,language=c,frame=tb,caption={Code Movement},label=lst:useless]
+
+HERE
+\end{lstlisting}
+
+\subsection{Code Pressure}
+\begin{lstlisting}[float=b,language=c,frame=tb,caption={Code Pressure},label=lst:useless]
+
+HERE
+\end{lstlisting}
+
+\subsection{Code Pulse/Heartrate}
+\begin{lstlisting}[float=b,language=c,frame=tb,caption={Code Pulse/Heartrate},label=lst:useless]
+
+HERE
+\end{lstlisting}
+
+%Ei solet nemore consectetuer nam. Ad eam porro impetus, te choro omnes
+%evertitur mel. Molestie conclusionemque vel at, no qui omittam
+%expetenda efficiendi. Eu quo nobis offendit, verterem scriptorem ne
+%vix.
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../ClassicThesis"
+%%% End:
