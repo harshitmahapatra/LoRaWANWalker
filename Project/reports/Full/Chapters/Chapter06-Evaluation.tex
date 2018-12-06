@@ -16,7 +16,6 @@ The parameters of our system that have to be measured to test practicality were 
 			We have different expectations, depending on the sensor:
 
 			\begin{enumerate}
-				\item Location: Our module's datasheet does not provide a precision threshold, so we don't know what to expect
 				\item Heart Rate: The sensor we are using is very sensitive to noise and we have no way of keeping our heart rate constant when running the test, so we expect the readings to vary quite a lot.
 				\item Movement: Since this is a boolean value, we expect it to be quite consistent, always reporting movement or no movement, given the same scenario.
 				\item Pressure: We expect that if we manage to put constant force on the pressure sensors, they will give consistent readings
@@ -26,7 +25,6 @@ The parameters of our system that have to be measured to test practicality were 
 			Again, each sensor can be said to be accurate if it meets conditions specific to it 
 
 			\begin{enumerate}
-				\item Location: According to the specification, the NEO 6M module should be accurate within 2 meters, so that is our expectation.
 				\item Heart Rate: The sensor we are using is very sensitive to the pressure put on it and the thickness of the person's skin. We are also calculating the user's heart rate by processing the raw pulse data, so we don't expect much accuracy
 				\item Movement: We are only using the accelerometer to measure if the walker is moving, so we expect an accuracy of 100\%, since we see no reason it would give an erroneous report
 				\item Pressure: The pressure sensor we use does not provide an accuracy threshold, but from our preliminary usage it seems to be at least 95\% accurate
@@ -71,24 +69,7 @@ The parameters of our system that have to be measured to test practicality were 
 		\end{itemize}
 
 	\subsection{Results}
-		\subsection{Latency}
-
-			Here are the times, in minutes and seconds, between packets:
-			\begin{table}[h]
-				\begin{tabular}{@{}lll@{}}
-					Gap 	    &	First Run   & 	Second run 	 \\
-					1st - 2nd 	&	7:35		& 	6:00     	 \\
-					2nd - 3rd 	&	8:06    	& 	4:43         \\
-					3rd - 4th 	&	6:47		& 	5:05         \\
-					4th - 5th 	&	6:13    	& 	5:14         \\
-					5th - 6th 	&	         	& 	4:24         \\
-				\end{tabular}
-				\caption[LoRaWAN latency]{LoRaWAN latency}
-				\label{tab:Latency}
-			\end{table}
-
-			For the 1st run we got an average of 7:18
-
+		
 		\subsubsection{Heart Rate}
 			First run:
 			\begin{table}[h]
@@ -118,13 +99,32 @@ The parameters of our system that have to be measured to test practicality were 
 				\label{tab:HeartRateSecond}
 			\end{table}
 
-		\subsubsection{Pulse Sensor}
+		\subsubsection{Reliability}
+			All the packets arrived successfully, but in two of them the heart rate was 0.
+
+		\subsubsection{Latency}
+			Here are the times, in minutes and seconds, between packets:
+			\begin{table}[h]
+				\begin{tabular}{@{}lll@{}}
+					Gap 	    		&	First Run   & 	Second run 	 \\
+					1st - 2nd 			&	7:35		& 	6:00     	 \\
+					2nd - 3rd 			&	8:06    	& 	4:43         \\
+					3rd - 4th 			&	6:47		& 	5:05         \\
+					4th - 5th 			&	6:13    	& 	5:14         \\
+					5th - 6th 			&	         	& 	4:24         \\
+					average     		&   7:18        &   5:05		 \\
+					Standard deviation  &   50.13s      &   36.30s		 \\
+				\end{tabular}
+				\caption[LoRaWAN latency]{LoRaWAN latency}
+				\label{tab:Latency}
+			\end{table}
+
+			Int the 1st run we got an average of 7:18, with a relative standard deviation of 11.7\%, while in the second run we got an average of 5:05, with a relative standard deviation of 11.9\%.
 
 		\subsubsection{Energy consumption}
 			The walker used 105 and 104 mAh during the first and second runs respectively. This means it was drawing a current of around 210mAh
-	\subsection{Matching results and expectations}
-		\subsubsection{Location}
 
+	\subsection{Matching results and expectations}
 		\subsubsection{Heart Rate}
 			In both runs we got a reading of 0 in on of the measurements, so we will takes these as errors of the overall system and not take them into account in our statistical analysis.
 
@@ -141,7 +141,10 @@ The parameters of our system that have to be measured to test practicality were 
 			As expected, we got an accuracy of 100\% on the movement detection, and, since it is a boolean value, also a standard deviation of 0. Getting the movement status of the walker is a very simple measurement, so any result other than this would have been surprising.
 
 		\subsubsection{Reliability}
-			The walker was very reliable, appart from the two times the heart rate didn't get measured. The method we have for calculating the heart rate from the pulse date times out if it doesn't find a value within a certain time frame, so that is most likely what happened in both these cases. We can notheless say that the whole data pipeline was 100\% reliable, which is the most relevant parameter for our hypothesis.
+			We believe the two failed measurements are due to the method we have for calculating the heart rate from the pulse, which times out if it doesn't find a value within a certain time frame, so that is most likely what happened in both these cases. We can notheless say that the whole data pipeline was 100\% reliable, which is the most relevant parameter for our hypothesis.
+
+		\subsubsection{Latency}
+			We got, on both runs, equaly spread out times, which is good evidence for the consistently high variablity of the latency, which is what we had expected. Our expectation of 6 minutes average time is right in the middle of the two runs (7:18 and 5:05), which leads us to believe that if we did more and longer runs, it would converge somewhere between 5:30 and 6:30.
 
 		\subsubsection{Energy consumption}
 			The walker consumed 30\% more than we expected, we think this could be because we are using two of the 5V pins, but it is most likely a factor we are not aware of and decided investigating it would be out of the scope our knowledge and most importantly this project.
@@ -180,14 +183,26 @@ The parameters of our system that have to be measured to test practicality were 
 \section{Testing the GPS sensor}
 
 	\subsection{Pourpose}
-
+		This experiment will allow us to know the accuracy and precision of the GPS sensor
 	\subsection{Expectations}
+		According to the specification, the NEO 6M module should be accurate within 2 meters, so that is our expectation. Regarding precision, our module's datasheet does not provide a threshold, so we don't know what to expect there,
 
 	\subsection{Parameters}
+		We took the walker outside and got its location through the GPS sensor 40 times
 
 	\subsection{Results}
+		The GPS had an average error of 3.5 meters, and the following error distribution:
+
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=1.2\linewidth]{gfx/gps_boxplot_error}
+			\caption{GPS error boxplot}
+			\label{fig:GPS plot}
+		\end{figure}
 
 	\subsection{Matching results and expectations}
+		The GPS was less accurate then expected, perhaps because of being positioned in the side of the walker, not getting the perfect reception.
+
 
 \section{Setting up the Arduino from scratch}
 
