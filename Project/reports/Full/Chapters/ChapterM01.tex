@@ -1,0 +1,47 @@
+\section{Setup the LoRaWAN gateway}
+
+At first we login into the Gateway for this we type the following into the terminal [\ref{lst:LoginIntoNode}]:
+\begin{lstlisting}[language=c,frame=tb,caption={Login into the Node},label=lst:LoginIntoNode]
+YOU:~$ ssh pi@192.168.188.23
+sign_and_send_pubkey: signing failed: agent refused operation
+pi@192.168.188.23's password: 
+Linux raspberrypi 4.14.69-v7+ #1141 SMP Mon Sep 10 15:26:29 BST 2018 armv7l
+
+The programs included with the Debian GNU/Linux system are free software; the exact distribution terms for each program are described in the individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Wed Dec  5 16:44:47 2018 from 192.168.188.59
+\end{lstlisting}
+
+Next we start it with the following command [\ref{lst:GatewayStart}]:
+\begin{lstlisting}[language=c,frame=tb,caption={Starting LoraWAN Gateway},label=lst:GatewayStart]
+pi@raspberrypi:~ $ LoraWanGateway/single_chan_pkt_fwd/single_chan_pkt_fwd 
+SX1276 detected, starting.
+Gateway ID: b8:27:eb:ff:ff:d0:8e:22
+Listening at SF7 on 868.100000 Mhz.
+------------------
+stat update: {"stat":{"time":"2018-12-06 18:02:38 GMT","lati":0.00000,"long":0.00000,"alti":0,"rxnb":0,"rxok":0,"rxfw":0,"ackr":0.0,"dwnb":0,"txnb":0,"pfrm":"Single Channel Gateway","mail":"bla@gmail.com","desc":"smart walkers!!"}}
+\end{lstlisting}
+
+\section{Setup the LoRaWAN Node}
+The node is a plug and play device, if its gets energy out of a 9V battery or through its USB Micro input, it will start to work imminently without any software upload.
+\newpage
+
+\section{Run Webpage}
+At first avigate in the directory with the server files.
+Next open a terminal and type in [\ref{lst:StartWebserver}]: 
+\begin{lstlisting}[language=c,frame=tb,caption={Starting Webpage},label=lst:StartWebserver]
+YOU:~/smartwalker$ python manage.py runserver --noreload
+Performing system checks...
+
+System check identified no issues (0 silenced).
+December 06, 2018 - 18:11:22
+Django version 2.1.2, using settings 'smartwalker.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Connected with result code 0
+\end{lstlisting}
+
+Open http://127.0.0.1:8000/ in a webbrowser. The webside should be now visible.
+

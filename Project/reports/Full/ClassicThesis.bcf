@@ -1937,7 +1937,12 @@
     <bcf:citekey order="12">postolache2011smart</bcf:citekey>
     <bcf:citekey order="13">postolache2011smart</bcf:citekey>
     <bcf:citekey order="14">postolache2011smart</bcf:citekey>
-    <bcf:citekey order="15">dickens</bcf:citekey>
+    <bcf:citekey order="15">pressureds</bcf:citekey>
+    <bcf:citekey order="16">pulseds</bcf:citekey>
+    <bcf:citekey order="17">accelds</bcf:citekey>
+    <bcf:citekey order="18">gpsds</bcf:citekey>
+    <bcf:citekey order="19">lorashield</bcf:citekey>
+    <bcf:citekey order="20">dickens</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nyt">
