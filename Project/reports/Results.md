@@ -67,13 +67,13 @@ Battery types
 accuracy
 We measured the pressure 5 times with a 1kg bag of rice and always got a measurement of exactly 1.00.
 
-# 1st run (avg:0.41 sd:0.0336 or 0.082%)
+# 1st run (avg:0.41 sd:0.0339 rsd:8.27%)
 0.45
 0.39
 0.45
 0.38
 0.40
-# 2nd run (avg:0.42 sd: 0.0197)
+# 2nd run (avg:0.42 sd:0.02 rsd:4.76%)
 0.41
 0.44
 0.43
@@ -81,6 +81,8 @@ We measured the pressure 5 times with a 1kg bag of rice and always got a measure
 0.43
 0.39
 
+
+0.33911
 
 
 ### Accelerometer
@@ -94,7 +96,7 @@ We measured the pressure 5 times with a 1kg bag of rice and always got a measure
 70->76
 00->82
 65->72
-66->74
+66->74 
 # 2nd run (avg error: 5.4)
 8 10 5 4 0 diffs
 72->64

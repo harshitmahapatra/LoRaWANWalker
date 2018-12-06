@@ -28,3 +28,4 @@ CMakeLists.txt
 **/*.log
 *.img
 
+**/**.DS_Store

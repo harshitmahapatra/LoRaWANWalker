@@ -1,7 +1,7 @@
 \chapter{Implementation}
 \label{cha:implementation}
 
-The final implementation of our system was follows:
+The final implementation of our system was as follows:
 \begin{figure}[h]
 \centering
 \includegraphics[width=1\linewidth]{gfx/architecture_implementation_h}
@@ -13,97 +13,160 @@ It differed from the overall design in the following ways:
 
 We decided to use a webserver with an mqtt client and a database instead of a central server with API. We also decided to not implement the analytics server as part of the current project. We made these decisions prioritising the components that we needed to test our hypothesis. Since the presence or absence of a central server or analytics platform don't affect the parameters we need to test our hypothesis we decided to ignore them in the implementation part.
 
-The implementation of each component of our system is described in details in the following subsections.
+
+\section{Node and Gateway hardware}
+	The presented architecture can be realized in a number of ways, meaning we had to make the following choices before going into details:
+
+	\begin{itemize}
+		\item Use sensors with inbuilt LoRa functionality or use a single-board computer connected to sensors and LoRa transmitter?
+		\item What hardware to use to interface with the sensors and act as the node?
+		\item What hardware to use as LoRaWAN gateway?
+	\end{itemize}
+
+
+	\subsection{Single-board Computer vs Inbuilt LoRa Sensors}
+
+		We had the option of using a single-board computer (SBC) to interface with all of the sensors (Arduino or Rpi) or using sensors with inbuilt LoRaWAN capabilities.
+
+		We summarized the haracteristics of sensors with inbuilt LoRaWAN as follows:
+		\begin{itemize}
+			\item They require little to no configuration and work out of the box. This means using them would grant us more time to we can focus on other parts of the project.
+			\item Data can be sent at different rates for each sensor.
+			\item They are much more expensive than standard sensors.
+			\item They are bulkier than standard sensors, making them harder to fit into the walker.
+			\item Their is low variety when it comes to such sensors in the market, limiting choice of vendor and sensors.
+			\item Having several LoRaWAN transmitters instead of one would make the power consumption higher.
+			\item Each sensor usually has its own battery or charging method, which makes recharging more complex
+		\end{itemize}
+
+
+		We summarized the following characteristics of SBCs:
+		\begin{itemize}
+			\item Fine grained control of the sensors
+			\item We might want to do some preprocessing of the sensor data before sending it, which is possible with SBCs.
+			\item Good amount of variety in the market allowing us a lot of choice.
+		\end{itemize}
+
+		We decided to go with an SBC because we value the flexibility provided by the vast array of sensors to choose from and the possibility to manually program them.
 
 
 
-\subsection{Node:} 
+	\subsection{Comparing Raspberry Pi and Arduino}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.8\linewidth]{gfx/node_diagram}
-	\caption[]{Implemented Architecture ot the Node}
-	\label{fig:architecture_node}
-\end{figure}
+		We then had the option of either using a Raspberry Pi or an Arduino. We summarized their characteristics as follows:
 
-\subsubsection{Hardware:}
-The node consists of an Arduino Mega (R3 ATmega2560) with a Seeedstudio Dragino Lora Shield (868 M Frequency). The node is powered by a standard 9V battery pack. The node also consists of a breadboard, which contains two Analog to Digital converter and a gps sensor. The entire node setup is mounted on the front face of the lower left leg of the walker. The accelerometer is directly connected to the arduino and is mounted on the back face of the left leg of walker. Two pressure sensors are mounted on the handles of the walker and are connected to the A/D converters in the breadboard, which in turn are connected to the arduino. The pulse sensor is mounted on the left handle and is on top of a button and is directly connected to the arduino. The pulse sensor is only activated if the underlying button is pressed. 
+		Pi:
+		\begin{itemize}
+			\item Faster and more powerful processor
+			\item Overhead of operating system, hdmi output, wifi/ethernet port, audio output, all of which take physical or disk space.
+			\item More power consumption
+		\end{itemize}
 
-The circuit diagram of the node is as follows:
+		Arduino:
+		\begin{itemize}
+			\item Easy to get up and running
+			\item Easier to connect with analog sensors
+			\item Lots of different models to choose from, meaning we can choose the one that best fits our goals
+			\item Cheaper than the Raspberry Pi
+			\item Smaller 
+			\item No operating system, meaning we are closer to the hardware and have more control over the sensors
+		\end{itemize}
 
+		Due to the points mentioned above, especially due to its flexibility, and low power consumption, we decided to go with the arduino as the node.
 
+		Due to its superior computational power, inbuilt networking capabilities, we decided to go with the Raspberry Pi as the gateway.
 
-\subsubsection{Software:}
-The IDE used for writing and uploading the code was Visual Studio with Platform I/O extension. The Platform I/O simplified the process of uploading the code and monitoring the output of the arduino mega.
-
-The libraries used were lmic, hal, SPI, SoftwareSerial, MPU9250 and HX711 along with the standard Arduino,stdlib and string library.
-
-The code structure is as follows:
---Insert code tree here---
-
-The main.cpp collects data in case of an event, converts the said data to bytes and sends it to a gateway using LoRaWAN. The main calls sensor specific functions to collect the data. 
-
-Each LoRa packet contains the application id and key that is required by the things network.
-
-\subsection{Pressure:}
-
-\subsubsection{Hardware:}
-For measuring pressure we used two 10kg Aluminum Alloy pressure sensors connected to the Arduino via a HX711 AD converter module. 
-
-\subsubsection{Software:}
-The sensor data was collected using HX711 library to transform the analog signal along with standard Arduino library. 
-
-\subsection{Pulse:}
-
-\subsection{Hardware:}
-For pulse, we used the pulse sensor from pulsesensor.com. It is based on light. The LED shines light into capillary tissue, and the sensor reads the light that bounces back.
-
-\subsubsection{Software:}
-For reading the data from the sensor, simple analog read was used. This data is then processed to get average heart rate of the patient by looking at the heardbeat pattern.
-
-\subsection{Accelerometer:}
-
-\subsection{Hardware:}
-We used an MPU9250 accelerometer to measure whether the walker is moving or not.
-
-\subsubsection{Software:}
-The library used to read the accelerometer's output was sensor specific MPU9250 library. If the gyroscope reading from the accelerometer increased beyond a certain threshold, the walker was considered to be moving.
-
-\subsection{GPS:}
-
-\subsection{Hardware:}
-For measuring GPS we used the GY-GPS6MV2 sensor.
-
-\subsubsection{Software:}
-The library used to read GPS data was SoftwareSerial. The read data was parsed to get the value of latitude and longitude, which were then converted to bytes.
-
-\subsection{Gateway:}
-
-\subsection{Hardware:}
-We used raspberry pi 3+ along with dragino lora hat with gps model number 979854 for the gateway.
-The gateway was made of a Raspberry Pi 3+ with a Dragino LoRa hat for Pi. The Pi was connected to a router which in turn was connected to the internet.
-
-
-The circuit layout of the gateway is
+		Our reasoning is supported by the arguments put forward in \cite{postolache2011smart}.
 
 
 
 
 
-\subsubsection{Software:}
-the pi has a single chain packet forwarder code written in c, which forwards the packets it receives from the node to The Things Network's IP address. 
+The specifics of the implementation of each component of our system is described in detail in the following sections.
 
 
-\subsection{The Things Network (TTN):}
-The things network is an online website that we used to host our mqtt broker. We chose TTN because it's convinient, secure and very popular among the LoRaWAN community. We created an application in the TTN to act as our mqtt broker. We laso registered our gateway in TTN.
+\section{Node} 
+	\subsection{Hardware}
+		As mentioned, the node consists of an Arduino Mega (R3 ATmega2560) with a Seeedstudio Dragino Lora Shield (868 M Frequency). It is powered by a standard 9V battery pack. The node also consists of a breadboard, which contains two Analog to Digital converter and a gps sensor. The entire node setup is mounted on the front face of the lower left leg of the walker. The accelerometer is directly connected to the arduino and is mounted on the back face of the left leg of walker. Two pressure sensors are mounted on the handles of the walker and are connected to the A/D converters in the breadboard, which in turn are connected to the arduino. The pulse sensor is mounted on the left handle and is on top of a button and is directly connected to the arduino. The pulse sensor is only activated if the underlying button is pressed. 
 
-The application in TTN received packets from the gateway, converted them back from byte string to json and published them using the mqtt broker.
+		The circuit diagram of the node is as follows:
+
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.8\linewidth]{gfx/node_diagram}
+			\caption[]{Implemented Architecture ot the Node}
+			\label{fig:architecture_node}
+		\end{figure}
+
+	\subsection{Software}
+		The IDE used for writing and uploading the code was Visual Studio with Platform I/O extension. The Platform I/O simplified the process of uploading the code and monitoring the output of the arduino mega.
+
+		The libraries used were lmic, hal, SPI, SoftwareSerial, MPU9250 and HX711 along with the standard Arduino,stdlib and string library.
+
+		The code structure is as follows:
+		--Insert code tree here---
+
+		The main.cpp collects data in case of an event, converts the said data to bytes and sends it to a gateway using LoRaWAN. The main calls sensor specific functions to collect the data. 
+
+		Each LoRa packet contains the application id and key that is required by the things network.
+
+\section{Pressure}
+	\subsection{Hardware}
+	For measuring pressure we used two 10kg Aluminum Alloy pressure sensors connected to the Arduino via a HX711 AD converter module. 
+
+	\subsection{Software}
+	The sensor data was collected using HX711 library to transform the analog signal along with standard Arduino library. 
+
+\section{Pulse}
+
+	\subsection{Hardware}
+	For pulse, we used the pulse sensor from pulsesensor.com. It is based on light. The LED shines light into capillary tissue, and the sensor reads the light that bounces back.
+
+	\subsection{Software}
+	For reading the data from the sensor, simple analog read was used. This data is then processed to get average heart rate of the patient by looking at the heardbeat pattern.
+
+\section{Accelerometer}
+
+	\subsection{Hardware}
+	We used an MPU9250 accelerometer to measure whether the walker is moving or not.
+
+	\subsection{Software}
+	The library used to read the accelerometer's output was sensor specific MPU9250 library. If the gyroscope reading from the accelerometer increased beyond a certain threshold, the walker was considered to be moving.
+
+\section{GPS}
+
+	\subsection{Hardware}
+	For measuring GPS we used the GY-GPS6MV2 sensor.
+
+	\subsection{Software}
+	The library used to read GPS data was SoftwareSerial. The read data was parsed to get the value of latitude and longitude, which were then converted to bytes.
+
+\section{Gateway}
+		
+	\subsection{Hardware}
+	We used raspberry pi 3+ along with dragino lora hat with gps model number 979854 for the gateway.
+	The gateway was made of a Raspberry Pi 3+ with a Dragino LoRa hat for Pi. The Pi was connected to a router which in turn was connected to the internet.
 
 
-\subsection{Webserver:}
-We created a webserver using the Django framework. It contained an mqtt client which subscribed to TTN. The mqtt borker was implemented using the paho mqtt library. The server then parsed the received data and stored them in a sqlite database. The database was then queried and the result was displayed on a webpage using django-tabular library.
+	The circuit layout of the gateway is
 
-We chose Django with sqlite for our server, because they allow quick prototyping and testing.
+
+
+
+
+	\subsection{Software}
+	the pi has a single chain packet forwarder code written in c, which forwards the packets it receives from the node to The Things Network's IP address. 
+
+\section{The Things Network (TTN)}
+	The things network is an online website that we used to host our mqtt broker. We chose TTN because it's convinient, secure and very popular among the LoRaWAN community. We created an application in the TTN to act as our mqtt broker. We laso registered our gateway in TTN.
+
+	The application in TTN received packets from the gateway, converted them back from byte string to json and published them using the mqtt broker.
+
+
+\section{Webserver}
+	We created a webserver using the Django framework. It contained an mqtt client which subscribed to TTN. The mqtt borker was implemented using the paho mqtt library. The server then parsed the received data and stored them in a sqlite database. The database was then queried and the result was displayed on a webpage using django-tabular library.
+
+	We chose to use the Django framework with sqlite as the database for our server, because they allow quick prototyping and testing.
 
 %%% Local Variables:
 %%% mode: latex
