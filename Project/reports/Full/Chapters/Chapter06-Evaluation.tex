@@ -5,19 +5,18 @@ Having in mind our hypothesis: "Is it practical to monitor walkers and their use
 
 The parameters of our system that have to be measured to test practicality were outlined in the introduction and the experiments we intended to run were outlined in the "Design and Methodology" chapter.
 
-
 \section{Normal Usage}
 
-	\subsection{Pourpose}
+	\subsection*{Pourpose}
 		We are running this big experiment because measuring accuracy, consistency, reliability, latency and energy consumption, all have in common the fact that the best way to get data on these parameters is simply using the walker, so we devised this test, which has the goal of helping us simultaneously assess all the aforementioned quality parameters.
 
-	\subsection{Expectations}
+	\subsection*{Expectations}
 		\subsubsection*{Consistency}
 			We have different expectations, depending on the sensor:
 
 			\begin{enumerate}
 				\item Heart Rate: The sensor we are using is very sensitive to noise and we have no way of keeping our heart rate constant when running the test, so we expect the readings to vary quite a lot.
-				\item Movement: Since this is a boolean value, we expect it to be quite consistent, always reporting movement or no movement, given the same scenario.
+				\item Movement: Since this is a boolean value and the accelerometer is very sensitive, we expect walking around to be enough to report movement consistently.
 				\item Pressure: We expect that if we manage to put constant force on the pressure sensors, they will give consistent readings.
 			\end{enumerate}
 
@@ -26,7 +25,7 @@ The parameters of our system that have to be measured to test practicality were 
 
 			\begin{enumerate}
 				\item Heart Rate: The sensor we are using is very sensitive to the pressure put on it and the thickness of the person's skin. We are also calculating the user's heart rate by processing the raw pulse data, so we don't expect much accuracy.
-				\item Movement: We are only using the accelerometer to measure if the walker is moving, so we expect an accuracy of 100\%, since we see no reason it would give an erroneous report.
+				\item Movement: Somewhat analogous to our consistency expectations, the movement someone makes while walking should be more than enough to trigger the accelerometer so we expect an accuracy of 100\%, since we see no reason it would give an erroneous report.
 				\item Pressure: The pressure sensor we use does not provide an accuracy threshold, but from our preliminary usage it seems to be at least 95\% accurate.
 			\end{enumerate}
 
@@ -35,11 +34,9 @@ The parameters of our system that have to be measured to test practicality were 
 
 		\subsubsection*{Latency}
 			The air-time of LoRaWAN packets is dependent on the payload, the distance to the gateway, the spreading factor and much more, so it is hard for us to make an accurate prediction. We have nonetheless noticed, while building our system, that the time between packets is usually between 4 and 9 minutes, so we are expecting an average of around 6 minutes and a high standard deviation from the mean.
-		\newline
-		\newline
-		\newline
+
 		\subsubsection*{Energy consumption}
-			The power consumption of our components is as follows [\ref{tab:EnergyConsumption}]:
+			The power consumption of our components, detailed in the datasheets referenced in each sensor's implementation details, is as follows [\ref{tab:EnergyConsumption}]:
 
 			\begin{table}[h]
 				\begin{tabular}{@{}ll@{}}
@@ -59,7 +56,7 @@ The parameters of our system that have to be measured to test practicality were 
 
 			Based on this, we expect the current draw to be around 160mA
 
-	\subsection{Parameters}
+	\subsection*{Parameters}
 		We had on of our team's members use the walker normally for 30 minutes, while the information was coming in and stored in our server for analysis. There were only three details:
 
 		\begin{itemize}
@@ -68,7 +65,7 @@ The parameters of our system that have to be measured to test practicality were 
 		  \item In order to measure the current draw we used a USB Current Meter during the experiment
 		\end{itemize}
 
-	\subsection{Results}
+	\subsection*{Results}
 		
 		\subsubsection{Heart Rate}
 			The results of the heart rate measured in the first run are shown in plot [\ref{fig:HeartRateFirst}]
@@ -137,7 +134,7 @@ The parameters of our system that have to be measured to test practicality were 
 		\subsubsection{Energy consumption}
 			The walker used 105 and 104 mAh during the first and second runs respectively. This means it was drawing a current of around 210mA.
 
-	\subsection{Matching results and expectations}
+	\subsection*{Matching results and expectations}
 		\subsubsection{Heart Rate}
 			In both runs we got a reading of 0 in one of the measurements, so we will take these as errors of the overall system and not take them into account in our statistical analysis.
 
@@ -164,46 +161,46 @@ The parameters of our system that have to be measured to test practicality were 
 
 \section{Idle Energy Consumption}
 
-	\subsection{Pourpose}
+	\subsection*{Pourpose}
 		Most of the time, the walker will not be in use, so it is important to know how much energy it draws while idle
-	\subsection{Expectations}
+	\subsection*{Expectations}
 		When the walker is not moving, the only activity the Arduino does is checking the movement status every 15 seconds. We nonetheless have reason to think that just the fact that the sensors are connected has them draw current, so we expect the power consumption to be close but a bit less than to that of the walker in use, which we expected to be 160mA.
-	\subsection{Parameters}
+	\subsection*{Parameters}
 		We connected a USB Current Meter to the walker and left it idle for 12:30h the first time and the 18:00h the second time
-	\subsection{Results}
+	\subsection*{Results}
 		During the 12:30h window, the walker drew 2498mAh, which equates to an average current of 200mA, while in the 18 hour run it drew 3505mAh, equating around 195mAh.
-	\subsection{Matching results and expectations}
+	\subsection*{Matching results and expectations}
 		As in the normal usage experiment, the Arduino drew much more current than the expected, and the explanation we have is the same. It was, as we predicted, just a bit lower than that of the walker in use, meaning a future improvement over our system would be setting up the node such that the sensors are not drawing power while the walker is idle.
 
 \section{Integrating the GPS sensor}
-	\subsection{Pourpose}
+	\subsection*{Pourpose}
 	This experiment has the goal of figuring out how quickly a new sensor can be added to the walker. Our walker is a proof of concept for something bigger, so it is important to know what kind of problems can arise when atempting to extend it.
 
-	\subsection{Expectations}
+	\subsection*{Expectations}
 	Having in consideration how much time it took us to mount, get readings, and send the current sensor's information, we expect to take around 1 or 2 days to integrate the GPS sensor into the system. 
 
-	\subsection{Parameters}
+	\subsection*{Parameters}
 	For this experiment, we had two of the team's members work exclusively on integrating the GPS sensor into the system. This consisted in mounting it on the walker, getting some readings, extracting the useful information, figuring out the best way to encode the data for sending over LoRaWAN, and then adapting the rest of the components to handle the latitude and longitude.
 
-	\subsection{Results}
+	\subsection*{Results}
 	Integrating GPS into the system ended up taking 2 whole days, not only was it hard to find a port layout which allowed all the sensors to work, but library support is also not very good, so after unsuccessfully trying to use external libraries, we ended up implementing it ourselves, which took some extra time.
 
-	\subsection{Matching results and expectations}
+	\subsection*{Matching results and expectations}
 	Integrating GPS into our system took as much time as we were roughly expecting, perhaps it is on the higher end of our expectation because of the usual delays that come with getting the right documentation for sensors and how they interplay with the other components. Two days doesn't seem like much having in consideration that repeating the process on new nodes would be much faster the following times.
 
 	While performing this experiment, coincidentally, we noticed that when the GPS wasn't working and we wanted to use the walker for other tests, we had to remove it, so we could also say the system is modular in the sense that it is easy to remove sensors.
 
 \section{Testing the GPS sensor}
 
-	\subsection{Pourpose}
+	\subsection*{Pourpose}
 		This experiment will allow us to know the accuracy and precision of the GPS sensor.
-	\subsection{Expectations}
+	\subsection*{Expectations}
 		According to the specification, the NEO 6M module should be accurate within 2 meters, so that is our expectation. Regarding precision, our module's datasheet does not provide a threshold, so we don't know what to expect there.
 
-	\subsection{Parameters}
+	\subsection*{Parameters}
 		We took the walker outside and got its location through the GPS sensor 40 times.
 
-	\subsection{Results}
+	\subsection*{Results}
 		The GPS had an average error of 3.5 meters, and its error distribution is show in boxplot furthermore the boxplot shows that the median error is 3 meters and  we can see that 75\% of our data points is in between 0 and 6 meters of error to the goal [\ref{fig:gps_plot}].
 
 		\begin{figure}[h!]
@@ -213,23 +210,23 @@ The parameters of our system that have to be measured to test practicality were 
 			\label{fig:gps_plot}
 		\end{figure}
 
-	\subsection{Matching results and expectations}
+	\subsection*{Matching results and expectations}
 		The GPS was less accurate then expected, perhaps because of being positioned in the side of the walker, not getting the perfect reception.
 
 \section{Setting up the Arduino from scratch}
 
-	\subsection{Pourpose}
+	\subsection*{Pourpose}
 		With this experiment we can get an idea of how scalable our system is, which is one of its most important features.
-	\subsection{Expectations}
+	\subsection*{Expectations}
 		We expect the first atempt to take around 4 minutes because we haven't registered a device in a while, but if the process is streamlined we expect it to take around 1:30 minutes, since it just requires navigating menues and slighly changing the node.
-	\subsection{Parameters}
+	\subsection*{Parameters}
 		We will, on the same computer, register a new device in The Things Network, change the node files to include its new authentication codes and upload them to the Arduino.
-	\subsection{Results}
+	\subsection*{Results}
 		The first atempt took 4:50 and the second one 01:02.
-	\subsection{Matching results and expectations}
+	\subsection*{Matching results and expectations}
 		The first atempt took a bit longer than expected, perhaps because we didn't remember very well how to navigate the menus and options on The Things Network. On the second run we were even faster than predicted, maybe because what takes the most time is simply navigating the menus, and after knowing exacly what do it is very fast. This experiment is not a complete demonstration of the scalability of our system, but it is the best we could come up given the situation. It doesn't show how the system would handle several nodes in parallel but at least we know that the act of adding them would be quick.
 
-\subsection{Disconnecting cables}
+\section{Disconnecting cables}
 
 	\subsection{Pourpose}
 		We wanted to have a test for accessing the serviceability of the walker, this will allow us to have an idea of how long the walker will take to be fixed when hardware problems arise.
@@ -244,13 +241,13 @@ The parameters of our system that have to be measured to test practicality were 
 
 \section{Finding maximum throughput}
 
-	\subsection{Pourpose}
+	\subsection*{Pourpose}
 		We don't intend to send much information, but it is nonetheless usefull knowing how much could theoretically be sent.
-	\subsection{Expectations}
+	\subsection*{Expectations}
 		We have configured our system to be able to use a spreading factor between 7 and 12, which have a maximum payload of 222 and 51 bytes, respectively, so we are expecting any value in-between, but most likely one of these two, since they are the most commonly used.
-	\subsection{Parameters}
+	\subsection*{Parameters}
 		We increased the payload step by step until the packets wouldn't successfully arrive at our server anymore.
-	\subsection{Results}
+	\subsection*{Results}
 		We kept increasing, testing twice and decreasing the payload in the following fashion, until we found the maximum we could successfully send [\ref{tab:LoraWanPayload}]:
 
 		\begin{table}[h]
@@ -264,7 +261,7 @@ The parameters of our system that have to be measured to test practicality were 
 
 		For the payloads of 60, 55 and 54 bytes, the packets never arrived at ttn, for loads of 53 and 52 bytes, they arrived but the payload was not readable.
 
-	\subsection{Matching results and expectations}
+	\subsection*{Matching results and expectations}
 		The maximum payload we got was 51 bytes, which is one of the options we considered most likely. With this experiment we can be sure the system is using a spreading factor of 12, which provides a very long range, but a very small payload and thus small throughput.
 
 %%% Local Variables:

@@ -24,7 +24,7 @@ We decided to use a webserver with an mqtt client and a database instead of a ce
 	\end{itemize}
 
 
-	\subsection{Single-board Computer vs Inbuilt LoRa Sensors}
+	\subsection{Single-board Computer vs Inbuilt LoRaWAN}
 
 		We had the option of using a single-board computer (SBC) to interface with all of the sensors (Arduino or Rpi) or using sensors with inbuilt LoRaWAN capabilities.
 
@@ -86,7 +86,7 @@ The specifics of the implementation of each component of our system is described
 
 
 \section{Node} 
-	\subsection{Hardware}
+	\subsection*{Hardware}
 		As mentioned, the node consists of an Arduino Mega (R3 ATmega2560) with a Seeedstudio Dragino Lora Shield (868 M Frequency). It is powered by a standard 9V battery pack. The node also consists of a breadboard, which contains two Analog to Digital converter and a GPS Sensor. The entire node setup is mounted on the front face of the lower left leg of the walker. The accelerometer is directly connected to the Arduino and is mounted on the back face of the left leg of walker. Two pressure sensors are mounted on the handles of the walker and are connected to the A/D converters in the breadboard, which in turn are connected to the Arduino. The pulse sensor is mounted on the left handle and is directly connected to the Arduino.
 
 		The circuit diagram of the node is as follows [\ref{fig:architecture_node}]:
@@ -127,7 +127,7 @@ The specifics of the implementation of each component of our system is described
 			\label{tab:blueprintArduino}
 		\end{table}
 
-	\subsection{Software}
+	\subsection*{Software}
 		The IDE used for writing and uploading the code was Visual Studio with Platform I/O extension. The Platform I/O simplified the process of uploading the code and monitoring the output of the Arduino mega.
 
 		The libraries used were lmic, hal, SPI, SoftwareSerial, MPU9250 and HX711 along with the standard Arduino,stdlib and string library.
@@ -139,43 +139,43 @@ The specifics of the implementation of each component of our system is described
 		Each LoRaWAN packet contains its application and network keys and the device's address, which are required by The Things Network.
 
 \section{Pressure}
-	\subsection{Hardware}
-	For measuring pressure we used two Aluminum Alloy pressure sensors, which have a measurement range of -10 to 10 kg, connected to the Arduino via an HX711 AD converter module. 
+	\subsection*{Hardware}
+	For measuring pressure we used two Aluminum Alloy pressure sensors, which have a measurement range of -10 to 10 kg, connected to the Arduino via an HX711 AD \cite{pressureds} converter module. 
 
-	\subsection{Software}
+	\subsection*{Software}
 	The sensor data was collected using the HX711 library to transform the analog signal along with the standard Arduino library. 
 
 \section{Pulse}
 
-	\subsection{Hardware}
-	For pulse, we used the pulse sensor from pulsesensor.com. It contains an LED that shines light into the capillary tissue, and the sensor reads the light that bounces back.
+	\subsection*{Hardware}
+	For pulse, we used the pulse sensor from pulsesensor.com \cite{pulseds}. It contains an LED that shines light into the capillary tissue, and the sensor reads the light that bounces back.
 
-	\subsection{Software}
+	\subsection*{Software}
 	For reading the data from the sensor, we simply read the analog input. This data is then processed to get the average heart rate of the patient by finding its pattern in the raw data.
 
 \section{Accelerometer}
 
-	\subsection{Hardware}
-	We used an MPU9250 accelerometer to measure whether the walker is moving or not.
+	\subsection*{Hardware}
+	We used an MPU9250 accelerometer \cite{accelds} to measure whether the walker is moving or not.
 
-	\subsection{Software}
+	\subsection*{Software}
 	The library used to read the accelerometer's output was the sensor specific MPU9250 library. If the gyroscope reading from the accelerometer increased beyond a certain threshold, the walker was considered to be moving.
 
 \section{GPS}
 
-	\subsection{Hardware}
-	For measuring GPS we used the GY-GPS6MV2 sensor.
+	\subsection*{Hardware}
+	For measuring GPS we used the GY-GPS6MV2 sensor \cite{gpsds}.
 
-	\subsection{Software}
+	\subsection*{Software}
 	The library used to read GPS data was SoftwareSerial and it was then parsed to get the value of latitude and longitude.
 
 \section{Gateway}
 		
-	\subsection{Hardware}
-	The gateway consists of a Raspberry Pi 3+ with a Dragino LoRa hat for Pi. The Pi was connected to a router which in turn was connected to the internet.
+	\subsection*{Hardware}
+	The gateway consists of a Raspberry Pi 3+ with a Dragino LoRa hat for Pi \cite{lorashield}. The Pi was connected to a router which in turn was connected to the internet.
 
 
-	\subsection{Software}
+	\subsection*{Software}
 	The Raspberry Pi is running a single channel packet forwarder written in C++, which forwards the packets it receives from the node to The Things Network's european router. 
 
 \section{The Things Network (TTN)}
