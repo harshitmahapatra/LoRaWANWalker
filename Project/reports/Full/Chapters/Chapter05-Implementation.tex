@@ -9,6 +9,32 @@ The final implementation of our system was as follows:
 \label{fig:image2}
 \end{figure}
 
+\begin{table}[h]
+	\begin{tabular}{l|ll}
+		\textbf{Sensor} & \textbf{Out\_Sensor} & \textbf{In\_Arduino} \\\hline
+		\textit{GPS} & VCC & 5V \\
+		& RX & D12 \\
+		& TX & D13 \\
+		& GND & GND \\\hline
+		\textit{Pressure Right} & VCC & 5V \\
+		& SCK & D37 \\
+		& DT & D36 \\
+		& GND & GND \\\hline
+		\textit{Pressure Left} & VCC & 5V \\
+		& SCK & D35 \\
+		& DT & D34 \\
+		& GND & GND \\\hline
+		\textit{Movement} & VCC & 5V \\
+		& GND & GND \\
+		& SCL & SCL \\
+		& SDA & SDA \\\hline
+		\textit{Pulse} & VCC & 5V \\
+		& GND & GND \\
+		& S & A15 
+	\end{tabular}
+	\caption[]{A: Analog, D: Digital}
+\end{table}
+
 It differed from the overall design in the following ways:
 
 We decided to use a webserver with an mqtt client and a database instead of a central server with API. We also decided to not implement the analytics server as part of the current project. We made these decisions prioritising the components that we needed to test our hypothesis. Since the presence or absence of a central server or analytics platform don't affect the parameters we need to test our hypothesis we decided to ignore them in the implementation part.
