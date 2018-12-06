@@ -9,22 +9,26 @@
 
 int32_t _latitude, _longitude;
 
+// Getter for Latitude
 int32_t GetLatitude(){
   return _latitude;
 }
 
+// Getter for Longitude
 int32_t GetLongitude(){
   return _longitude;
 }
 
+// Cuts the input and processes
 void ParseGpsData(String gpsData)
 { 
     gpsData = CutGpsString(gpsData);
 
-    GetRelevantData("$GPGGA,110617.00,4123.45635,N,00831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42");
-    //GetRelevantData(gpsData);
+    //GetRelevantData("$GPGGA,110617.00,4123.45635,N,00831.54761,W,1,05,2.68,129.0,M,50.1,M,,*42");
+    GetRelevantData(gpsData);
 }
 
+// Extract relevant data from string
 void GetRelevantData(String s)
 {
     //Latitude
@@ -75,6 +79,7 @@ String CutGpsString(String s)
   return s.substring(save, s.length());
 }
 
+// Removes dot from string
 String removeDot(String str)
 {
   String strOut="";
