@@ -9,7 +9,7 @@ The parameters of our system that have to be measured to test practicality were 
 \section{Normal Usage}
 
 	\subsection{Pourpose}
-	We are running this big experiment because measuring accuracy, consistency, reliability, latency and energy consumption, all have in common the fact that the best way to get data on these parameters is simply using the walker, so we devised this test, which has the goal of helping us simultaneously assess all the aforementioned quality parameters.
+		We are running this big experiment because measuring accuracy, consistency, reliability, latency and energy consumption, all have in common the fact that the best way to get data on these parameters is simply using the walker, so we devised this test, which has the goal of helping us simultaneously assess all the aforementioned quality parameters.
 
 	\subsection{Expectations}
 		\subsubsection{Consistency}
@@ -33,7 +33,7 @@ The parameters of our system that have to be measured to test practicality were 
 			\end{enumerate}
 
 		\subsection{Reliability}
-			The only failure we could see happening in this experiment would be LoRaWAN packets being sent from the node to the gateway being dropped, which doesn't seem to happen very often. We are thus expecting at least 90\% reliability
+			The only failure we could see happening in this experiment would be LoRaWAN packets being sent from the node to the gateway being dropped, which doesn't seem to happen very often. We are thus expecting at least 90\% reliability. 
 
 		\subsection{Latency}
 			The air-time of LoRaWAN packets is dependent on the payload, the distance to the gateway, the spreading factor and much more, so it is hard for us to make an accurate prediction. We have nonetheless noticed, while building our system, that the time between packets is usually between 4 and 9 minutes, so we are expecting an average of around 6 minutes and a high standard deviation from the mean.
@@ -141,7 +141,7 @@ The parameters of our system that have to be measured to test practicality were 
 			As expected, we got an accuracy of 100\% on the movement detection, and, since it is a boolean value, also a standard deviation of 0. Getting the movement status of the walker is a very simple measurement, so any result other than this would have been surprising.
 
 		\subsubsection{Reliability}
-			We 
+			The walker was very reliable, appart from the two times the heart rate didn't get measured. The method we have for calculating the heart rate from the pulse date times out if it doesn't find a value within a certain time frame, so that is most likely what happened in both these cases. We can notheless say that the whole data pipeline was 100\% reliable, which is the most relevant parameter for our hypothesis.
 
 		\subsubsection{Energy consumption}
 			The walker consumed 30\% more than we expected, we think this could be because we are using two of the 5V pins, but it is most likely a factor we are not aware of and decided investigating it would be out of the scope our knowledge and most importantly this project.
@@ -151,12 +151,13 @@ The parameters of our system that have to be measured to test practicality were 
 	\subsection{Pourpose}
 		Most of the time, the walker will not be in use, so it is important to know how much energy it draws while idle
 	\subsection{Expectations}
-
+		When the walker is not moving, the only activity the arduino does is checking the movement status every 15 seconds. We nonetheless have reason to think that just the fact that the sensors are connected has them draw current, so we expect the power consumption to be close but a bit less than to that of the walker in use, which we expected to be 160mA.
 	\subsection{Parameters}
-		We connected a USB Current Meter to the walker and left it idle for 5 minutes, while monitoring the current it was drawing
+		We connected a USB Current Meter to the walker and left it idle for 12:30h the first time and the 18:00h the second time
 	\subsection{Results}
-		The walker drew 0.2A throughout the 5 minutes, which
+		During the 12:30h window, the walker drew 2498mAh, which equates to an average current of 200mA, while in the 18 hour run it drew 3505mAh, equating around 195mAh.
 	\subsection{Matching results and expectations}
+		As in the normal usage experiment, the arduino drew much more current than the expected, and the explanation we have is the same. It was, as we predicted, just a bit lower than that of the walker in use, meaning a future improvement over our system would be setting up the node such that the sensors are not drawing power while the walker is idle.
 
 \section{Integrating the GPS sensor}
 	\subsection{Pourpose}
@@ -175,6 +176,18 @@ The parameters of our system that have to be measured to test practicality were 
 	Integrating GPS into our system took as much time as we were roughly expecting, perhaps it is on the higher end of our expectation because of the usual delays that come with getting the right documentation for sensors and how they interplay with the other components. Two days doesn't seem like much having in consideration that repeating the process on new nodes would be much faster the following times.
 
 	While performing this experiment, coincidentally, we noticed that when the GPS wasn't working and we wanted to use the walker for other tests, we had to remove it, so we could also say the system is modular in the sense that it is easy to remove sensors.
+
+\section{Testing the GPS sensor}
+
+	\subsection{Pourpose}
+
+	\subsection{Expectations}
+
+	\subsection{Parameters}
+
+	\subsection{Results}
+
+	\subsection{Matching results and expectations}
 
 \section{Setting up the Arduino from scratch}
 
@@ -202,7 +215,7 @@ The parameters of our system that have to be measured to test practicality were 
 	\subsection{Matching results and expectations}
 		We overestimated the time it would take by a minute, we think this might be because the team member fixing the walker was the most familiar with the cabling and pin layout.
 
-\section{Finding maximim throughput}
+\section{Finding maximum throughput}
 
 	\subsection{Pourpose}
 		We dont intend to send much information, but it is nonetheless usefull knowing how much could theoretically be sent
