@@ -39,7 +39,7 @@ The parameters of our system that have to be measured to test practicality were 
 		\newline
 		\newline
 		\subsubsection*{Energy consumption}
-			The power consumption of our components is as follows:
+			The power consumption of our components is as follows [\ref{tab:EnergyConsumption}]:
 
 			\begin{table}[h]
 				\begin{tabular}{@{}ll@{}}
@@ -73,16 +73,16 @@ The parameters of our system that have to be measured to test practicality were 
 		\subsubsection{Heart Rate}
 			The results of the heart rate measured in the first run are shown in plot [\ref{fig:HeartRateFirst}]
 
-			\begin{figure}[h]
+			\begin{figure}[h!]
 				\centering
 				\includegraphics[width=1.1\linewidth]{gfx/pulse_run1_diff.jpg}
 				\caption{Measurement heart rate first run}
 				\label{fig:HeartRateFirst}
 			\end{figure}
-			
+			\newpage
 			The results of the heart rate measured in the second run are shown in plot [\ref{fig:HeartRateSecond}]
 
-			\begin{figure}[h]
+			\begin{figure}[h!]
 				\centering
 				\includegraphics[width=1.1\linewidth]{gfx/pulse_run2_diff.jpg}
 				\caption{Measurement heart rate first run}
@@ -93,14 +93,22 @@ The parameters of our system that have to be measured to test practicality were 
 			The movement detection was 100\% accurate.
 
 		\subsubsection{Pressure}
-			The results of the pressure measured in the first run are shown in plot%34r graph
-			The results of the pressure measured in the second run are shown in plot%34r graph
+			The results of the pressure measured in the first run and second run are shown in plot [\ref{fig:PressureDiff}]
+			
+			\begin{figure}[h!]
+				\centering
+				\includegraphics[width=1.1\linewidth]{gfx/pressure_diff.jpg}
+				\caption{Measurement heart rate first run}
+				\label{fig:PressureDiff}
+			\end{figure}
+		\newpage
 		\subsubsection{Reliability}
 			All the packets arrived successfully, but in two of them the heart rate was 0.
 
 		\subsubsection{Latency}
-			Here are the times, in minutes and seconds, between packets:
-			\begin{table}[h]
+			Here are the times, in minutes and seconds, between packets [\ref{fig:Latency}]:
+			\begin{table}[h!]
+				\centering
 				\begin{tabular}{@{}lll@{}}
 					\toprule
 					\textbf{Gap}&\textbf{First Run}& \textbf{Second run} 	 \\ \midrule
@@ -115,8 +123,9 @@ The parameters of our system that have to be measured to test practicality were 
 				\caption[LoRaWAN latency]{LoRaWAN latency}
 				\label{tab:Latency}
 			\end{table}
-		
-			\begin{figure}[h]
+			
+			Plot [\ref{fig:Latency}] visualizes these results:
+			\begin{figure}[h!]
 				\centering
 				\includegraphics[width=1.1\linewidth]{gfx/latency_diff.jpg}
 				\caption{LoRaWAN latency}
@@ -199,7 +208,7 @@ The parameters of our system that have to be measured to test practicality were 
 
 		\begin{figure}[h]
 			\centering
-			\includegraphics[width=1.2\linewidth]{gfx/gps_boxplot_error}
+			\includegraphics[width=1.1\linewidth]{gfx/gps_boxplot_error}
 			\caption{GPS error boxplot}
 			\label{fig:gps_plot}
 		\end{figure}
@@ -225,7 +234,7 @@ The parameters of our system that have to be measured to test practicality were 
 	\subsection{Pourpose}
 		We wanted to have a test for accessing the serviceability of the walker, this will allow us to have an idea of how long the walker will take to be fixed when hardware problems arise.
 	\subsection{Expectations}
-		We expect the node to be fixed in around 2:30 minutes, which includes looking up the blueprint [\ref{tab:blueprint}] and arranging the cables accordingly.
+		We expect the node to be fixed in around 2:30 minutes, which includes looking up the blueprint [\ref{tab:blueprintArduino}] and arranging the cables accordingly.
 	\subsection{Parameters}
 		One of the team members will disconnect 7 random cables from the node and another one will atempt to fix it.
 	\subsection{Results}
@@ -242,12 +251,12 @@ The parameters of our system that have to be measured to test practicality were 
 	\subsection{Parameters}
 		We increased the payload step by step until the packets wouldn't successfully arrive at our server anymore.
 	\subsection{Results}
-		We kept increasing, testing twice and decreasing the payload in the following fashion, until we found the maximum we could successfully send:
+		We kept increasing, testing twice and decreasing the payload in the following fashion, until we found the maximum we could successfully send [\ref{tab:LoraWanPayload}]:
 
 		\begin{table}[h]
-			\begin{tabular}{@{}lllllllllll@{}}
-				Payload (bytes) & 15  & 30  & 60 & 45  & 50  & 55 & 54 & 53 & 52 & 51  \\
-				Success & yes & yes & no & yes & yes & no & no & no & no & yes
+			\begin{tabular}{@{}l|llllllllll@{}}
+				\textbf{Payload (bytes)} & 15  & 30  & 60 & 45  & 50  & 55 & 54 & 53 & 52 & 51  \\\hline
+				\textbf{Success} & yes & yes & no & yes & yes & no & no & no & no & yes
 			\end{tabular}
 			\caption[Payload testing LoraWAN]{Payload testing LoraWAN}
 			\label{tab:LoraWanPayload}

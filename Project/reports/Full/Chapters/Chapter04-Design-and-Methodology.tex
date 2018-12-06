@@ -1,13 +1,13 @@
 \chapter{Design and Methodology}
 \label{cha:design-and-method}
 
-Based on our analysis and the information we want to collect, we decided on the following architecture for our system:
+Based on our analysis and the information we want to collect, we decided on the following architecture for our system [\ref{fig:architecture1}]:
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=1\linewidth]{gfx/architecture_design_and_methology_h}
-\caption{Proposed architecture}
-\label{fig:image1}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\linewidth]{gfx/architecture_design_and_methology_h}
+	\caption{Proposed architecture}
+	\label{fig:architecture1}
 \end{figure}
 
 \section{Components and their interactions}
@@ -34,7 +34,17 @@ Based on our analysis and the information we want to collect, we decided on the 
 
 	\subsection{Server}
 		The server will subscribe to the MQTT broker on TTN and store the information received from there, while also exposing an API that can be used, for example, to have other services process the data and display it to the interested parties
-
+	
+	\newpage
+	This interaction of the mentioned components is visualized in the following [\ref{fig:sequenceDiagram}]: 
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=0.9\linewidth]{gfx/sequenceDiagram.png}
+		\caption{Proposed architecture}
+		\label{fig:sequenceDiagram}
+	\end{figure}
+	
+	
 \section{Experiments}
 	In order to test the previously mentioned quality parameters and thus our hypothesis, we designed the following experiments:
 

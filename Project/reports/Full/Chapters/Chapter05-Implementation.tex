@@ -1,40 +1,13 @@
 \chapter{Implementation}
 \label{cha:implementation}
 
-The final implementation of our system is as follows:
-\begin{figure}[h]
+The final implementation of our system is as follows [\ref{fig:architecture2}]:
+\begin{figure}[h!]
 \centering
 \includegraphics[width=1\linewidth]{gfx/architecture_implementation_h}
 \caption{Implemented Architecture}
-\label{fig:image2}
+\label{fig:architecture2}
 \end{figure}
-
-\begin{table}[h]
-	\begin{tabular}{l|ll}
-		\textbf{Sensor} & \textbf{Out\_Sensor} & \textbf{In\_Arduino} \\\hline
-		\textit{GPS} & VCC & 5V \\
-		& RX & D12 \\
-		& TX & D13 \\
-		& GND & GND \\\hline
-		\textit{Pressure Right} & VCC & 5V \\
-		& SCK & D37 \\
-		& DT & D36 \\
-		& GND & GND \\\hline
-		\textit{Pressure Left} & VCC & 5V \\
-		& SCK & D35 \\
-		& DT & D34 \\
-		& GND & GND \\\hline
-		\textit{Movement} & VCC & 5V \\
-		& GND & GND \\
-		& SCL & SCL \\
-		& SDA & SDA \\\hline
-		\textit{Pulse} & VCC & 5V \\
-		& GND & GND \\
-		& S & A15 
-	\end{tabular}
-	\label{tab:blueprint}
-	\caption[Blueprint connections node]{A: Analog, D: Digital}
-\end{table}
 
 It differed from the proposed design in the following ways:
 
@@ -116,14 +89,43 @@ The specifics of the implementation of each component of our system is described
 	\subsection{Hardware}
 		As mentioned, the node consists of an Arduino Mega (R3 ATmega2560) with a Seeedstudio Dragino Lora Shield (868 M Frequency). It is powered by a standard 9V battery pack. The node also consists of a breadboard, which contains two Analog to Digital converter and a GPS Sensor. The entire node setup is mounted on the front face of the lower left leg of the walker. The accelerometer is directly connected to the Arduino and is mounted on the back face of the left leg of walker. Two pressure sensors are mounted on the handles of the walker and are connected to the A/D converters in the breadboard, which in turn are connected to the Arduino. The pulse sensor is mounted on the left handle and is directly connected to the Arduino.
 
-		The circuit diagram of the node is as follows:
+		The circuit diagram of the node is as follows [\ref{fig:architecture_node}]:
 
-		\begin{figure}[h]
+		\begin{figure}[h!]
 			\centering
-			\includegraphics[width=0.8\linewidth]{gfx/node_diagram}
+			\includegraphics[width=0.7\linewidth]{gfx/node_diagram}
 			\caption{Implemented Architecture ot the Node}
 			\label{fig:architecture_node}
 		\end{figure}
+		
+		The Blueprint table shows how we connected the sensors to the pins of our Arduino board [\ref{tab:blueprintArduino}]:
+		\begin{table}[h!]
+			\centering
+			\begin{tabular}{l|ll}
+				\textbf{Sensor} & \textbf{Out\_Sensor} & \textbf{In\_Arduino} \\\hline
+				\textit{GPS} & VCC & 5V \\
+				& RX & D12 \\
+				& TX & D13 \\
+				& GND & GND \\\hline
+				\textit{Pressure Right} & VCC & 5V \\
+				& SCK & D37 \\
+				& DT & D36 \\
+				& GND & GND \\\hline
+				\textit{Pressure Left} & VCC & 5V \\
+				& SCK & D35 \\
+				& DT & D34 \\
+				& GND & GND \\\hline
+				\textit{Movement} & VCC & 5V \\
+				& GND & GND \\
+				& SCL & SCL \\
+				& SDA & SDA \\\hline
+				\textit{Pulse} & VCC & 5V \\
+				& GND & GND \\
+				& S & A15 
+			\end{tabular}
+			\caption[Blueprint connections node]{A: Analog, D: Digital}
+			\label{tab:blueprintArduino}
+		\end{table}
 
 	\subsection{Software}
 		The IDE used for writing and uploading the code was Visual Studio with Platform I/O extension. The Platform I/O simplified the process of uploading the code and monitoring the output of the Arduino mega.
