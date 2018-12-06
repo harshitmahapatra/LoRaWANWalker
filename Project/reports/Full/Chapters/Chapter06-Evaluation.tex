@@ -72,32 +72,20 @@ The parameters of our system that have to be measured to test practicality were 
 		
 		\subsubsection{Heart Rate}
 			First run:
-			\begin{table}[h]
-				\begin{tabular}{@{}ll@{}}
-					Our Reading & IWatch Reading \\
-					60          & 72             \\
-					70          & 76             \\
-					00          & 82             \\
-					65          & 72             \\
-					66          & 74            
-				\end{tabular}
-				\caption[Measuring heart rate first run]{Measuring heart rate first run}
-				\label{tab:HeartRateFirst}
-			\end{table}
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=1.1\linewidth]{gfx/pulse_run1_diff.jpg}
+				\caption{Measurement heart rate first run}
+				\label{fig:HeartRateFirst}
+			\end{figure}
+			
 			Second Run:
-			\begin{table}[h]
-				\begin{tabular}{@{}ll@{}}
-					Our Reading & IWatch Reading \\
-					72          & 64             \\
-					00          & 64             \\
-					62          & 72             \\
-					65          & 70             \\
-					61          & 65      		 \\      
-					64          & 64
-				\end{tabular}
-				\caption[Measuring heart rate second run]{Measuring heart rate second run}
-				\label{tab:HeartRateSecond}
-			\end{table}
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=1.1\linewidth]{gfx/pulse_run2_diff.jpg}
+				\caption{Measurement heart rate first run}
+				\label{fig:HeartRateSecond}
+			\end{figure}
 
 		\subsubsection{Reliability}
 			All the packets arrived successfully, but in two of them the heart rate was 0.
@@ -106,18 +94,26 @@ The parameters of our system that have to be measured to test practicality were 
 			Here are the times, in minutes and seconds, between packets:
 			\begin{table}[h]
 				\begin{tabular}{@{}lll@{}}
-					Gap 	    		&	First Run   & 	Second run 	 \\
+					\toprule
+					\textbf{Gap}&\textbf{First Run}& \textbf{Second run} 	 \\ \midrule
 					1st - 2nd 			&	7:35		& 	6:00     	 \\
 					2nd - 3rd 			&	8:06    	& 	4:43         \\
 					3rd - 4th 			&	6:47		& 	5:05         \\
 					4th - 5th 			&	6:13    	& 	5:14         \\
-					5th - 6th 			&	         	& 	4:24         \\
+					5th - 6th 			&	         	& 	4:24         \\ \bottomrule
 					average     		&   7:18        &   5:05		 \\
-					Standard deviation  &   50.13s      &   36.30s		 \\
+					Standard deviation  &   50.13s      &   36.30s		 \\ \bottomrule
 				\end{tabular}
 				\caption[LoRaWAN latency]{LoRaWAN latency}
 				\label{tab:Latency}
 			\end{table}
+		
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=1.1\linewidth]{gfx/latency_diff.jpg}
+				\caption{LoRaWAN latency}
+				\label{fig:Latency}
+			\end{figure}
 
 			Int the 1st run we got an average of 7:18, with a relative standard deviation of 11.7\%, while in the second run we got an average of 5:05, with a relative standard deviation of 11.9\%.
 
