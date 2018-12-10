@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<h1>Welcome to Team India's Walker dashboard</h1>
+
+{% if data_lines %}
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        table.alt tr:first-child {
+            background-color: #80a9c9;
+        }
+
+    </style>
+    <table table class="alt">
+        <tr>
+            <th>Node ID</th>
+            <th>Timestamp</th>
+            <th>Heart Beat (bpm)</th>
+            <th>Movement Detection</th>
+            <th>Left Hand Pressure (kg)</th>
+            <th>Right Hand Pressure (kg)</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+        </tr>
+        {% for data_point in data_lines %}
+        <tr>
+                <th>{{ data_point.nodeID }}</th>
+                <th>{{ data_point.timestamp }}</th>
+                <th>{{ data_point.heartRate }}</th>
+                <th>{{ data_point.movement }}</th>
+                <th>{{ data_point.leftHandPressure }}</th>
+                <th>{{ data_point.rightHandPressure }}</th>
+                <th>{{ data_point.latitude }}</th>
+                <th>{{ data_point.longitude }}</th>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+<p>No data to display.</p>
+{% endif %}
+
+<script>
+    window.setTimeout(function () {
+        location.href = "http://127.0.0.1:8000/track/";
+    }, 5000);
+</script>

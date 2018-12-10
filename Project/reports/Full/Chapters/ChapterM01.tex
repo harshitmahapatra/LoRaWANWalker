@@ -1,17 +1,17 @@
 \section{Setup the LoRaWAN gateway}
 
-At first we login into the Gateway for this we type the following into the terminal [\ref{lst:LoginIntoNode}]:
-\begin{lstlisting}[language=c,frame=tb,caption={Login into the Node},label=lst:LoginIntoNode]
-YOU:~$ ssh pi@192.168.188.23
+At first we log into the Gateway, for this we type the following into the terminal [\ref{lst:LoginIntoNode}]:
+\begin{lstlisting}[language=c,frame=tb,caption={Logging into the gateway},label=lst:LoginIntoNode]
+YOU:~$ ssh pi@<ip_address>
 sign_and_send_pubkey: signing failed: agent refused operation
-pi@192.168.188.23's password: 
+pi@<ip_address>'s password: 
 Linux raspberrypi 4.14.69-v7+ #1141 SMP Mon Sep 10 15:26:29 BST 2018 armv7l
 
 The programs included with the Debian GNU/Linux system are free software; the exact distribution terms for each program are described in the individual files in /usr/share/doc/*/copyright.
 
 Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
 permitted by applicable law.
-Last login: Wed Dec  5 16:44:47 2018 from 192.168.188.59
+Last login: Wed Dec  5 16:44:47 2018 from <ip_address>
 \end{lstlisting}
 
 Next we start it with the following command [\ref{lst:GatewayStart}]:
@@ -25,13 +25,13 @@ stat update: {"stat":{"time":"2018-12-06 18:02:38 GMT","lati":0.00000,"long":0.0
 \end{lstlisting}
 
 \section{Setup the LoRaWAN Node}
-The node is a plug and play device, if its gets energy out of a 9V battery or through its USB Micro input, it will start to work imminently without any software upload.
+The node is a plug and play device, if its gets energy out of a 9V battery or through its USB Micro input, it will start to work immediately without any software upload.
 \newpage
 
 \section{Run Webpage}
-At first avigate in the directory with the server files.
+First navigate to the directory with the server files.
 Next open a terminal and type in [\ref{lst:StartWebserver}]: 
-\begin{lstlisting}[language=c,frame=tb,caption={Starting Webpage},label=lst:StartWebserver]
+\begin{lstlisting}[language=c,frame=tb,caption={Starting Webserver},label=lst:StartWebserver]
 YOU:~/smartwalker$ python manage.py runserver --noreload
 Performing system checks...
 

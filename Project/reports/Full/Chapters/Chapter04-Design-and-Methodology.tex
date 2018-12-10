@@ -33,10 +33,10 @@ Based on our analysis and the information we want to collect, we decided on the 
 		TTN has become the standard in LoRaWAN applications, due to its unparalleled potencial for scalability, integration and security. In our case it deserializes the packets coming from the gateways and publishes them in an MQTT broker 
 
 	\subsection{Server}
-		The server will subscribe to the MQTT broker on TTN and store the information received from there, while also exposing an API that can be used, for example, to have other services process the data and display it to the interested parties
+		The server subscribes to the MQTT broker on TTN and stores the information received from there, while also exposing an API that can be used, for example, to have other services process the data and display it to the interested parties
 	
 	\newpage
-	This interaction of the mentioned components is visualized in the following [\ref{fig:sequenceDiagram}]: 
+	The interaction of the mentioned components can be visualized in the following diagram [\ref{fig:sequenceDiagram}]: 
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[width=0.9\linewidth]{gfx/sequenceDiagram.png}
@@ -45,11 +45,11 @@ Based on our analysis and the information we want to collect, we decided on the 
 	\end{figure}
 	
 	
-\section{Experiments}
+\section{Experiments}\label{experiments}
 	In order to test the previously mentioned quality parameters and thus our hypothesis, we designed the following experiments:
 
 	\subsection{Normal Usage}
-		In order to test the consistency and accuracy of our readings, the reliability of the whole system, its latency, and its energy consumption when in use, we have to use the walker and analyse what output we get. We will thus do two runs of 30 minutes, doing as much as possible to keep all the factors constant and save all the information we get. We can then use the sensor readings to find out our consistency and accuracy, the percentage of packets dropped for latency, the delay between them for latency and the energy used for energy consumption.
+		In order to test the consistency and accuracy of our readings, the reliability of the whole system, its latency, and its energy consumption when in use, we have to use the walker and analyse what output we get. We decided to do two runs of 30 minutes, doing as much as possible to keep all the factors constant and save all the information we get. We can then use the sensor readings to find out our consistency and accuracy, the percentage of packets dropped for reliability, the delay between them for latency and the energy used for energy consumption.
 
 	\subsection{Idle Energy Consumption}
 		We will leave the walker idle for around 12 hours while measuring its energy comsumption.
@@ -68,8 +68,8 @@ Based on our analysis and the information we want to collect, we decided on the 
 	\subsection{Disconnecting cables}
 		In order to test serviceability, we will have someone disconnect random cables connecting the sensors to the node and we will then have another member of the team get the system back up and running while we measure the time it takes.
 
-	\subsection{Finding maximimum throughput}
-		We will increase the ammount of bytes being sent by the node until they no longer arrive, this will allow us to discover the maximum amount of information we are able to send in each packet.
+	\subsection{Finding maximimum payload}
+		We will increase the ammount of bytes being sent by the node until they no longer arrive, this will allow us to discover the maximum amount of information we are able to send in each packet and, together with the latency numbers, the maximum throughput.
 
 %%% Local Variables:
 %%% mode: latex
