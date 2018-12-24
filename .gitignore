@@ -23,6 +23,7 @@ CMakeLists.txt
 
 %Specific folders
 */docker/*
+*/webserver/*
 **/node\_modules/*
 **/iot-project-master/*
 **/build/*
