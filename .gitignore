@@ -22,8 +22,9 @@ CMakeLists.txt
 *.img
 
 %Specific folders
-*/docker/*
-*/webserver/*
+**/docker/*
+**/Videos/*
+**/webserver/*
 **/node\_modules/*
 **/iot-project-master/*
 **/build/*
