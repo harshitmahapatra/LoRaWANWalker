@@ -1,5 +1,0 @@
-Compile to docker file
-docker build -t india/milestone2 .
-
-Run the docker file
-docker run --privileged -p 8080:8080 -d india/milestone2
